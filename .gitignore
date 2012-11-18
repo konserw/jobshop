@@ -4,7 +4,9 @@
 maszyna*
 *.o
 moc_*
-zsw
+kSzereg
 zsw.pro.*
 Makefile
 ui_*
+*.mar
+temp/*

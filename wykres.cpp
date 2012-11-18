@@ -115,7 +115,6 @@ void wykres::set(int maszyn, int alfa, int beta)
         text->setY(ym-18);
     }
 
-
     x = x0 + dx*c;
     scene->addLine(x, 0, x, ym);
     text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
