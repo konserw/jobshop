@@ -14,9 +14,11 @@
 
 qint32 t=0;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QStringList *_args, bool _cli, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    args(_args),
+    cli(_cli)
 {
     ui->setupUi(this);
     QStringList labels;
@@ -71,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete args;
 }
 
 void MainWindow::changeEvent(QEvent *e)

@@ -18,7 +18,7 @@ namespace Ui {
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QStringList* _args=NULL, bool _cli=false, QWidget *parent = 0);
     ~MainWindow();
 
     /*zaprzyjaźnienie operatorów serializacji*/
@@ -54,6 +54,8 @@ private:
     QGraphicsScene* scene;
     wykres* gant;
 
+    QStringList* args;
+    bool cli;
 };
 
 /* serializacja - zapis do pliku danych wejściowych */

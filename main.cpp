@@ -8,11 +8,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-    QStringList args = app.arguments();
-    bool cli = (args.count() > 1);
+    QStringList* args = new QStringList(app.arguments());
+    bool cli = (args->count() > 1);
     if(cli)
     {
-        if(args.contains("--help", Qt::CaseInsensitive))
+        if(args->contains("--help", Qt::CaseInsensitive))
         {
             qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [<file> ...]";
             qDebug() << "or kSzereg without arguments for GUI operation";
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
             qDebug() << "\tLIFO\t\t\tLast In First Out";
             return 0;
         }
-        if(!args.contains(".mar") && !(args.contains("-l") || args.contains("--list")))
+        if(!args->contains(".mar") && !(args->contains("-l") || args->contains("--list")))
         {
             qDebug() << "Nothing to process";
             qDebug() << "See 'kSzereg --help'' for more information.";
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    MainWindow w;
+    MainWindow w(args);
     if(!cli) w.show();
     return app.exec();
 }
