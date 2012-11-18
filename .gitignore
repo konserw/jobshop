@@ -3,3 +3,8 @@
 ~*
 maszyna*
 *.o
+moc_*
+zsw
+zsw.pro.*
+Makefile
+ui_*

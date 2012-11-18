@@ -194,7 +194,7 @@ void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
 {
     QTableWidgetItem* item;
 
-    qint32 mac = ui->machines->value();
+    //qint32 mac = ui->machines->value();
     marszruta* mar;
     qint32 rows = ui->tableWidget->rowCount();
     //qint32 cols = ui->tableWidget->colorCount();
