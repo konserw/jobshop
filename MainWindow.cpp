@@ -10,9 +10,6 @@
 #include <QFile>
 #include <QDataStream>
 #include <QFileDialog>
-#include <QApplication>
-
-qint32 t=0;
 
 MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     QMainWindow(parent),
