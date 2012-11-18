@@ -138,7 +138,6 @@ void wykres::set(int maszyn, int alfa, int beta)
     this->showMaximized();
     this->exec();
 
-
     ui->tableWidget->clear();
     foreach(st, s)
     {

@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setHorizontalHeaderLabels(labels);
     ui->tableWidget->resizeColumnsToContents();
 
-
     scene = new QGraphicsScene(this);
     gant = new wykres(this, scene);
 
@@ -137,10 +136,7 @@ void MainWindow::solve()
     {
         emit tick();
         emit tick2();
-
-   //     DEBUG << "time: " << t;
         t++;
-
     }while(zadan > skonczone);
 
     gant->set(maszyn, ui->alfa->value(), ui->beta->value());
@@ -173,7 +169,6 @@ void MainWindow::more()
     qint32 mac = ui->machines->value();
     marszruta* mar;
     qint32 rows = ui->tableWidget->rowCount();
-    //qint32 cols = ui->tableWidget->colorCount();
     qint32 cols = ui->tableWidget->columnCount();
 
     ui->tableWidget->insertRow(rows);
@@ -196,11 +191,8 @@ void MainWindow::more()
 void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
 {
     QTableWidgetItem* item;
-
-    //qint32 mac = ui->machines->value();
     marszruta* mar;
     qint32 rows = ui->tableWidget->rowCount();
-    //qint32 cols = ui->tableWidget->colorCount();
     qint32 cols = ui->tableWidget->columnCount();
 
     ui->tableWidget->insertRow(rows);
@@ -304,8 +296,6 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
     return out;
 }
 
-
-
 QDataStream &operator>>(QDataStream &in, MainWindow &win)
 {
     win.ui->rout->setEnabled(false);
@@ -336,8 +326,6 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
         }
         win.more(start, due, marszruty);
     }
-
-
 
     return in;
 }

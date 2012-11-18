@@ -16,7 +16,6 @@ marszruta::marszruta(QWidget *parent) :
     ui->time->setMinimum(0);
     ui->time->setValue(0);
     ui->time->setMaximum(999999);
-
 }
 
 marszruta::marszruta(qint32 machines, qint32 machine, qint32 time, QWidget *parent):
@@ -42,30 +41,7 @@ marszruta::marszruta(qint32 machines, qint32 machine, qint32 time, QWidget *pare
     ui->time->setValue(time);
     ui->time->setMaximum(999999);
 }
-/*
-marszruta::marszruta(const marszruta &in):
-    QWidget(in.parent),
-    ui(new Ui::marszruta)
-{
 
-    ui->label_machine->setText(tr("Maszyna"));
-    ui->label_time->setText(tr("Czas"));
-
-    m = in.m;
-    QString s;
-    for(qint32 i=0; i<m; i++)
-    {
-        s = "m";
-        s += QString::number(i+1);
-        ui->machine->insertItem(i, s);
-    }
-    ui->machine->setCurrentIndex(in.machine()-1);
-
-    ui->time->setMinimum(0);
-    ui->time->setValue(in.time());
-    ui->time->setMaximum(999999);
-}
-*/
 marszruta &marszruta::operator =(const marszruta &in)
 {
     if(this == &in)
@@ -148,8 +124,6 @@ QDataStream &operator<<(QDataStream &out, const marszruta &mar)
         << mar.time();
     return out;
 }
-
-
 
 QDataStream &operator>>(QDataStream &in, marszruta* &mar)
 {
