@@ -284,9 +284,13 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
 {
     qint32 tasks = qint32(win.ui->tableWidget->rowCount());
     qint32 routLength = qint32(win.ui->rout->value());
+    qint32 alfa = qint32(win.ui->alfa->value());
+    qint32 beta = qint32(win.ui->beta->value());
     out << qint32(win.ui->machines->value())                        //nbumber of machines
         << routLength                                               //number of operations for each task
-        << tasks;                                                   //number of tasks
+        << tasks                                                    //number of tasks
+        << alfa
+        << beta;
     for(qint32 i=0; i<tasks; ++i)
     {
         out << win.ui->tableWidget->item(i, 1)->text().toInt()      //start time
@@ -309,11 +313,13 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
     win.ui->exportButton->setEnabled(true);
     win.ui->importButton->setEnabled(false);
 
-    qint32 machines, routLength, tasks;
+    qint32 machines, routLength, tasks, alfa, beta;
 
-    in >> machines >> routLength >> tasks;
+    in >> machines >> routLength >> tasks >> alfa >> beta;
     win.ui->machines->setValue(machines);
     win.ui->rout->setValue(routLength);
+    win.ui->alfa->setValue(alfa);
+    win.ui->beta->setValue(beta);
 
     QList<marszruta*> marszruty;
     marszruta* mar;
