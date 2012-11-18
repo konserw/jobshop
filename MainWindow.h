@@ -36,7 +36,7 @@ public slots:
 
     void imp();
     void exp();
-    void import(QString*);
+    void import(const QString &);
 
 signals:
     void tick();
@@ -56,7 +56,6 @@ private:
     wykres* gant;
 
     QString* arg;
-    bool cli;
 };
 
 /* serializacja - zapis do pliku danych wejściowych */

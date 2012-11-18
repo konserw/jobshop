@@ -65,12 +65,9 @@ MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     connect(ui->exportButton, SIGNAL(clicked()), this, SLOT(exp()));
     connect(ui->importButton, SIGNAL(clicked()), this, SLOT(imp()));
 
-    if(arg == NULL)
-        cli = false;
-    else
+    if(cli)
     {
-        cli = true;
-        import(arg);
+        import(*arg);
     }
 }
 
@@ -228,16 +225,11 @@ void MainWindow::next(qint32 m, zadanie* z)
 void MainWindow::finished(stat* x)
 {
     DEBUG << "zadanie " << x->j() << "zakonczone"; //, parametry: " << cj << " " << fj << " " << lj;
-
     skonczone++;
 }
 
-void MainWindow::imp()
+void MainWindow::import(const QString &s)
 {
-    QString s;
-    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
-    if(s.isEmpty())return;
-
     QFile file(s);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -254,6 +246,15 @@ void MainWindow::imp()
     in >> *this;
 
     DEBUG <<  "koniec wczytywania";
+}
+
+void MainWindow::imp()
+{
+    QString s;
+    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
+    if(s.isEmpty())return;
+
+    import(s);
 }
 
 void MainWindow::exp()
@@ -279,12 +280,6 @@ void MainWindow::exp()
 
     DEBUG <<  "koniec zapisu";
 }
-
-void MainWindow::import(QString *)
-{
-
-}
-
 
 QDataStream &operator<<(QDataStream &out, const MainWindow &win)
 {

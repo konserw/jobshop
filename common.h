@@ -1,9 +1,11 @@
 #ifndef common_h
 #define common_h
 
-#include <qdebug.h>
+#include <QDebug>
 
 extern int t;
+extern bool cli;
+
 #define dx 20
 #define dy 18
 

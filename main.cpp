@@ -3,13 +3,15 @@
 #include <QTextCodec>
 #include <QDebug>
 
+bool cli;
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     QStringList* args = new QStringList(app.arguments());
-    bool cli = (args->count() > 1);
+    cli = (args->count() > 1);
     if(cli)
     {
         if(args->contains("--help", Qt::CaseInsensitive))
