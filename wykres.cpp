@@ -2,8 +2,8 @@
 #include "ui_wykres.h"
 #include <QDebug>
 #include <QtGui>
-//#include "czas.h"
 #include "common.h"
+#include <QFileDialog>
 
 wykres::wykres(QWidget *parent, QGraphicsScene *s) :
     QDialog(parent),
@@ -17,6 +17,8 @@ wykres::wykres(QWidget *parent, QGraphicsScene *s) :
 
     ui->graphicsView->setScene(s);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(print()));
 
     zadan = 0;
 }
@@ -47,7 +49,6 @@ void wykres::setText(QString &s)
 void wykres::finished(stat* x)
 {
     DEBUG << "ukończono zadanie: " << x->j();
-
 
     s << x;
     zadan++;
@@ -144,5 +145,22 @@ void wykres::set(int maszyn, int alfa, int beta)
     }
     s.clear();
     zadan = 0;
+}
+
+void wykres::print()
+{
+    print(NULL);
+}
+
+void wykres::print(QString* filename)
+{
+    if(filename == NULL)
+    {
+        QString* filename = new QString;
+        *filename = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
+        if(filename->isEmpty())return;
+    }
 
 }
+
+

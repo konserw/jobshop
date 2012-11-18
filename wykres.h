@@ -20,6 +20,9 @@ public slots:
     void setText(QString& s);
     void finished(stat* x);
     void set(int maszyn, int alfa, int beta);
+    void print();
+    void print(QString* filename);
+
 
 protected:
     void changeEvent(QEvent *e);

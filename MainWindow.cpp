@@ -127,7 +127,6 @@ void MainWindow::solve()
         connect(z, SIGNAL(finished(stat*)), gant, SLOT(finished(stat*)));
         connect(this, SIGNAL(tick()), z, SLOT(update()));
 
-
         zadania.append(z);
     }
     zadan = i;
