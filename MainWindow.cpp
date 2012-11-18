@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QApplication>
 
 qint32 t=0;
 
@@ -63,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->rout, SIGNAL(valueChanged(int)), this, SLOT(rout(int)));
     connect(ui->exportButton, SIGNAL(clicked()), this, SLOT(exp()));
     connect(ui->importButton, SIGNAL(clicked()), this, SLOT(imp()));
+
+
 }
 
 MainWindow::~MainWindow()
