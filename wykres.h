@@ -19,8 +19,7 @@ public:
 public slots:
     void setText(QString& s);
     void finished(stat* x);
-    void set(int maszyn);
-    void up(int);
+    void set(int maszyn, int alfa, int beta);
 
 protected:
     void changeEvent(QEvent *e);

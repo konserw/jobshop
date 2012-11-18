@@ -21,6 +21,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    /*zaprzyjaźnienie operatorów serializacji*/
     friend QDataStream &operator<<(QDataStream &out, const MainWindow &win);
     friend QDataStream &operator>>(QDataStream &in, MainWindow &win);
 
@@ -55,6 +56,7 @@ private:
 
 };
 
+/* serializacja - zapis do pliku danych wejściowych */
 QDataStream &operator<<(QDataStream &out, const MainWindow &win);
 QDataStream &operator>>(QDataStream &in, MainWindow &win);
 

@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowTitle(tr("kSzereg"));
 
+    ui->label_alfa->setText(tr("α"));
+    ui->label_beta->setText(tr("β"));
+
     ui->importButton->setText(tr("Import"));
     ui->exportButton->setText(tr("Export"));
     ui->exportButton->setEnabled(false);
@@ -140,7 +143,7 @@ void MainWindow::solve()
 
     }while(zadan > skonczone);
 
-    gant->set(maszyn);
+    gant->set(maszyn, ui->alfa->value(), ui->beta->value());
 
     foreach(z, zadania)
         delete z;

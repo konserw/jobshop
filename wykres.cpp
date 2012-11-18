@@ -12,14 +12,11 @@ wykres::wykres(QWidget *parent, QGraphicsScene *s) :
     ui->setupUi(this);
 
     this->setWindowTitle(tr("Podsumowanie obliczeń"));
-    ui->label_alfa->setText(tr("α"));
-    ui->label_beta->setText(tr("β"));
+
+    ui->pushButton->setText(tr("export do pdf"));
 
     ui->graphicsView->setScene(s);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-
-    connect(ui->alfa, SIGNAL(valueChanged(int)), this, SLOT(up(int)));
-    connect(ui->beta, SIGNAL(valueChanged(int)), this, SLOT(up(int)));
 
     zadan = 0;
 }
@@ -56,7 +53,7 @@ void wykres::finished(stat* x)
     zadan++;
 }
 
-void wykres::set(int maszyn)
+void wykres::set(int maszyn, int alfa, int beta)
 {
     stat* st;
     c=0;
@@ -126,8 +123,17 @@ void wykres::set(int maszyn)
     text->setY(ym-18);
 
     f /= zadan;
-    up(0);
 
+    QString str;
+    str = tr("\nCmax = ");
+    str += QString::number(c);
+    str += tr("\nFsr = ");
+    str += QString::number(f);
+    str += tr("\n√[∑(ej^2) + ∑(lj^2)] =");
+    str += QString::number(sqrt(sum));
+    str += tr("\nα*∑ej + β*∑lj = ");
+    str += QString::number((alfa*e) + (beta*l));
+    ui->label->setText(str);
 
     this->showMaximized();
     this->exec();
@@ -141,22 +147,4 @@ void wykres::set(int maszyn)
     s.clear();
     zadan = 0;
 
-}
-
-void wykres::up(int x)
-{
-    Q_UNUSED(x);
-
-    QString str;
-    str = tr("\nCmax = ");
-    str += QString::number(c);
-    str += tr("\nFsr = ");
-    str += QString::number(f);
-    str += tr("\n√[∑(ej^)2 + ∑(lj^2)] =");
-    str += QString::number(sqrt(sum));
-    str += tr("\nα*∑ej + β*∑lj = ");
-    str += QString::number((ui->alfa->value()*e) +  (ui->beta->value()*l));
-   // str += "\nKolejnosc zadan na maszynach jst w pliku tekstowym";
-    DEBUG << "update wyników:" << str;
-    ui->label->setText(str);
 }
