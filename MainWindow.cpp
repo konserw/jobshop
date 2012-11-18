@@ -14,15 +14,12 @@
 
 qint32 t=0;
 
-MainWindow::MainWindow(QStringList *_args, bool _cli, QWidget *parent) :
+MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    args(_args),
-    cli(_cli)
+    arg(_arg)
 {
     ui->setupUi(this);
-    QStringList labels;
-
     this->setWindowTitle(tr("kSzereg"));
 
     ui->label_alfa->setText(tr("α"));
@@ -49,6 +46,7 @@ MainWindow::MainWindow(QStringList *_args, bool _cli, QWidget *parent) :
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
 
+    QStringList labels;
     labels << "FIFO" << "LIFO";
     ui->method->addItems(labels);
 
@@ -67,13 +65,19 @@ MainWindow::MainWindow(QStringList *_args, bool _cli, QWidget *parent) :
     connect(ui->exportButton, SIGNAL(clicked()), this, SLOT(exp()));
     connect(ui->importButton, SIGNAL(clicked()), this, SLOT(imp()));
 
-
+    if(arg == NULL)
+        cli = false;
+    else
+    {
+        cli = true;
+        import(arg);
+    }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete args;
+    delete arg;
 }
 
 void MainWindow::changeEvent(QEvent *e)
@@ -98,7 +102,7 @@ void MainWindow::rout(qint32 col)
     QStringList labels;
     labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Due date");
     for(qint32 i=1; i<=col; ++i)
-        labels << QString::number(i);// << "" /*tr("marszruta technologiczna")*/ << "";
+        labels << QString::number(i);
     ui->tableWidget->setHorizontalHeaderLabels(labels);
 }
 void MainWindow::solve()
@@ -274,6 +278,11 @@ void MainWindow::exp()
     out << *this;
 
     DEBUG <<  "koniec zapisu";
+}
+
+void MainWindow::import(QString *)
+{
+
 }
 
 

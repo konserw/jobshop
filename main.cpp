@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    MainWindow w(args);
+    MainWindow w;
     if(!cli) w.show();
     return app.exec();
 }
