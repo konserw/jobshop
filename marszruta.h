@@ -21,7 +21,7 @@ public:
     qint32 machines()const;
 
 public slots:
-    void setMachines(qint32);
+    void setMachines(int);
 
 protected:
     void changeEvent(QEvent *e);

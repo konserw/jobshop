@@ -84,7 +84,7 @@ void marszruta::changeEvent(QEvent *e)
     }
 }
 
-void marszruta::setMachines(qint32 nm)
+void marszruta::setMachines(int nm)
 {
     QString s;
 

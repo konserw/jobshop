@@ -66,6 +66,8 @@ MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     {
         this->import(*arg);
         this->solve();
+        //this->close();
+        qApp->quit();
     }
 }
 
@@ -184,7 +186,7 @@ void MainWindow::more()
     {
         mar = new marszruta;
         mar->setMachines(mac);
-        connect(ui->machines, SIGNAL(valueChanged(qint32)), mar, SLOT(machines(qint32)));
+        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
         ui->tableWidget->setCellWidget(rows, i, mar);
     }
 
@@ -207,7 +209,7 @@ void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
     for(qint32 i=3; i<cols; i++)
     {
         mar = marszruty[i-3];
-        connect(ui->machines, SIGNAL(valueChanged(qint32)), mar, SLOT(machines(qint32)));
+        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
         ui->tableWidget->setCellWidget(rows, i, mar);
     }
 
