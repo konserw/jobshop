@@ -66,8 +66,8 @@ MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     {
         this->import(*arg);
         this->solve();
-        //this->close();
-        qApp->quit();
+        this->close();
+ //       qApp->quit();
     }
 }
 
