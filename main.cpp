@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         qDebug() << "\tLIFO\t\t\tLast In First Out";
         return 0;
     }
-    if(args->contains("-l", Qt::CaseInsensitive) || args->contains("--list", Qt::CaseInsensitive))
+    if(args->contains("-l") || args->contains("--list"))
     {
         int where = args->indexOf("-l");
         if(where == -1)
