@@ -84,17 +84,17 @@ int main(int argc, char *argv[])
         DEBUG << "wczytano liste plikow.";
         DEBUG << *files;
     }
-    MainWindow* wins[2];
-    for(int i=0; i<files->count(); ++i)
+    int count = files->count();
+    MainWindow* wins[count];
+    for(int i=0; i<count; ++i)
     {
         wins[i] = new MainWindow(new QString(files->at(i)));
-
     }
-app.exec();
-for(int i=0; i<files->count(); ++i)
-{
-    delete wins[i];
-}
+    app.exec();
+    for(int i=0; i<count; ++i)
+    {
+        delete wins[i];
+    }
     delete args;
     delete files;
     return 0;
