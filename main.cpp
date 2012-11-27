@@ -76,7 +76,11 @@ int main(int argc, char *argv[])
         files = new QStringList;
         QTextStream in(&file);
         while(!in.atEnd())
-            files->append(in.readLine());
+        {
+            QString s = in.readLine();
+            if(!s.isEmpty())
+                files->append(s);
+        }
         DEBUG << "wczytano liste plikow.";
         DEBUG << *files;
     }
