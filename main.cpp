@@ -4,6 +4,7 @@
 #include "common.h"
 #include <QFile>
 #include <QTextStream>
+#include <QStringList>
 
 //global extern variables
 bool cli;
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QStringList* files;
     QStringList* args = new QStringList(app.arguments());
-    *args << "-l";
+
     cli = (args->count() > 1);
 
     //GUI operation
@@ -52,9 +53,9 @@ int main(int argc, char *argv[])
             where = args->indexOf("--list");
         ++where;
 
-        if(args->count() < where)
+        if(args->count() < where+1)
         {
-            qDebug() << "You have to specify name of list file after -l option";
+            qDebug() << "You have to specify name of list file after -l option (ater white char)";
             qDebug() << "See 'kSzereg --help'' for more information.";
             return 1;
         }
@@ -76,11 +77,5 @@ int main(int argc, char *argv[])
         DEBUG << "wczytano liste plikow.";
         DEBUG << *files;
     }
-/*
-   {
-        qDebug() << "Nothing to process";
-        qDebug() << "See 'kSzereg --help'' for more information.";
-        return 0;
-    }
-    */
+
 }
