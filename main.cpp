@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     {
         MainWindow w;
         w.show();
+        delete args;
         return app.exec();
     }
 
@@ -44,8 +45,10 @@ int main(int argc, char *argv[])
         qDebug() << "Aviable heuristics:";
         qDebug() << "\tFIFO\t\t\tFirst In First Out";
         qDebug() << "\tLIFO\t\t\tLast In First Out";
+        delete args;
         return 0;
     }
+
     if(args->contains("-l") || args->contains("--list"))
     {
         int where = args->indexOf("-l");
@@ -78,4 +81,13 @@ int main(int argc, char *argv[])
         DEBUG << *files;
     }
 
+    for(int i=0; i<files->count(); ++i)
+    {
+        MainWindow w(new QString(files->at(i)));
+        app.exec();
+    }
+
+    delete args;
+    delete files;
+    return 0;
 }

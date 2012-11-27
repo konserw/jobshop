@@ -64,7 +64,8 @@ MainWindow::MainWindow(QString *_arg, QWidget *parent) :
 
     if(cli)
     {
-        import(*arg);
+        this->import(*arg);
+        this->solve();
     }
 }
 
