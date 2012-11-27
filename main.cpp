@@ -88,9 +88,9 @@ int main(int argc, char *argv[])
     QList<MainWindow*> wins;
     for(int i=0; i<count; ++i)
     {
-        wins.append(new MainWindow(new QString(files->at(i))));
+        wins.append(new MainWindow(files->at(i)));
     }
-    app.exec();
+  //  app.exec();
     for(int i=0; i<count; ++i)
     {
         delete wins[i];

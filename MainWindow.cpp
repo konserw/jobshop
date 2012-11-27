@@ -11,10 +11,9 @@
 #include <QDataStream>
 #include <QFileDialog>
 
-MainWindow::MainWindow(QString *_arg, QWidget *parent) :
+MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    arg(_arg)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("kSzereg"));
@@ -64,17 +63,14 @@ MainWindow::MainWindow(QString *_arg, QWidget *parent) :
 
     if(cli)
     {
-        this->import(*arg);
+        this->import(arg);
         this->solve();
-        this->close();
- //       qApp->quit();
     }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete arg;
 }
 
 void MainWindow::changeEvent(QEvent *e)

@@ -48,7 +48,7 @@ void wykres::setText(QString &s)
 
 void wykres::finished(stat* x)
 {
-    DEBUG << "ukończono zadanie: " << x->j();
+    DEBUG << "ukonczono zadanie: " << x->j();
 
     s << x;
     zadan++;
