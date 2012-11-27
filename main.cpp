@@ -85,10 +85,10 @@ int main(int argc, char *argv[])
         DEBUG << *files;
     }
     int count = files->count();
-    MainWindow* wins[count];
+    QList<MainWindow*> wins;
     for(int i=0; i<count; ++i)
     {
-        wins[i] = new MainWindow(new QString(files->at(i)));
+        wins.append(new MainWindow(new QString(files->at(i))));
     }
     app.exec();
     for(int i=0; i<count; ++i)
