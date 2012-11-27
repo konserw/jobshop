@@ -11,10 +11,10 @@
 #include <QDataStream>
 #include <QFileDialog>
 
-MainWindow::MainWindow(const QString &_arg, QWidget *parent) :
+MainWindow::MainWindow(QString *_arg, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    arg(new QString(_arg))
+    arg(_arg)
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("kSzereg"));

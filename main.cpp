@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     QStringList* files;
     QStringList* args = new QStringList(app.arguments());
 
-    cli = (args->count() > 1);
 
+    cli = (args->count() > 1);
     //GUI operation
     if(!cli)
     {
