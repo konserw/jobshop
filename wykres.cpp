@@ -18,7 +18,7 @@ wykres::wykres(QWidget *parent, QGraphicsScene *s) :
     ui->graphicsView->setScene(s);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(print()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(pdf()));
 
     zadan = 0;
 }
@@ -147,19 +147,71 @@ void wykres::set(int maszyn, int alfa, int beta)
     zadan = 0;
 }
 
-void wykres::print()
+void wykres::pdf(const QString &filename)
 {
-    print(NULL);
-}
+    QString fileName;
+    QPrinter* printer;
+    QFont* font;
+    QTextDocument* doc;
+    const int margin = 5;
+    const int w = 745;                           //szerokosc szkieletu dokumentu
+    const int d = (w-5)/2;                       //szerokość kolumny w szkielecie
 
-void wykres::print(QString* filename)
-{
-    if(filename == NULL)
+    if(filename.isNull() || filename.isEmpty())
     {
-        QString* filename = new QString;
-        *filename = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
-        if(filename->isEmpty())return;
+        fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
+        if(fileName.isEmpty())return;
     }
+    else
+        fileName = filename;
+
+    printer = new QPrinter;
+    printer->setPaperSize(QPrinter::A4);
+    printer->setResolution(300);
+    printer->setPageMargins(margin, margin, margin, margin, QPrinter::Millimeter);
+    printer->setOutputFormat(QPrinter::PdfFormat);
+    printer->setOutputFileName(fileName);
+
+    font = new QFont;
+    font->setPointSize(10);
+    font->setFamily("Arial");
+
+    QString s;
+    s =     "<table>\n"
+            "<tr><td width=\""; //polowa dla tabeli
+    s +=    QString::number(d);
+    s +=    "\">\n"
+            "\t<table>\n"
+            "\t<thead><tr>\n"
+            "\t\t<td>Cj</td>";
+
+
+    s +=    "</td><td width=\">"; //połowa dla wyznaczników
+    s +=    QString::number(d);
+    s +=    "\"Cmax = ";
+
+    s +=    "<br />\n"
+            "Fśr = ";
+
+    s +=    "<br />\n"
+            "<img src = \"\\rownanie1.png\" /> = ";
+
+    s +=    "<br />\n"
+            "<img src=\"\\rownanie2.png\" /> = ";
+
+    s +=    "<br />\n"
+            "gdzie:<br>\n"
+            "alfa = ";
+
+    s +=    "<br />\n"
+            "beta = ";
+
+
+    doc = new QTextDocument;
+    doc->setDefaultFont(*font);
+    doc->setHtml(s);
+    doc->print(printer);
+
 
 }
 
