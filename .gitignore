@@ -3,3 +3,5 @@
 ~*
 maszyna*
 *.o
+moc_*
+ui_*
