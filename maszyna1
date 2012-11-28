@@ -1,0 +1,13 @@
+czas|zadanie|czynnosc
+0	| 1	| otrzymano zlecenie
+0	| 2	| otrzymano zlecenie
+0	| 1	| poczatek zadania
+4	| 1	| zadanie zakonczone
+4	| 2	| poczatek zadania
+7	| 2	| zadanie zakonczone
+9	| 3	| otrzymano zlecenie
+9	| 3	| poczatek zadania
+13	| 4	| otrzymano zlecenie
+15	| 3	| zadanie zakonczone
+15	| 4	| poczatek zadania
+17	| 4	| zadanie zakonczone
