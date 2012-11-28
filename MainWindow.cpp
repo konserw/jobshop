@@ -57,7 +57,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
 
     ui->tableWidget->setColumnCount(3);
     labels.clear();
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Due date");// << "" /*tr("marszruta technologiczna")*/ << "";
+    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Due date");
     ui->tableWidget->setHorizontalHeaderLabels(labels);
     ui->tableWidget->resizeColumnsToContents();
 
@@ -73,7 +73,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     if(cli)
     {
         this->import(arg);
-        this->solve();
+        this->solve(arg);
     }
 }
 
@@ -107,7 +107,7 @@ void MainWindow::rout(qint32 col)
         labels << QString::number(i);
     ui->tableWidget->setHorizontalHeaderLabels(labels);
 }
-void MainWindow::solve()
+void MainWindow::solve(const QString &arg)
 {
     skonczone = 0;
     t = 0;
@@ -151,6 +151,19 @@ void MainWindow::solve()
     }while(zadan > skonczone);
 
     gant->set(maszyn, ui->alfa->value(), ui->beta->value());
+    if(cli)
+    {
+
+        QString s = arg;
+        if(s.contains("."))
+                s.chop(4);
+        if(s.isEmpty())
+            s = "unknown_name";
+        s += ".pdf";
+        gant->bazinga(s);
+    }
+    else
+        gant->bazinga();
 
     foreach(z, zadania)
         delete z;
@@ -199,6 +212,11 @@ void MainWindow::more()
     ui->tableWidget->resizeColumnsToContents();
 }
 
+void MainWindow::solve()
+{
+    this->solve(NULL);
+}
+
 void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
 {
     QTableWidgetItem* item;
@@ -229,7 +247,7 @@ void MainWindow::next(qint32 m, zadanie* z)
 
 void MainWindow::finished(stat* x)
 {
-    DEBUG << "zadanie " << x->j() << "zakonczone"; //, parametry: " << cj << " " << fj << " " << lj;
+    DEBUG << "zadanie " << x->j() << "zakonczone";
     skonczone++;
 }
 

@@ -29,6 +29,7 @@ public slots:
     void more(qint32 start, qint32 due, QList<marszruta *> &marszruty);
     void more();
     void solve();
+    void solve(const QString& arg);
     void rout(int);
 
     void next(qint32, zadanie*);

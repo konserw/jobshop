@@ -5,9 +5,10 @@
 #include "common.h"
 #include <QFileDialog>
 
-wykres::wykres(QWidget *parent, QGraphicsScene *scene) :
+wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
-    ui(new Ui::wykres)
+    ui(new Ui::wykres),
+    scene(_scene)
 {
     ui->setupUi(this);
 
@@ -54,18 +55,23 @@ void wykres::finished(stat* x)
     zadan++;
 }
 
-void wykres::set(int maszyn, int alfa, int beta)
+void wykres::set(int _maszyn, double _alfa, double _beta)
 {
-    stat* st;
-    c=0;
-    f=0;
-    l=0;
-    e=0;
-    sum=0;
+    maszyn = _maszyn;
+    alfa = _alfa;
+    beta = _beta;
+
+    evalStats();
+    setupScene();
+}
+
+void wykres::bazinga()  //start gui mode
+{
     int j, cols;
     QTableWidgetItem* it;
-
     QStringList list;
+    stat* st;
+
     list << tr("cj") << tr("fj") << tr("lj") << tr("ej");
     cols = list.count();
     ui->tableWidget->setColumnCount(cols);
@@ -73,15 +79,12 @@ void wykres::set(int maszyn, int alfa, int beta)
     ui->tableWidget->setRowCount(zadan);
     for(int i=0; i<zadan; i++)
     {
-    //    ui->tableWidget->insertRow(i);
         for(int j=0; j<cols; j++)
         {
             it = new QTableWidgetItem("x");
             ui->tableWidget->setItem(i, j, it);
         }
     }
-
-    DEBUG << "zadan: " << zadan;
 
     foreach(st, stats)
     {
@@ -90,38 +93,7 @@ void wykres::set(int maszyn, int alfa, int beta)
         ui->tableWidget->item(j, 1)->setText(QString::number(st->fj()));
         ui->tableWidget->item(j, 2)->setText(QString::number(st->lj()));
         ui->tableWidget->item(j, 3)->setText(QString::number(st->ej()));
-
-        sum += pow(st->lj(), 2) + pow(st->ej(), 2);
-        l += st->lj();
-        e += st->ej();
-
-        if(st->cj() > c)c = st->cj();
-        f += st->fj();
     }
-
-    QGraphicsSimpleTextItem* text;
-    QFont font("Arial", 12);
-    QGraphicsScene* scene = ui->graphicsView->scene();
-    qreal x;
-    qreal x0 = 80;
-    qreal ym = (maszyn*40)+20;
-
-    for(int i=0; i<c; i+=5)
-    {
-        x = x0 + dx*i;
-        scene->addLine(x, 0, x, ym);
-        text = scene->addSimpleText(QString::number(i), font);
-        text->setX(x+3);
-        text->setY(ym-18);
-    }
-
-    x = x0 + dx*c;
-    scene->addLine(x, 0, x, ym);
-    text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
-    text->setX(x+3);
-    text->setY(ym-18);
-
-    f /= zadan;
 
     QString str;
     str = tr("\nCmax = ");
@@ -129,9 +101,9 @@ void wykres::set(int maszyn, int alfa, int beta)
     str += tr("\nFsr = ");
     str += QString::number(f);
     str += tr("\n√[∑(ej^2) + ∑(lj^2)] =");
-    str += QString::number(sqrt(sum));
+    str += QString::number(w1);
     str += tr("\nα*∑ej + β*∑lj = ");
-    str += QString::number((alfa*e) + (beta*l));
+    str += QString::number(w2);
     ui->label->setText(str);
 
     this->showMaximized();
@@ -144,6 +116,24 @@ void wykres::set(int maszyn, int alfa, int beta)
     }
     stats.clear();
     zadan = 0;
+}
+
+void wykres::bazinga(const QString &filename)   //start cli mode
+{
+    this->pdf(filename);
+
+    stat* st;
+    foreach(st, stats)
+    {
+        delete st;
+    }
+    stats.clear();
+    zadan = 0;
+}
+
+void wykres::pdf() //bo do connecta jest potrzeban funkcja bezargumentowa
+{
+    this->pdf(NULL);
 }
 
 void wykres::pdf(const QString &filename)
@@ -175,42 +165,129 @@ void wykres::pdf(const QString &filename)
     font->setPointSize(10);
     font->setFamily("Arial");
 
+    QPainter p(printer);
+    scene->render(&p, printer->pageRect(), scene->sceneRect());
+    p.end();
+
+    stat* st;
     QString s;
+
     s =     "<table>\n"
-            "<tr><td width=\""; //polowa dla tabeli
+            "<tr><td width=\"";     //polowa dla tabeli
     s +=    QString::number(d);
     s +=    "\">\n"
             "\t<table>\n"
             "\t<thead><tr>\n"
-            "\t\t<td>Cj</td>";
+            "\t\t<td>Lp</td>\n"
+            "\t\t<td>Cj</td>\n"
+            "\t\t<td>Fj</td>\n"
+            "\t\t<td>Lj</td>\n"
+            "\t\t<td>Ej</td>\n"
+            "\t</tr></thead>\n";
+    int j;
+    foreach(st, stats)
+    {
+        j = st->j() - 1;
+        s += "\t<tr>\n"
+             "\t\t<td>";
+        s += QString::number(j);
+        s += "</td>\n";
+        s += "\t\t<td>";
+        s += QString::number(st->cj());
+        s += "</td>\n";
+        s += "\t\t<td>";
+        s += QString::number(st->fj());
+        s += "</td>\n";
+        s += "\t\t<td>";
+        s += QString::number(st->lj());
+        s += "</td>\n";
+        s += "\t\t<td>";
+        s += QString::number(st->ej());
+        s += "</td>\n"
+             "\t</tr>\n";
+    }
 
-
-    s +=    "</td><td width=\">"; //połowa dla wyznaczników
+    s +=    "\t</table>\n"
+            "</td><td width=\"";    //połowa dla wyznaczników
     s +=    QString::number(d);
-    s +=    "\"Cmax = ";
-
+    s +=    "\">\n\tCmax = ";
+    s +=    QString::number(c);
     s +=    "<br />\n"
-            "Fśr = ";
-
+            "\tFśr = ";
+    s +=    QString::number(f);
     s +=    "<br />\n"
-            "<img src = \"\\rownanie1.png\" /> = ";
-
+            "\t<img src = \"\\rownanie1.png\" /> = ";
+    s +=    QString::number(w1);
     s +=    "<br />\n"
-            "<img src=\"\\rownanie2.png\" /> = ";
-
+            "\t<img src=\"\\rownanie2.png\" /> = ";
+    s +=    QString::number(w2);
     s +=    "<br />\n"
-            "gdzie:<br>\n"
-            "alfa = ";
-
+            "\tgdzie:<br>\n"
+            "\talfa = ";
+    s +=    QString::number(alfa);
     s +=    "<br />\n"
-            "beta = ";
-
+            "\tbeta = ";
+    s +=    QString::number(beta);
+    s +=    "\n</td></tr></table>";
 
     doc = new QTextDocument;
     doc->setDefaultFont(*font);
     doc->setHtml(s);
-    doc->print(printer);
+ //   doc->print(printer);
 
+
+    delete printer;
+    delete font;
+    delete doc;
+}
+
+void wykres::evalStats()
+{
+    stat* st;
+    c = 0;
+    f = 0;
+    l = 0;
+    e = 0;
+    double sum = 0;
+
+    foreach(st, stats)
+    {
+        sum += pow(st->lj(), 2) + pow(st->ej(), 2);
+        l += st->lj();                              //sum lejts
+        e += st->ej();                              //sum earliness
+
+        if(st->cj() > c)c = st->cj();               //find Cmax
+        f += st->fj();                              //evaluate mean flow time
+    }
+    f /= zadan;
+
+    w1 = sqrt(sum);
+    w2 = (alfa*e) + (beta*l);
+
+}
+
+void wykres::setupScene()
+{
+    QGraphicsSimpleTextItem* text;
+    QFont font("Arial", 12);
+    qreal x;
+    qreal x0 = 80;
+    qreal ym = (maszyn*40)+20;
+
+    for(int i=0; i<c; i+=5)
+    {
+        x = x0 + dx*i;
+        scene->addLine(x, 0, x, ym);
+        text = scene->addSimpleText(QString::number(i), font);
+        text->setX(x+3);
+        text->setY(ym-18);
+    }
+
+    x = x0 + dx*c;
+    scene->addLine(x, 0, x, ym);
+    text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
+    text->setX(x+3);
+    text->setY(ym-18);
 
 }
 

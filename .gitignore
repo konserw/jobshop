@@ -10,3 +10,5 @@ Makefile
 ui_*
 *.mar
 temp/*
+*.pdf
+info_*
