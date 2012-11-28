@@ -10,7 +10,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     _id = id;
     cur = NULL;
 
-    QString s = "maszyna";
+    QString s = "info_maszyna_";
     s += QString::number(id);
     f = new QFile(s);
     f->open(QIODevice::WriteOnly | QIODevice::Text);
