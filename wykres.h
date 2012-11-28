@@ -13,11 +13,11 @@ namespace Ui {
 class wykres : public QDialog {
     Q_OBJECT
 public:
-    wykres(QWidget *parent, QGraphicsScene* s);
+    wykres(QWidget *parent, QGraphicsScene* scene);
     ~wykres();
 
 public slots:
-    void setText(QString& s);
+    void setText(const QString& text);
     void finished(stat* x);
     void set(int maszyn, int alfa, int beta);
     void pdf(const QString& filename = NULL);
@@ -29,7 +29,7 @@ protected:
 private:
     Ui::wykres *ui;
 
-    QList<stat*> s;
+    QList<stat*> stats;
     int zadan;
 
     int c;

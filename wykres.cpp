@@ -5,7 +5,7 @@
 #include "common.h"
 #include <QFileDialog>
 
-wykres::wykres(QWidget *parent, QGraphicsScene *s) :
+wykres::wykres(QWidget *parent, QGraphicsScene *scene) :
     QDialog(parent),
     ui(new Ui::wykres)
 {
@@ -15,7 +15,7 @@ wykres::wykres(QWidget *parent, QGraphicsScene *s) :
 
     ui->pushButton->setText(tr("export do pdf"));
 
-    ui->graphicsView->setScene(s);
+    ui->graphicsView->setScene(scene);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(pdf()));
@@ -40,9 +40,9 @@ void wykres::changeEvent(QEvent *e)
     }
 }
 
-void wykres::setText(QString &s)
+void wykres::setText(const QString &text)
 {
-    ui->label->setText(s);
+    ui->label->setText(text);
 }
 
 
@@ -50,7 +50,7 @@ void wykres::finished(stat* x)
 {
     DEBUG << "ukonczono zadanie: " << x->j();
 
-    s << x;
+    stats << x;
     zadan++;
 }
 
@@ -84,7 +84,7 @@ void wykres::set(int maszyn, int alfa, int beta)
 
     DEBUG << "zadan: " << zadan;
 
-    foreach(st, s)
+    foreach(st, stats)
     {
         j = st->j() - 1;
         ui->tableWidget->item(j, 0)->setText(QString::number(st->cj()));
@@ -139,11 +139,11 @@ void wykres::set(int maszyn, int alfa, int beta)
     this->exec();
 
     ui->tableWidget->clear();
-    foreach(st, s)
+    foreach(st, stats)
     {
         delete st;
     }
-    s.clear();
+    stats.clear();
     zadan = 0;
 }
 
