@@ -124,11 +124,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="beta">
-          <property name="value">
-           <number>1</number>
-          </property>
-         </widget>
+         <widget class="QDoubleSpinBox" name="beta"/>
         </item>
        </layout>
       </item>
@@ -151,11 +147,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="alfa">
-          <property name="value">
-           <number>1</number>
-          </property>
-         </widget>
+         <widget class="QDoubleSpinBox" name="alfa"/>
         </item>
        </layout>
       </item>
@@ -202,8 +194,6 @@
      <widget class="QTableWidget" name="tableWidget"/>
     </item>
    </layout>
-   <zorder>tableWidget</zorder>
-   <zorder>label_beta</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

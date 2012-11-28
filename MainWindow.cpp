@@ -19,7 +19,16 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     this->setWindowTitle(tr("kSzereg"));
 
     ui->label_alfa->setText(tr("α"));
+    ui->alfa->setMinimum(0);
+    ui->alfa->setValue(0.5);
+    ui->alfa->setMaximum(1);
+    ui->beta->setSingleStep(0.1);
+
     ui->label_beta->setText(tr("β"));
+    ui->beta->setMinimum(0);
+    ui->beta->setValue(0.5);
+    ui->beta->setMaximum(1);
+    ui->beta->setSingleStep(0.1);
 
     ui->importButton->setText(tr("Import"));
     ui->exportButton->setText(tr("Export"));
