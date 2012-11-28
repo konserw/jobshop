@@ -70,17 +70,16 @@ void wykres::set(int maszyn, int alfa, int beta)
     cols = list.count();
     ui->tableWidget->setColumnCount(cols);
     ui->tableWidget->setHorizontalHeaderLabels(list);
-
+    ui->tableWidget->setRowCount(zadan);
     for(int i=0; i<zadan; i++)
     {
-        ui->tableWidget->insertRow(i);
+    //    ui->tableWidget->insertRow(i);
         for(int j=0; j<cols; j++)
         {
             it = new QTableWidgetItem("x");
             ui->tableWidget->setItem(i, j, it);
         }
     }
-    ui->tableWidget->setRowCount(zadan);
 
     DEBUG << "zadan: " << zadan;
 
