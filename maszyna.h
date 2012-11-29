@@ -3,8 +3,6 @@
 
 #include <QObject>
 #include <QList>
-#include <QTextStream>
-#include <QFile>
 #include <QtGui>
 
 class zadanie;
