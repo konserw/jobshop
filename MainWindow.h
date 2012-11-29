@@ -18,7 +18,7 @@ namespace Ui {
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    MainWindow(const QString& arg = 0, QWidget *parent = false);
+    MainWindow(const QString& arg = 0, QWidget *parent = 0);
     ~MainWindow();
 
     /*zaprzyjaźnienie operatorów serializacji*/

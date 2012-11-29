@@ -117,7 +117,8 @@ void MainWindow::solve(const QString &arg)
     qint32 zadan, maszyn;
 
     ui->centralWidget->setEnabled(false);
-    maszyna::method = ui->method->currentIndex();
+    if(!cli)
+        maszyna::method = ui->method->currentIndex();
 
     for(i=0; i<ui->machines->value(); i++)
     {

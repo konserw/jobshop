@@ -1,3 +1,4 @@
+#include "maszyna.h"
 #include <QtGui/QApplication>
 #include "MainWindow.h"
 #include <QTextCodec>
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
         qDebug() << "";
         qDebug() << "OPTIONS:";
         qDebug() << "\t--help\t\t\tDisplay this help text and exit";
-        qDebug() << "\t-h, --heuristics <type>\tSet heuristics used to resolve conflicts. FIFO is default";
+        qDebug() << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default";
         qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
         qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
         qDebug() << "";
@@ -49,6 +50,8 @@ int main(int argc, char *argv[])
         delete args;
         return 0;
     }
+
+    files = new QStringList;
 
     if(args->contains("-l") || args->contains("--list"))
     {
@@ -74,7 +77,7 @@ int main(int argc, char *argv[])
             return 1;
         }
         DEBUG << "Otworzono plik listy";
-        files = new QStringList;
+
         QTextStream in(&file);
         while(!in.atEnd())
         {
@@ -85,6 +88,35 @@ int main(int argc, char *argv[])
         DEBUG << "wczytano liste plikow.";
         DEBUG << *files;
     }
+
+    if(args->contains("-h") || args->contains("--heuristic"))
+    {
+        int where = args->indexOf("-h");
+        if(where == -1)
+            where = args->indexOf("--heuristic");
+        ++where;
+
+        if(args->count() < where+1)
+        {
+            qDebug() << "You have to specify name of list heuristic after -h option (ater white char)";
+            qDebug() << "See 'kSzereg --help'' for more information.";
+            return 1;
+        }
+        if(args->at(where) == "FIFO")
+            maszyna::method = 0;
+        else if(args->at(where) == "LIFO")
+            maszyna::method = 1;
+        else
+        {
+            qDebug() << "Only FIFO and LIFO heuristics are aviable atm.";
+            qDebug() << "See 'kSzereg --help'' for more information.";
+            return 1;
+        }
+    }
+    else
+        maszyna::method = 0; //defaults to FIFO
+
+    DEBUG << "wybrana heurystyka: " << maszyna::method;
 
     for(int i=0; i<files->count(); ++i)
     {
