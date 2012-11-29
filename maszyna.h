@@ -38,9 +38,6 @@ private:
     QGraphicsLineItem* line;
     QFont* font;
     QPen* pen;
-
-    QFile* f;
-    QTextStream* ts;
 };
 
 #endif // MASZYNA_H

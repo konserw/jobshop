@@ -10,12 +10,13 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     _id = id;
     cur = NULL;
 
-    QString s = "info_maszyna_";
+    QString s = "maszyna ";
     s += QString::number(id);
+    /*
     f = new QFile(s);
     f->open(QIODevice::WriteOnly | QIODevice::Text);
     ts = new QTextStream(f);
-
+*/
     scene = sc;
     y = (id-1)*40;
     x = 0;
@@ -33,29 +34,22 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
 
     line = scene->addLine(x, y, x+200, y, *pen);
 
-    *ts << "czas|zadanie|czynnosc\n";
     DEBUG << "utworzono maszyne nr " << id;
 }
 
 maszyna::~maszyna()
 {
-    delete f;
-    delete ts;
-
     delete pen;
     delete font;
 }
 
 void maszyna::add(zadanie *z)
 {
-    *ts << t << "\t| " << z->number() << "\t| " << "otrzymano zlecenie\n";
-
     kolejka.append(z);
 }
 
 void maszyna::start(zadanie* z)
 {
-    *ts << t << "\t| " << z->number() << "\t| " << "poczatek zadania\n";
     cur = z;
     stop = t + cur->time();
 
@@ -71,8 +65,6 @@ void maszyna::update()
 {
     if(t >= stop && cur != NULL)
     {
-        *ts << t << "\t| " << cur->number() << "\t| " << "zadanie zakonczone\n";
-
         cur->done();
         cur = NULL;
     }
