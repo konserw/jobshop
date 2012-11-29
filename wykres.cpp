@@ -97,14 +97,16 @@ void wykres::bazinga()  //start gui mode
     }
 
     QString str;
-    str = tr("\nCmax = ");
+    str = tr("<br>Cmax = ");
     str += QString::number(c);
-    str += tr("\nFsr = ");
+    str += tr("<br>Fsr = ");
     str += QString::number(f);
-    str += tr("\n√[∑(ej^2) + ∑(lj^2)] =");
+    str += "<br><img src=:/w1> = ";
     str += QString::number(w1);
-    str += tr("\nα*∑ej + β*∑lj = ");
+    str += "<br><img src=:/w2> = ";
     str += QString::number(w2);
+    ui->label->setTextFormat(Qt::RichText);
+    ui->label->setStyleSheet("QLabel { background-color : white; color : black; }");
     ui->label->setText(str);
 
     this->showMaximized();

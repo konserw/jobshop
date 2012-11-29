@@ -1,1 +1,6 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/">
+        <file alias="w1">res/w11.png</file>
+        <file alias="w2">res/w21.png</file>
+    </qresource>
+</RCC>
