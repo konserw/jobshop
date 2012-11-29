@@ -156,8 +156,8 @@ void wykres::pdf(const QString &filename)
 
     QSvgGenerator svgGen;
     svgGen.setFileName( fileName + ".svg" );
-    svgGen.setSize(QSize(200, 200));
-    svgGen.setViewBox(QRect(0, 0, 200, 200));
+    svgGen.setSize(QSize(1000, 500));
+    svgGen.setViewBox(QRect(0, 0, 1000, 500));
     svgGen.setTitle(tr("Gantt chart"));
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter( &svgGen );
