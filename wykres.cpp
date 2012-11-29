@@ -164,12 +164,34 @@ void wykres::pdf(const QString &filename)
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter( &svgGen );
     scene->render( &painter );
-/*
-    stat* st;
+
+  //  stat* st;
     QString s;
 
-    s =     "<table>\n"
-            "<tr><td width=\"";     //polowa dla tabeli
+    s =     "\documentclass[11pt,a4paper]{article}"
+            "\usepackage{polski}"
+            "\usepackage[utf8]{inputenc}"
+            "\title{Praca inżynierska}"
+            "\author{Kamil Strzempowicz}"
+            "\date{}"
+            "\begin{document}"
+            "\maketitle"
+            "\begin{abstract}"
+            "Strategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk FIFO i LIFO."
+            "\end{abstract}"
+            "\section{Tekst}\label{sec:Wstep}"
+            "\LaTeX\ ułatwia autorowi tekstu zarządzanie" ;
+
+            /*    \begin{equation}
+        E = mc^2,
+        \label{eqn:wzor1}
+    \end{equation}
+    gdzie
+    \begin{equation}
+        m = \frac{m_0}{\sqrt{1-\frac{v^2}{c^2}}}.
+    \end{equation}
+
+    \end{document}
     s +=    QString::number(d);
     s +=    "\">\n"
             "\t<table>\n"
