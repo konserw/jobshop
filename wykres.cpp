@@ -149,6 +149,10 @@ void wykres::pdf(const QString &filename)
     else
         fileName = filename;
 
+    if(fileName.contains("."))
+            fileName.chop(4);
+    if(fileName.isEmpty())
+        fileName = "unknown_name";
 
     QSvgGenerator svgGen;
     svgGen.setFileName( fileName + ".svg" );

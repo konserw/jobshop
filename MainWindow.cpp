@@ -159,7 +159,6 @@ void MainWindow::solve(const QString &arg)
                 s.chop(4);
         if(s.isEmpty())
             s = "unknown_name";
-        s += ".pdf";
         gant->bazinga(s);
     }
     else
