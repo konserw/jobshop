@@ -22,7 +22,7 @@
 #----------------------------------------------------------------------------
 TARGET = kSzereg
 
-QT += opengl core gui
+QT += opengl core gui svg
 
 TEMPLATE = app
 QMAKE_CXXFLAGS += -Wall -Werror -Wextra

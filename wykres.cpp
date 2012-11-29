@@ -4,6 +4,7 @@
 #include <QtGui>
 #include "common.h"
 #include <QFileDialog>
+#include <QtSvg/QSvgGenerator>
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -139,12 +140,6 @@ void wykres::pdf() //bo do connecta jest potrzeban funkcja bezargumentowa
 void wykres::pdf(const QString &filename)
 {
     QString fileName;
-    QPrinter* printer;
-    QFont* font;
-    QTextDocument* doc;
-    const int margin = 5;
-    const int w = 745;                           //szerokosc szkieletu dokumentu
-    const int d = (w-5)/2;                       //szerokość kolumny w szkielecie
 
     if(filename.isNull() || filename.isEmpty())
     {
@@ -154,21 +149,16 @@ void wykres::pdf(const QString &filename)
     else
         fileName = filename;
 
-    printer = new QPrinter;
-    printer->setPaperSize(QPrinter::A4);
-    printer->setResolution(300);
-    printer->setPageMargins(margin, margin, margin, margin, QPrinter::Millimeter);
-    printer->setOutputFormat(QPrinter::PdfFormat);
-    printer->setOutputFileName(fileName);
 
-    font = new QFont;
-    font->setPointSize(10);
-    font->setFamily("Arial");
-
-    QPainter p(printer);
-    scene->render(&p, printer->pageRect(), scene->sceneRect());
-    p.end();
-
+    QSvgGenerator svgGen;
+    svgGen.setFileName( fileName + ".svg" );
+    svgGen.setSize(QSize(200, 200));
+    svgGen.setViewBox(QRect(0, 0, 200, 200));
+    svgGen.setTitle(tr("Gantt chart"));
+    svgGen.setDescription(tr("Gantt chart"));
+    QPainter painter( &svgGen );
+    scene->render( &painter );
+/*
     stat* st;
     QString s;
 
@@ -229,16 +219,7 @@ void wykres::pdf(const QString &filename)
             "\tbeta = ";
     s +=    QString::number(beta);
     s +=    "\n</td></tr></table>";
-
-    doc = new QTextDocument;
-    doc->setDefaultFont(*font);
-    doc->setHtml(s);
- //   doc->print(printer);
-
-
-    delete printer;
-    delete font;
-    delete doc;
+*/
 }
 
 void wykres::evalStats()
