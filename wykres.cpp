@@ -184,26 +184,8 @@ void wykres::pdf(const QString &filename)
 
   //  stat* st;
 
-    s =     "\\documentclass[11pt,a4paper]{article}\n"
-            "\\usepackage{polski}\n"
-            "\\usepackage[utf8]{inputenc}\n"
-            "\\usepackage{mathtools}\n"
-            "\\usepackage{color}\n"
-            "\\usepackage{graphicx}\n"
-            "\\usepackage{transparent}\n"
-            "\\mathtoolsset{showonlyrefs}\n"
-            "\\title{Praca inżynierska}\n"
-            "\\author{Kamil Strzempowicz}\n"
-            "\\date{}\n"
-            "\\begin{document}\n"
-            "\\maketitle\n"
-            "\\begin{abstract}\n"
-            "\tStrategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.\n"
-            "\\end{abstract}\n"
-            "\\section{Tekst}\\label{sec:Wstęp}\n"
-            "\tjakiś tekst\n"
-            "\t\\begin{figure}[htb]\n"
-            "\t\t\\centering\n"
+    s =     "\t\\begin{figure}[htb]\n"
+    //        "\t\t\\centering\n"
             "\t\t\\def\\svgwidth{\\columnwidth}\n"
             "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
@@ -212,9 +194,25 @@ void wykres::pdf(const QString &filename)
             "\t\\begin{equation}\n"
             "\t\t\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
     s +=    QString::number(w1);
-    s +=    "\t\t\\label{eqn:w1}\n"
+    s +=    "\n"
+            "\t\t\\label{eqn:w1}\n"
             "\t\\end{equation}\n"
-            "\\end{document}\n";
+            "\t\\begin{equation}\n"
+            "\t\t\\alpha*\\sum e_j + \\beta*\\sum l_j = ";
+    s +=    QString::number(w2);
+    s +=    ",\n"
+            "\t\t\\label{eqn:w2}\n"
+            "\t\\end{equation}\n"
+            "\tgdzie"
+            "\t\\begin{equation}\n"
+            "\t\t\\alpha = ";
+    s +=    QString::number(alfa);
+    s +=    ",\\quad\\beta = ";
+    s +=    QString::number(beta);
+    s +=    "\n"
+
+            "\t\\end{equation}\n";
+//            "\\end{document}\n";
 /*
     int j;
     foreach(st, stats)
@@ -267,6 +265,7 @@ void wykres::pdf(const QString &filename)
     QFile f(texName);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream ts(&f);
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
     ts << s;
     f.close();
 
@@ -278,31 +277,14 @@ void wykres::pdf(const QString &filename)
     DEBUG << "command: " << program << " args: " << args;
     rc = QProcess::execute(program, args);
     DEBUG << program << " return code: " << rc;
-
+/*
     args.clear();
     args << "--pdf" << texName;
     program = "rubber";
     DEBUG << "command: " << program << " args: " << args;
     rc = QProcess::execute(program, args);
     DEBUG << program << " return code: " << rc;
-
-      /*
-    sys = "inkscape -z -f=";
-    sys += svgName;
-    sys += " --export-latex -E=";
-    sys += pdfName;
-    sys += " -D";
-
-
-    rc = system(sys.toAscii());
-    DEBUG << "inkscape return code: " << rc;
-
-    sys = "rubber --into=./.. --pdf ";
-    sys += texName;
-    DEBUG << "command: " << sys;
-    rc = system(sys.toAscii());
-    DEBUG << "rubber return code: " << rc;
-            */
+*/
     QDir::setCurrent(cur.path());
 }
 
