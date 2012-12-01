@@ -7,6 +7,8 @@
 #include <QtSvg/QSvgGenerator>
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
+#include <QProcess>
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -147,6 +149,11 @@ void wykres::pdf(const QString &filename)
     QString sys;
     QString s;
 
+    QDir cur = QDir::current();
+    QDir out(cur);
+    out.cd("output");
+    QDir::setCurrent(out.path());
+
     if(filename.isNull() || filename.isEmpty())
     {
         fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
@@ -160,9 +167,10 @@ void wykres::pdf(const QString &filename)
     if(fileName.isEmpty())
         fileName = "unknown_name";
 
-    QString svgName = fileName + ".svg";
-    QString texName = fileName + ".tex";
-    QString pdfName = fileName + ".pdf";
+    QString name = fileName.remove(0, fileName.lastIndexOf("/")+1);      //usunięcie folderu - sama nazwa
+    QString svgName = name + ".svg";
+    QString texName = name + ".tex";
+    QString pdfName = name + "_gantt.pdf";
 
     QSvgGenerator svgGen;
     svgGen.setFileName(svgName);
@@ -176,12 +184,13 @@ void wykres::pdf(const QString &filename)
 
   //  stat* st;
 
-
     s =     "\\documentclass[11pt,a4paper]{article}\n"
             "\\usepackage{polski}\n"
             "\\usepackage[utf8]{inputenc}\n"
             "\\usepackage{mathtools}\n"
             "\\usepackage{color}\n"
+            "\\usepackage{graphicx}\n"
+            "\\usepackage{transparent}\n"
             "\\mathtoolsset{showonlyrefs}\n"
             "\\title{Praca inżynierska}\n"
             "\\author{Kamil Strzempowicz}\n"
@@ -192,8 +201,14 @@ void wykres::pdf(const QString &filename)
             "\tStrategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.\n"
             "\\end{abstract}\n"
             "\\section{Tekst}\\label{sec:Wstęp}\n"
-            "\t\\input{";
+            "\tjakiś tekst\n"
+            "\t\\begin{figure}[htb]\n"
+            "\t\t\\centering\n"
+            "\t\t\\def\\svgwidth{\\columnwidth}\n"
+            "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
+            "\t\t\\caption{Gantt chart}\n"
+            "\t\t\\end{figure}\n"
             "\t\\begin{equation}\n"
             "\t\t\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
     s +=    QString::number(w1);
@@ -248,6 +263,7 @@ void wykres::pdf(const QString &filename)
     s +=    "\n</td></tr></table>";
 */
 
+
     QFile f(texName);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream ts(&f);
@@ -255,22 +271,39 @@ void wykres::pdf(const QString &filename)
     f.close();
 
     int rc;
+    QStringList args;
+    QString program("inkscape");
 
+    args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << pdfName << "-D";
+    DEBUG << "command: " << program << " args: " << args;
+    rc = QProcess::execute(program, args);
+    DEBUG << program << " return code: " << rc;
+
+    args.clear();
+    args << "--pdf" << texName;
+    program = "rubber";
+    DEBUG << "command: " << program << " args: " << args;
+    rc = QProcess::execute(program, args);
+    DEBUG << program << " return code: " << rc;
+
+      /*
     sys = "inkscape -z -f=";
     sys += svgName;
-    sys += " --export-latex -A=";
+    sys += " --export-latex -E=";
     sys += pdfName;
     sys += " -D";
-    DEBUG << "command: " << sys;
+
+
     rc = system(sys.toAscii());
     DEBUG << "inkscape return code: " << rc;
 
-    sys = "rubber ";
+    sys = "rubber --into=./.. --pdf ";
     sys += texName;
-    sys += " --inplace --pdf";
     DEBUG << "command: " << sys;
     rc = system(sys.toAscii());
     DEBUG << "rubber return code: " << rc;
+            */
+    QDir::setCurrent(cur.path());
 }
 
 void wykres::evalStats()
