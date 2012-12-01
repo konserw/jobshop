@@ -12,11 +12,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
 
     QString s = "maszyna ";
     s += QString::number(id);
-    /*
-    f = new QFile(s);
-    f->open(QIODevice::WriteOnly | QIODevice::Text);
-    ts = new QTextStream(f);
-*/
+
     scene = sc;
     y = (id-1)*40;
     x = 0;
