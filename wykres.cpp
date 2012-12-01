@@ -5,6 +5,8 @@
 #include "common.h"
 #include <QFileDialog>
 #include <QtSvg/QSvgGenerator>
+#include <QFile>
+#include <QTextStream>
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -142,6 +144,8 @@ void wykres::pdf() //bo do connecta jest potrzeban funkcja bezargumentowa
 void wykres::pdf(const QString &filename)
 {
     QString fileName;
+    QString sys;
+    QString s;
 
     if(filename.isNull() || filename.isEmpty())
     {
@@ -156,52 +160,47 @@ void wykres::pdf(const QString &filename)
     if(fileName.isEmpty())
         fileName = "unknown_name";
 
+    QString svgName = fileName + ".svg";
+    QString texName = fileName + ".tex";
+    QString pdfName = fileName + ".pdf";
+
     QSvgGenerator svgGen;
-    svgGen.setFileName( fileName + ".svg" );
+    svgGen.setFileName(svgName);
     svgGen.setSize(QSize(1000, 500));
     svgGen.setViewBox(QRect(0, 0, 1000, 500));
     svgGen.setTitle(tr("Gantt chart"));
     svgGen.setDescription(tr("Gantt chart"));
-    QPainter painter( &svgGen );
-    scene->render( &painter );
+    QPainter painter(&svgGen);
+    scene->render(&painter);
+    painter.end();
 
   //  stat* st;
-    QString s;
 
-    s =     "\documentclass[11pt,a4paper]{article}"
-            "\usepackage{polski}"
-            "\usepackage[utf8]{inputenc}"
-            "\title{Praca inżynierska}"
-            "\author{Kamil Strzempowicz}"
-            "\date{}"
-            "\begin{document}"
-            "\maketitle"
-            "\begin{abstract}"
-            "Strategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk FIFO i LIFO."
-            "\end{abstract}"
-            "\section{Tekst}\label{sec:Wstep}"
-            "\LaTeX\ ułatwia autorowi tekstu zarządzanie" ;
 
-            /*    \begin{equation}
-        E = mc^2,
-        \label{eqn:wzor1}
-    \end{equation}
-    gdzie
-    \begin{equation}
-        m = \frac{m_0}{\sqrt{1-\frac{v^2}{c^2}}}.
-    \end{equation}
-
-    \end{document}
-    s +=    QString::number(d);
-    s +=    "\">\n"
-            "\t<table>\n"
-            "\t<thead><tr>\n"
-            "\t\t<td>Lp</td>\n"
-            "\t\t<td>Cj</td>\n"
-            "\t\t<td>Fj</td>\n"
-            "\t\t<td>Lj</td>\n"
-            "\t\t<td>Ej</td>\n"
-            "\t</tr></thead>\n";
+    s =     "\\documentclass[11pt,a4paper]{article}\n"
+            "\\usepackage{polski}\n"
+            "\\usepackage[utf8]{inputenc}\n"
+            "\\usepackage{mathtools}\n"
+            "\\usepackage{color}\n"
+            "\\mathtoolsset{showonlyrefs}\n"
+            "\\title{Praca inżynierska}\n"
+            "\\author{Kamil Strzempowicz}\n"
+            "\\date{}\n"
+            "\\begin{document}\n"
+            "\\maketitle\n"
+            "\\begin{abstract}\n"
+            "\tStrategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.\n"
+            "\\end{abstract}\n"
+            "\\section{Tekst}\\label{sec:Wstęp}\n"
+            "\t\\input{";
+    s +=    pdfName + "_tex}\n"
+            "\t\\begin{equation}\n"
+            "\t\t\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
+    s +=    QString::number(w1);
+    s +=    "\t\t\\label{eqn:w1}\n"
+            "\t\\end{equation}\n"
+            "\\end{document}\n";
+/*
     int j;
     foreach(st, stats)
     {
@@ -248,6 +247,30 @@ void wykres::pdf(const QString &filename)
     s +=    QString::number(beta);
     s +=    "\n</td></tr></table>";
 */
+
+    QFile f(texName);
+    f.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream ts(&f);
+    ts << s;
+    f.close();
+
+    int rc;
+
+    sys = "inkscape -z -f=";
+    sys += svgName;
+    sys += " --export-latex -A=";
+    sys += pdfName;
+    sys += " -D";
+    DEBUG << "command: " << sys;
+    rc = system(sys.toAscii());
+    DEBUG << "inkscape return code: " << rc;
+
+    sys = "rubber ";
+    sys += texName;
+    sys += " --inplace --pdf";
+    DEBUG << "command: " << sys;
+    rc = system(sys.toAscii());
+    DEBUG << "rubber return code: " << rc;
 }
 
 void wykres::evalStats()
@@ -262,7 +285,7 @@ void wykres::evalStats()
     foreach(st, stats)
     {
         sum += pow(st->lj(), 2) + pow(st->ej(), 2);
-        l += st->lj();                              //sum lejts
+        l += st->lj();                              //sum lates
         e += st->ej();                              //sum earliness
 
         if(st->cj() > c)c = st->cj();               //find Cmax
