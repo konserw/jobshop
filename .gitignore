@@ -12,4 +12,4 @@ ui_*
 temp/*
 *.pdf
 info_*
-sample/
+output/*
