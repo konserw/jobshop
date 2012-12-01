@@ -10,13 +10,13 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     _id = id;
     cur = NULL;
 
-    QString s = "maszyna ";
+    QString s = tr("machine ");
     s += QString::number(id);
 
     scene = sc;
     y = (id-1)*40;
     x = 0;
-    font = new QFont("Helvetica", 12, QFont::Normal, false);
+    font = new QFont("Arial", 10, QFont::Normal, false);
     pen = new QPen();
     pen->setWidth(1);
 
