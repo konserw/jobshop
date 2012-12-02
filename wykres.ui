@@ -34,7 +34,14 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="doPdf">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="doLatexu">
          <property name="text">
           <string>PushButton</string>
          </property>

@@ -5,6 +5,7 @@
 
 struct stat;
 class QGraphicsScene;
+class QDir;
 
 namespace Ui {
     class wykres;
@@ -24,8 +25,13 @@ public slots:
     void bazinga(const QString& filename);
     void pdf();
     void pdf(const QString& filename);
+    void latex();
+    void latex(const QString& filename);
     void evalStats();
     void setupScene();
+    void cdOutput();
+    void cdBack();
+
 
 protected:
     void changeEvent(QEvent *e);
@@ -40,6 +46,8 @@ private:
     double f, l, e, w1, w2, alfa, beta;
 
     QGraphicsScene* scene;
+    QString* texName;
+    QDir* cur;
 };
 
 #endif // WYKRES_H
