@@ -171,7 +171,7 @@ void wykres::pdf(const QString &filename)
     this->latex(filename);
 
     s =     "\\documentclass[11pt,a4paper]{article}\n"
-            "\\usepackage{polski}\n"
+            "\\usepackage{polski}\n" //[babel]
             "\\usepackage[utf8]{inputenc}\n"
             "\\usepackage{mathtools}\n"
             "\\usepackage{color}\n"
@@ -205,53 +205,6 @@ void wykres::pdf(const QString &filename)
     DEBUG << program << " return code: " << rc;
 }
 
-/*
-    int j;
-    foreach(st, stats)
-    {
-        j = st->j() - 1;
-        s += "\t<tr>\n"
-             "\t\t<td>";
-        s += QString::number(j);
-        s += "</td>\n";
-        s += "\t\t<td>";
-        s += QString::number(st->cj());
-        s += "</td>\n";
-        s += "\t\t<td>";
-        s += QString::number(st->fj());
-        s += "</td>\n";
-        s += "\t\t<td>";
-        s += QString::number(st->lj());
-        s += "</td>\n";
-        s += "\t\t<td>";
-        s += QString::number(st->ej());
-        s += "</td>\n"
-             "\t</tr>\n";
-    }
-
-    s +=    "\t</table>\n"
-            "</td><td width=\"";    //połowa dla wyznaczników
-    s +=    QString::number(d);
-    s +=    "\">\n\tCmax = ";
-    s +=    QString::number(c);
-    s +=    "<br />\n"
-            "\tFśr = ";
-    s +=    QString::number(f);
-    s +=    "<br />\n"
-            "\t<img src = \"\\rownanie1.png\" /> = ";
-    s +=    QString::number(w1);
-    s +=    "<br />\n"
-            "\t<img src=\"\\rownanie2.png\" /> = ";
-    s +=    QString::number(w2);
-    s +=    "<br />\n"
-            "\tgdzie:<br>\n"
-            "\talfa = ";
-    s +=    QString::number(alfa);
-    s +=    "<br />\n"
-            "\tbeta = ";
-    s +=    QString::number(beta);
-    s +=    "\n</td></tr></table>";
-*/
 void wykres::latex()
 {
     QString fileName;
@@ -263,8 +216,9 @@ void wykres::latex()
 void wykres::latex(const QString &filename)
 {
     QString fileName(filename);
-    QString sys;
     QString s;
+    int j;
+    stat* st;
 
     this->cdOutput();
 
@@ -288,15 +242,28 @@ void wykres::latex(const QString &filename)
     scene->render(&painter);
     painter.end();
 
-  //  stat* st;
-
     s =     "\t\\begin{figure}[htb]\n"
-    //        "\t\t\\centering\n"
+            "\t\t\\centering\n"
             "\t\t\\def\\svgwidth{\\columnwidth}\n"
             "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
             "\t\t\\caption{Gantt chart}\n"
-            "\t\t\\end{figure}\n"
+            "\t\\end{figure}\n"
+
+            "\n%Wyznaczniki\n\n"
+
+            "\t\\begin{equation}\n"
+            "\t\tC_{max} = ";
+    s +=    QString::number(c);
+    s +=    "\n"
+            "\t\t\\label{eqn:Cmax}\n"
+            "\t\\end{equation}\n"
+            "\t\\begin{equation}\n"
+            "\t\tF_{śr} = ";
+    s +=    QString::number(f);
+    s +=    "\n"
+            "\t\t\\label{eqn:Fśr}\n"
+            "\t\\end{equation}\n"
             "\t\\begin{equation}\n"
             "\t\t\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
     s +=    QString::number(w1);
@@ -309,18 +276,42 @@ void wykres::latex(const QString &filename)
     s +=    ",\n"
             "\t\t\\label{eqn:w2}\n"
             "\t\\end{equation}\n"
-            "\tgdzie"
+            "\tgdzie\n"
             "\t\\begin{equation}\n"
             "\t\t\\alpha = ";
     s +=    QString::number(alfa);
     s +=    ",\\quad\\beta = ";
     s +=    QString::number(beta);
     s +=    "\n"
+            "\t\\end{equation}\n"
 
-            "\t\\end{equation}\n";
+            "\n%Tabela\n\n"
 
+            "\t\\begin{table}[h]\n"
+            "\t\t\\centering\n"
+            "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
+            "\t\t\\hline\n"
+            "\t\tj & \\(c_j\\) & \\(F_j\\) & \\(l_j\\) & \\(e_j\\) \\\\ \\hline\n";
 
+    foreach(st, stats)
+    {
+        j = st->j() - 1;
+        s += "\t\t";
+        s += QString::number(j);
+        s += " & ";
+        s += QString::number(st->cj());
+        s += " & ";
+        s += QString::number(st->fj());
+        s += " & ";
+        s += QString::number(st->lj());
+        s += " & ";
+        s += QString::number(st->ej());
+        s += " \\\\ \\hline\n";
+    }
 
+    s +=    // "\t\t\\hline\n"
+            "\t\\end{tabular}\n"
+            "\t\\end{table}\n";
 
     QFile f(*texName);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
