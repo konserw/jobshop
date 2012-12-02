@@ -5,6 +5,7 @@
 
 extern int t;
 extern bool cli;
+extern int fmt;
 
 #define dx 20
 #define dy 18

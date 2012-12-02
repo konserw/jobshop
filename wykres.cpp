@@ -132,7 +132,10 @@ void wykres::bazinga()  //start gui mode
 
 void wykres::bazinga(const QString &filename)   //start cli mode
 {
-    this->pdf(filename);
+    if(fmt == 1)
+        this->pdf(filename);
+    else
+        this->latex(filename);
 
     stat* st;
     foreach(st, stats)

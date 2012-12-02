@@ -154,13 +154,14 @@ void MainWindow::solve(const QString &arg)
     gant->set(maszyn, ui->alfa->value(), ui->beta->value());
     if(cli)
     {
-
+/*
         QString s = arg;
         if(s.contains("."))
                 s.chop(4);
         if(s.isEmpty())
             s = "unknown_name";
-        gant->bazinga(s);
+            */
+        gant->bazinga(arg);
     }
     else
         gant->bazinga();

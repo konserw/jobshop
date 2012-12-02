@@ -9,7 +9,8 @@
 
 //global extern variables
 bool cli;
-qint32 t=0;
+int t = 0;
+int fmt = 0;
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     //display cli help text
     if(args->contains("--help", Qt::CaseInsensitive))
     {
-        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [<file> ...]";
+        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [<file> ...] --pdf";
         qDebug() << "or kSzereg without arguments for GUI operation";
         qDebug() << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis";
         qDebug() << "for job shop problem.";
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
         qDebug() << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default";
         qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
         qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
+        qDebug() << "\t-p --pdf\t\tCompile LaTeX output to .pdf format";
         qDebug() << "";
         qDebug() << "Aviable heuristics:";
         qDebug() << "\tFIFO\t\t\tFirst In First Out";
@@ -50,6 +52,9 @@ int main(int argc, char *argv[])
         delete args;
         return 0;
     }
+
+    if(args->contains("-p") || args->contains("--pdf"))
+        fmt = 1;
 
     files = new QStringList;
 
