@@ -1,5 +1,4 @@
 #!/bin/sh
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
-epdfview praca.pdf
 

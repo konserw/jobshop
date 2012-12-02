@@ -262,7 +262,7 @@ void wykres::latex(const QString &filename)
             "\t\tF_{śr} = ";
     s +=    QString::number(f);
     s +=    "\n"
-            "\t\t\\label{eqn:Fśr}\n"
+            "\t\t\\label{eqn:Fsr}\n"
             "\t\\end{equation}\n"
             "\t\\begin{equation}\n"
             "\t\t\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
