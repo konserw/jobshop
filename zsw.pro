@@ -25,7 +25,7 @@ TARGET = kSzereg
 QT += opengl core gui svg
 
 TEMPLATE = app
-QMAKE_CXXFLAGS += -Wall -Werror -Wextra
+#QMAKE_CXXFLAGS += -Wall -Werror -Wextra
 
 OBJECTS_DIR =   temp/obj
 UI_DIR =        temp/ui
