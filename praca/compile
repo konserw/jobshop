@@ -1,5 +1,9 @@
 #!/bin/sh
+cd ../
+rm output/*
+./kSzereg -l lista
+cd praca
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
-epdfview praca.pdf
+#epdfview praca.pdf
 
