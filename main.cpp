@@ -21,12 +21,21 @@ int main(int argc, char *argv[])
     QStringList* files;
     QStringList* args = new QStringList(app.arguments());
 
+    bool m = false;
     cli = (args->count() > 1);
+    if(cli && args->contains("-m", Qt::CaseInsensitive))
+    {
+        cli = false;
+        m = true;
+    }
     //GUI operation
     if(!cli)
     {
         MainWindow w;
-        w.show();
+        if(m)
+            w.showMaximized();
+        else
+            w.show();
         delete args;
         return app.exec();
     }
@@ -40,7 +49,8 @@ int main(int argc, char *argv[])
         qDebug() << "for job shop problem.";
         qDebug() << "";
         qDebug() << "OPTIONS:";
-        qDebug() << "\t--help\t\t\tDisplay this help text and exit";
+        qDebug() << "\t--help\t\t\t\tDisplay this help text and exit";
+        qDebug() << "\t-m\t\tGUI operation with maximized window";
         qDebug() << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default";
         qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
         qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
