@@ -57,7 +57,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
 
     ui->tableWidget->setColumnCount(3);
     labels.clear();
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Due date");
+    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zakończenia");
     ui->tableWidget->setHorizontalHeaderLabels(labels);
     ui->tableWidget->resizeColumnsToContents();
 

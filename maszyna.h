@@ -36,6 +36,7 @@ private:
     QGraphicsLineItem* line;
     QFont* font;
     QPen* pen;
+    QPen* penKonflikt;
 };
 
 #endif // MASZYNA_H

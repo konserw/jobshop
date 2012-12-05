@@ -10,7 +10,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     _id = id;
     cur = NULL;
 
-    QString s = tr("machine ");
+    QString s = tr("Maszyna ");
     s += QString::number(id);
 
     scene = sc;
@@ -18,6 +18,8 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     x = 0;
     font = new QFont("Arial", 10, QFont::Normal, false);
     pen = new QPen();
+    penKonflikt = new QPen(QColor(255, 0, 0));
+    penKonflikt->setWidth(5);
     pen->setWidth(1);
 
     QGraphicsTextItem* text = scene->addText(s, *font);
@@ -35,6 +37,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
 
 maszyna::~maszyna()
 {
+    delete penKonflikt;
     delete pen;
     delete font;
 }
@@ -75,6 +78,10 @@ void maszyna::up2()
         return;
     }
 
+    bool konflikt = false;
+    if(kolejka.size() > 1)
+        konflikt = true;
+
     switch(method)
     {
     case 0://fifo
@@ -85,5 +92,12 @@ void maszyna::up2()
         start(kolejka.last());
         kolejka.removeLast();
         break;
+    }
+
+
+    if(konflikt)
+    {
+        //DEBUG << "konflikt";
+        scene->addLine(x, y-1.5*dy, x, y+0.5*dy, *penKonflikt);
     }
 }
