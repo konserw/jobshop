@@ -5,8 +5,4 @@ rm output/*
 cd praca
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
-<<<<<<< HEAD
-#epdfview praca.pdf
-=======
->>>>>>> 49a2359dde2a562e7b02cb93c527067eb2f3ad76
-
+evince praca.pdf
