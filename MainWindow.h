@@ -26,7 +26,8 @@ public:
     friend QDataStream &operator>>(QDataStream &in, MainWindow &win);
 
 public slots:
-    void more(qint32 start, qint32 due, QList<marszruta *> &marszruty);
+//    void more(qint32 start, qint32 due, QList<marszruta *> &marszruty);
+    void more(const QString& nazwa, qint32 start, qint32 due, const QList<marszruta *> &marszruty);
     void more();
     void solve();
     void solve(const QString& arg);

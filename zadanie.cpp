@@ -1,7 +1,6 @@
 #include "zadanie.h"
 #include "marszruta.h"
 #include <qdebug.h>
-//#include "czas.h"
 #include "common.h"
 
 

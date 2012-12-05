@@ -153,16 +153,7 @@ void MainWindow::solve(const QString &arg)
 
     gant->set(maszyn, ui->alfa->value(), ui->beta->value());
     if(cli)
-    {
-/*
-        QString s = arg;
-        if(s.contains("."))
-                s.chop(4);
-        if(s.isEmpty())
-            s = "unknown_name";
-            */
         gant->bazinga(arg);
-    }
     else
         gant->bazinga();
 
@@ -218,7 +209,7 @@ void MainWindow::solve()
     this->solve(NULL);
 }
 
-void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
+void MainWindow::more(const QString& nazwa, qint32 start, qint32 due, const QList<marszruta *> &marszruty)
 {
     QTableWidgetItem* item;
     marszruta* mar;
@@ -226,6 +217,8 @@ void MainWindow::more(qint32 start, qint32 due, QList<marszruta *> &marszruty)
     qint32 cols = ui->tableWidget->columnCount();
 
     ui->tableWidget->insertRow(rows);
+    item = new QTableWidgetItem(nazwa);
+    ui->tableWidget->setItem(rows, 0, item);
     item = new QTableWidgetItem(QString::number(start));
     ui->tableWidget->setItem(rows, 1, item);
     item = new QTableWidgetItem(QString::number(due));
@@ -318,7 +311,8 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
         << beta;
     for(qint32 i=0; i<tasks; ++i)
     {
-        out << win.ui->tableWidget->item(i, 1)->text().toInt()      //start time
+        out << win.ui->tableWidget->item(i, 0)->text()              //nazwa
+            << win.ui->tableWidget->item(i, 1)->text().toInt()      //start time
             << win.ui->tableWidget->item(i, 2)->text().toInt();     //due date
         for(qint32 j=0; j<routLength; ++j)                          //operations
         {
@@ -347,17 +341,18 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
     QList<marszruta*> marszruty;
     marszruta* mar;
     qint32 start, due;
+    QString nazwa;
 
     for(qint32 i=0; i<tasks; ++i)
     {
-        in >> start >> due;
+        in >> nazwa >> start >> due;
         marszruty.clear();
         for(qint32 j=0; j<routLength; ++j)
         {
             in >> mar;
             marszruty.append(mar);
         }
-        win.more(start, due, marszruty);
+        win.more(nazwa, start, due, marszruty);
     }
 
     return in;

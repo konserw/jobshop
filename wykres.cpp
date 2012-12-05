@@ -242,15 +242,36 @@ void wykres::latex(const QString &filename)
     scene->render(&painter);
     painter.end();
 
-    s =     "\t\\begin{figure}[htb]\n"
-            "\t\t\\centering\n"
-            "\t\t\\def\\svgwidth{\\columnwidth}\n"
-            "\t\t\\input{";
-    s +=    pdfName + "_tex}\n"
-            "\t\t\\caption{Gantt chart}\n"
-            "\t\\end{figure}\n"
+    s =     "\n%Tabela\n\n"
 
-            "\n%Wyznaczniki\n\n"
+            "\t\\begin{table}[h]\n"
+            "\t\t\\centering\n"
+            "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
+            "\t\t\\hline\n"
+            "\t\tj & \\(c_j\\) & \\(F_j\\) & \\(l_j\\) & \\(e_j\\) \\\\ \\hline\n";
+
+    foreach(st, stats)
+    {
+        j = st->j() - 1;
+        s += "\t\t";
+        s += QString::number(j);
+        s += " & ";
+        s += QString::number(st->cj());
+        s += " & ";
+        s += QString::number(st->fj());
+        s += " & ";
+        s += QString::number(st->lj());
+        s += " & ";
+        s += QString::number(st->ej());
+        s += " \\\\ \\hline\n";
+    }
+
+    s +=    // "\t\t\\hline\n"
+            "\t\\end{tabular}\n"
+            "\t\\end{table}\n";
+
+
+    s +=    "\n%Wyznaczniki\n\n"
 
             "\t\\begin{equation}\n"
             "\t\tC_{max} = ";
@@ -283,35 +304,20 @@ void wykres::latex(const QString &filename)
     s +=    ",\\quad\\beta = ";
     s +=    QString::number(beta);
     s +=    "\n"
-            "\t\\end{equation}\n"
+            "\t\\end{equation}\n";
 
-            "\n%Tabela\n\n"
+    s +=    "%wykres w landscape\n"
 
-            "\t\\begin{table}[h]\n"
-            "\t\t\\centering\n"
-            "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
-            "\t\t\\hline\n"
-            "\t\tj & \\(c_j\\) & \\(F_j\\) & \\(l_j\\) & \\(e_j\\) \\\\ \\hline\n";
+           "\t\\begin{landscape}\n"
+           "\t\\begin{figure}[htb]\n"
+           "\t\t\\centering\n"
+           "\t\t\\def\\svgwidth{\\columnwidth}\n"
+           "\t\t\\input{";
+    s +=    pdfName + "_tex}\n"
+            "\t\t\\caption{Gantt chart}\n"
+            "\t\\end{figure}\n"
+            "\t\\end{landscape}\n";
 
-    foreach(st, stats)
-    {
-        j = st->j() - 1;
-        s += "\t\t";
-        s += QString::number(j);
-        s += " & ";
-        s += QString::number(st->cj());
-        s += " & ";
-        s += QString::number(st->fj());
-        s += " & ";
-        s += QString::number(st->lj());
-        s += " & ";
-        s += QString::number(st->ej());
-        s += " \\\\ \\hline\n";
-    }
-
-    s +=    // "\t\t\\hline\n"
-            "\t\\end{tabular}\n"
-            "\t\\end{table}\n";
 
     QFile f(*texName);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -394,5 +400,3 @@ void wykres::cdBack()
     QDir::setCurrent(cur->path());
     delete cur;
 }
-
-
