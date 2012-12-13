@@ -30,8 +30,6 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     scene->addLine(x, y, x, y+20, *pen);
     y += 20;
 
-    line = scene->addLine(x, y, x+200, y, *pen);
-
     DEBUG << "utworzono maszyne nr " << id;
 }
 

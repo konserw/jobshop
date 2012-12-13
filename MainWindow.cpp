@@ -357,5 +357,3 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
 
     return in;
 }
-
-

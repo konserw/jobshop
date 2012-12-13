@@ -33,7 +33,6 @@ private:
 
     QGraphicsScene* scene;
     qreal x, y;
-    QGraphicsLineItem* line;
     QFont* font;
     QPen* pen;
     QPen* penKonflikt;
