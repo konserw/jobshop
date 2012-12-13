@@ -248,22 +248,22 @@ void wykres::latex(const QString &filename)
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
             "\t\t\\hline\n"
-            "\t\tj & \\(c_j\\) & \\(F_j\\) & \\(l_j\\) & \\(e_j\\) \\\\ \\hline\n";
+            "\t\tj\t& \\(c_j\\)\t& \\(F_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
     foreach(st, stats)
     {
         j = st->j() - 1;
         s += "\t\t";
         s += QString::number(j);
-        s += " & ";
+        s += "\t& ";
         s += QString::number(st->cj());
-        s += " & ";
+        s += "\t& ";
         s += QString::number(st->fj());
-        s += " & ";
+        s += "\t& ";
         s += QString::number(st->lj());
-        s += " & ";
+        s += "\t& ";
         s += QString::number(st->ej());
-        s += " \\\\ \\hline\n";
+        s += "\t\\\\ \\hline\n";
     }
 
     s +=    // "\t\t\\hline\n"
