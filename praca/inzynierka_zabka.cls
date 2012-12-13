@@ -1,3 +1,25 @@
+%% wersja 3.0 -- nowy uk³ad stron tyt.
+%% wersja 2.3
+%% wersja 2.2 -- poprawka -- usuni©cie kropki po numerze rozdziau
+%%               przy komendzie "\rozdzialy" (8 I 2004r.)
+%% wersja 2.3 -- zmiana koncepcji kropki aby uzyskac zgodnosc z amsmath 
+%% wersja 2.4 -- dodane komendy \wnioski \rysunki 
+%%               \sectionRysunki \subsectionRysunki
+%%              oraz inne zachowanie pustego \caption{}
+%%              (10.05.2005r.)
+%% wersja 2.5 -- kierunek z du¿ej litery, praca licencjacka
+%%               oraz komenda pozwalaj¹ca na rozszerzani komend typu \rysunki, \wnioski.. 
+%%              \dodatkowo{nazwa}
+%%           
+%% wersja 2.6 -- inaczej prace 
+%%           
+%%            
+%% This is file `article.cls',
+%% Zmieniony na dyplomMS.cls --- dokonano poprawek
+%% zwiazanych z uzyciem stylu do prac dyplomowych
+%% 
+%%
+%%
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -13,7 +35,6 @@
 %%   Right bracket \]     Circumflex    \^     Underscore    \_
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
-
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{pracaInzynierskaMS}
               [2005/05/10 v2.4
@@ -23,12 +44,16 @@
 \newif\if@titlepage
 \@titlepagefalse
 
+%
 % PRZEDEFINIOWANIE !!!!
+%
+%
 
 \def\refstepcounter#1{\stepcounter{#1}%
     \protected@edef\@currentlabel
        {\csname p@#1\endcsname\csname the#1\endcsname\protect}%
 }
+
 
 \def\backslashDYPMF{\char92\relax}
 \def\NawOtwDYPMF{\char123\relax}
@@ -39,9 +64,52 @@
 \def\WyjasnienieAut{\hfill}
 \def\WyjasnienieProm{\hfill}
 
+
+% \newif\if@magister
+% \@magisterfalse
+% 3XI 2000 zmienilem zdanie.
+
+
+%%%--{\Huge\bfseries NIEZDEFINIOWANY\\
+%%%--Musisz da\'c jedn\k a z komend:\\
+%%%--{\tt \backslashDYPMF PracaMagisterska }\\ {\tt \backslashDYPMF PracaInzynierska}\\ w preambule}}
+
+%\if@compatibility\else
+%\DeclareOption{a4paper}
+%   {\setlength\paperheight {297mm}%
+%    \setlength\paperwidth  {210mm}}
+%\DeclareOption{a5paper}
+%   {\setlength\paperheight {210mm}%
+%    \setlength\paperwidth  {148mm}}
+%\DeclareOption{b5paper}
+%   {\setlength\paperheight {250mm}%
+%    \setlength\paperwidth  {176mm}}
+%\DeclareOption{letterpaper}
+%   {\setlength\paperheight {11in}%
+%    \setlength\paperwidth  {8.5in}}
+%\DeclareOption{legalpaper}
+%   {\setlength\paperheight {14in}%
+%    \setlength\paperwidth  {8.5in}}
+%\DeclareOption{executivepaper}
+%   {\setlength\paperheight {10.5in}%
+%    \setlength\paperwidth  {7.25in}}
+%\DeclareOption{landscape}
+%   {\setlength\@tempdima   {\paperheight}%
+%    \setlength\paperheight {\paperwidth}%
+%    \setlength\paperwidth  {\@tempdima}}
+%\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Nowe opcja mgr, mag oraz inz
+%%
+%% dodane 19.02.2010: opcja praca licencjacka, opcje: lic oraz l lub L
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\rodzajKodow\relax
 \DeclareOption{dos}     {\def\rodzajKodow{\usepackage[cp852]{inputenc}}}
 \DeclareOption{win}     {\def\rodzajKodow{\usepackage[cp1250]{inputenc}}}
+
+
+
 
 \if@compatibility
   \renewcommand\@ptsize{0}
@@ -69,17 +137,23 @@
 
 \DeclareOption{leqno}{\input{leqno.clo}}
 \DeclareOption{fleqn}{\input{fleqn.clo}}
-\DeclareOption{openbib}{
-  \AtEndOfPackage{
-   \renewcommand\@openbib@code{
+\DeclareOption{openbib}{%
+  \AtEndOfPackage{%
+   \renewcommand\@openbib@code{%
       \advance\leftmargin\bibindent
       \itemindent -\bibindent
       \listparindent \itemindent
       \parsep \z@
-      }
-   \renewcommand\newblock{\par}}
+      }%
+   \renewcommand\newblock{\par}}%
 }
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zmiana
+%     10pt na 12pt oraz letterpaper na a4paper
+%   wykonana 21 X 2000r. by Marek \.Zabka
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \ExecuteOptions{letterpaper,10pt,oneside,onecolumn,final}
+%
 \ExecuteOptions{a4paper,12pt,twoside,onecolumn,final}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,6 +162,14 @@
 \input{size1\@ptsize.clo}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zmiana
+% \renewcommand\baselinestretch{}
+%   wykonana 21 X 2000r. by Marek \.Zabka
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  \renewcommand\baselinestretch{}
+%
 \renewcommand\baselinestretch{1.2}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -278,6 +360,29 @@
      \nobreak
      \vskip 3ex
      \@afterheading}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Zmiana                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand\section{\@startsection {section}{1}{\z@}%
+%                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
+%                                    {2.3ex \@plus.2ex}%
+%                                    {\normalfont\Large\bfseries}}
+% \newcommand\subsection{\@startsection{subsection}{2}{\z@}%
+%                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\large\bfseries}}
+% \newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+%                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
+%                                      {1.5ex \@plus .2ex}%
+%                                      {\normalfont\normalsize\bfseries}}
+% \newcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+%                                     {3.25ex \@plus1ex \@minus.2ex}%
+%                                     {-1em}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \newcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                        {3.25ex \@plus1ex \@minus .2ex}%
+%                                        {-1em}%
+%                                       {\normalfont\normalsize\bfseries}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\section{\@startsection {section}{1}{\z@}%
                                    {3.5ex \@plus 1ex \@minus .2ex}%
@@ -481,7 +586,21 @@
 \newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
 \setlength\belowcaptionskip{0\p@}
+%%\long\def\@makecaption#1#2{%
+%%  \vskip\abovecaptionskip
+%%  \sbox\@tempboxa{#1: #2}%
+%%  \ifdim \wd\@tempboxa >\hsize
+%%    #1: #2\par
+%%  \else
+%%    \global \@minipagefalse
+%%    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+%%  \fi
+%%  \vskip\belowcaptionskip}
+%%
 
+%%
+%% nowa wersja \@makecaption
+%%
  \newdimen\capspecdimx  
 \long\def\@makecaption#1#2{%
   \vskip\abovecaptionskip
@@ -499,7 +618,9 @@
     \fi
   \fi
   \vskip\belowcaptionskip}
-
+%%
+%% koniec nwej wersji
+%%  
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
 \DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
@@ -549,8 +670,10 @@
       #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
     \endgroup
   \fi}
-
+%% poprawki szerokoci
+%\newcommand*\l@subsection{\@dottedtocline{2}{1.5em}{2.3em}}
 \newcommand*\l@subsection{\@dottedtocline{2}{1.5em}{2.8em}}
+%\newcommand*\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
 \newcommand*\l@subsubsection{\@dottedtocline{3}{3.8em}{4.2em}}
 \newcommand*\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \newcommand*\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
@@ -597,6 +720,10 @@
 %
 \newenvironment{thebibliography}[1]
      {\section*{\refname
+%%
+%% wyniesione ni¿ej 30 V 2006, ¿eby dzia³o z hyperref.sty
+%%     
+%        \addcontentsline{toc}{section}{\refname}%
         \markboth{\MakeUppercase\refname\liniaA}{\liniaB\MakeUppercase\refname}%
         \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
          \addcontentsline{toc}{section}{\refname}%
@@ -644,11 +771,14 @@
                 \fi
                 \columnseprule \z@
                 \columnsep 35\p@
-                \twocolumn[\section*{\indexnameY}]
-                \markboth{\MakeUppercase\indexnameX\liniaA}
-                        {\liniaB\MakeUppercase\indexnameX}
-                \@mkboth{\MakeUppercase\indexname}
-                        {\MakeUppercase\indexname}
+                \twocolumn[\section*{\indexnameY}]%
+% dodane 3 X 2000
+                \markboth{\MakeUppercase\indexnameX\liniaA}%
+                        {\liniaB\MakeUppercase\indexnameX}%
+                \@mkboth{\MakeUppercase\indexname}%
+                        {\MakeUppercase\indexname}%
+% zmienione na empty:
+%                \thispagestyle{plain}\parindent\z@
                 \thispagestyle{empty}\parindent\z@
                 \parskip\z@ \@plus .3\p@\relax
                 \let\item\@idxitem}
@@ -702,7 +832,9 @@
 %                                                  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \def\newoddpage{\newpage\ifodd\c@page \else\hbox{} \thispagestyle{empty} \newpage\fi}
+
 
 \newcommand{\fontnag}{\Large}
 \newcommand{\fonttyt}{\huge\bfseries\sffamily}
@@ -734,7 +866,15 @@
 \def\title#1{\gdef\@title{#1}}
 \let\tytul\title
 \def\promotor#1{\gdef\@promotor{#1}}
-\let\prowadzacyPrace\promoto
+\let\prowadzacyPrace\promotor
+%%% problem autor/autorzy 14.03.2011
+%%%\newcounter{NrAutora}
+%%%\newcounter{NrAutoraX}
+%%%\setcounter{NrAutora}{0}
+%%%\setcounter{NrAutoraX}{0}
+%%%\def\nazwa@autorow{Autor}
+%%%\let\@@aut\empty
+
 
 \def\nazwa@autorow{Autor}
 %%%\let\@@aut\empty
@@ -766,17 +906,18 @@
      \def\dodMnogiAut##1##2{##1}%
     \else
      \def\nazwa@autorow{Autorzy}%
-     \def\nazwa@autorowa{autor\'ow}
+     \def\nazwa@autorowa{autor\'ow}%
      \def\nazwa@autorowb{Podpisy autor\'ow pracy}%
-     \def\dodMnogiAut##1##2{##2}
+     \def\dodMnogiAut##1##2{##2}%
      \fi
 }
-\def\nazwa@autorow{}
-\def\nazwa@autorowa{}
-\def\nazwa@autorowb{}
-\def\dodMnogiAut#1#2{}
+\def\nazwa@autorow{}%
+\def\nazwa@autorowa{}%
+\def\nazwa@autorowb{}%
+\def\dodMnogiAut#1#2{}%
 
-\def\streszczenie#1{\gdef\@streszczenie{#1}}
+\def\streszczenie#1{\gdef\@streszczenie{#1}}	
+	
 
 \def\keys#1{\gdef\klu@cze{#1}}
 
@@ -785,13 +926,18 @@
 \newcount\nr@@klasy 
 \nr@@klasy=0
 
+
 \def\klasa#1#2{\global\advance\nr@@klasy1\relax
-\expandafter\gdef\csname klasa@@a\the\nr@@klasy\endcsname{#1}
+\expandafter\gdef\csname klasa@@a\the\nr@@klasy\endcsname{#1}%
 \global\advance\nr@@klasy1
-\expandafter\gdef\csname klasa@@a\the\nr@@klasy\endcsname{#2}
+\expandafter\gdef\csname klasa@@a\the\nr@@klasy\endcsname{#2}%
 }
 
-\long\def\dedykacja#1{\gdef\@podziek{#1}
+
+
+
+
+\long\def\dedykacja#1{\gdef\@podziek{#1}%
                  \let\podziek\ewpodziek }
 
 \let\podziek\relax
@@ -799,17 +945,17 @@
 \def\rok#1{\gdef\@rok{#1}}
 \rok{\the\year}
 \let\xxdocument\document
-\def\document{
+\def\document{%
 \Jestfalse
-\CzyJest{fleqn.clo}
+\CzyJest{fleqn.clo}%
 \ifJest
      \ifJestleqno
-        {\DodajNaPoczatek{\mathindent=45pt}}
+        {\DodajNaPoczatek{\mathindent=45pt}}%
 \fi\fi
 \xxdocument \relax
 \let\xxprintindex\printindex
 \def\printindex{\newoddpage
-\addcontentsline{toc}{section}{Skorowidz}
+\addcontentsline{toc}{section}{Skorowidz}%
 \let\newoddpage\newoddpagexxx
 \xxprintindex }
 \poczatek }
@@ -818,13 +964,20 @@
 \def\ZmianyOstateczne{}
 \def\DodajNaPoczatek{\g@addto@macro\ZmianyOstateczne}
 
+
 \def\nic{ }
+%\def\newcline{\x@protect \newcyline\protect \newcxline }
+
 
 \def\newlineSpis{\x@protect \\\protect \relax }
 \def\newlineTekst{\x@protect \relax \protect \\}
 
 \let\newlineB\newlineTresc
 \let\newlineA\newlineSpis
+
+%\def\newcyline{a}
+%\def\newcxline{b}
+
 
 \def\poczatek{\ZmianyOstateczne
 \let\ZmianyOstateczne\@empty
@@ -834,10 +987,9 @@
 \newpage
 \podziek
 \global\count0=1
-%% wywalenie listy autorowi oswiadczen
-%% konserw
-%\stronaDruga
-%\stronaTrzecia
+%% nowe
+\stronaDruga
+\stronaTrzecia
 
 \gdef\kernsekcyjny{}
 \gdef\kernsubsekcyjny{}
@@ -851,9 +1003,7 @@
 \spistresc
 
 \global\let\numberline\savenumberline
-%Wstep jako normalny rozdzial
-%konserw
-%\wstep
+\wstep
 }
 
 \def\stronaDruga{
@@ -863,10 +1013,12 @@ Praca in\.zynierska:\\
 \textbf{\@title}\vrule width0pt\\
 prowadz\k acy: \@promotor
 
+
 \vskip2cm
 
 \t@mpnumer=0
-
+%%TODO: zmieniæ na ?
+%%%\begin{tabular}{rlp{10cm}}
 \begingroup
 \leftskip=2cm
 \parindent=0pt
@@ -874,6 +1026,7 @@ prowadz\k acy: \@promotor
  \wypisz@autorowcdx
 
 \endgroup
+%%%\end{tabular}
 
 \vfill
 
@@ -948,6 +1101,8 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \end{tabular}
 }
 
+
+
 \def\wypisz@klasycd{\global\advance\t@mpnumer1		
 	\ifnum\t@mpnumer<\nr@@klasy\relax
 			\csname klasa@@a\the\t@mpnumer\endcsname
@@ -959,6 +1114,13 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 	\else \let\next\relax\fi
 	\next
 	}
+
+
+%%%%%%%%%%%\def\wypisz@autorow{\t@mpnumer=0
+%%%%%%%%%%%\begin{tabular}{l}
+%%%%%%%%%%%\wypisz@autorowcd
+%%%%%%%%%%%\end{tabular}
+%%%%%%%%%%%}
 
 \def\wypisz@autorowcd{\global\advance\t@mpnumer1
 	\ifnum\t@mpnumer>\nr@@tora\relax
@@ -995,6 +1157,10 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 	\next
 }
 	
+		
+	
+
+
 \def\ewpodziek{%
   \thispagestyle{empty}%
   \hrule height0pt depth0pt
@@ -1069,14 +1235,16 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \end{center}
 }
 
+
 \def\wypisRodzajuPracy{\begin{center}{\fontrodzpracy
 \TheRodzPracy}\end{center}}
 
+%% poprawka do wprowadzania nowej linii do promotora 24.06.2010
 \def\defspec{\def\\{\egroup\hbox\bgroup\fontpromotor}}
 
 \def\wypisanieAutorPromotor{\hbox to \hsize{
    \vtop{\hbox{\fontpromotoretyk Prowadz\k acy prac\k e:}\hbox\bgroup\fontpromotor\defspec \@promotor\egroup}\hfill
-
+%%   \vtop{\hbox{\fontautoretyk Autor:}\hbox{\fontautor\@author}}}
 \vtop{\hbox{\fontautoretyk \nazwa@autorow:}
       \hbox{\global\t@mpnumer=0%
       \begin{tabular}[t]{l}%      
@@ -1091,10 +1259,13 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
      \end{center}\par\break
 }
 
+
+
 \def\odstepGoraTyt{\vskip-1pt\vskip0.5in\par\nointerlineskip}
 \def\odstepGoraTytNap{\vfill\vfill}
 \def\odsteptytAutorProm{\vfill\vfill\vfill\vfill\vfill\vfill}
 \def\odstepAutorPromDol{\vskip0.5in\vfill}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1116,6 +1287,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \@tempcnta=\@tempdima
 \setlength\textheight{\@tempcnta\@tempdimb}
 \addtolength\textheight{\topskip}
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1194,6 +1366,11 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \pagestyle{myheadings}
 \markboth{\MakeUppercase{Spis Tre\'sci}\liniaA}{\liniaB \MakeUppercase{Spis Tre\'sci}}
 
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  r¢wnania
@@ -1220,9 +1397,12 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
       \let\PrzedSectionx\zerujLicznikRysunkow
       \let\PrzedSubSectionx\relax          }
 
+
 \def\subsectionRysunki{\renewcommand  \thefigure {\thesubsection.\@arabic\c@figure}%
       \let\PrzedSectionx\zerujLicznikRysunkow
       \let\PrzedSubSectionx\zerujLicznikRysunkow          }
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1241,8 +1421,12 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \markboth{\MakeUppercase\NagText\liniaA}{\liniaB\MakeUppercase\NagText}}
 \def\section{\@ifnextchar*{\sectionXXX}{\@dblarg\sectionXY}}
 
+% \@dblarg\CS when \CS takes arguments [ARG1]{ARG2},
+%                        where default is ARG1 = ARG2.
+
 \DodajNaPoczatek{\def\contentsname{Spis tre\'sci}}
 \DodajNaPoczatek{\def\indexname{Skorowidz}}
+%\DodajNaPoczatek{\mathindent=45pt}
 \def\indexnameX{Skorowidz}
 \def\indexnameY{\vbox to 12pt{\vss Skorowidz \vskip15pt\hrule height0pt}\vskip-8.3pt\relax}
 
@@ -1253,6 +1437,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \let\subsubsectionXXX\subsubsection
 \def\subsubsectionYYY#1{\subsubsectionXXX{\protect\kernsubsubsekcyjny #1}}
 \def\subsubsection{\@ifnextchar*{\subsubsectionXXX}{\subsubsectionYYY}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% kropki w twierdzeniach
@@ -1319,6 +1504,8 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \markboth{\MakeUppercase\NagText\liniaA}{\liniaB\MakeUppercase\NagText}%
 }
 
+
+
 \author{}
 \title{}
 
@@ -1330,9 +1517,14 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 
 \rodzajKodow
 
+
+
+%\def\usunkropke#1{}
+
 \def\@seccntformatSPEC#1{
 \begingroup
 \lower-2cm\hbox to 0pt{Rozdzia\l\
+%\let\protect\usunkropke
 \csname the#1\endcsname\hss }\endgroup}
 \def\znikajKropko{}%
 \def\rozdzialy{%
@@ -1342,6 +1534,9 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
    \let\subsectionXYZ\subsection
    \def\subsection{\let\@seccntformat\seczwykform\subsectionXYZ }
 }
+
+
+
 
 \def\rozdzialyx{\rozdzialy
 \renewcommand*\l@section[2]{%
@@ -1361,6 +1556,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
   \fi}
 \renewcommand*\l@subsection{\let\numberline\numberlineN \@dottedtocline{2}{1.5em}{2.8em}}			
 }
+
 
 \def\rzymskieRozdzialy{
 \renewcommand{\thesection}{\Roman{section}%
@@ -1399,6 +1595,11 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 
 % dla kompatybilnosci:
 \let\xle\le \let\xge\ge
+%
+%\let\rodzajKodow\relax
+%\def\rodzajKodow{\usepackage[cp852]{inputenc}}  = opcja dos
+%\def\rodzajKodow{\usepackage[cp1250]{inputenc}} = opcja win
+%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%         WYJANIENIA                                       %%
@@ -1498,11 +1699,20 @@ Pytania i uwagi prosz\k e kierowaæ na adres: \texttt{marek.zabka@polsl.pl}
 
 }
 
+
+
 \def\bezWyjasnien{\let\wyjasnienia\relax}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%         K O N I E C                                       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
 \endinput
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1512,13 +1722,18 @@ Pytania i uwagi prosz\k e kierowaæ na adres: \texttt{marek.zabka@polsl.pl}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \wnioski
      
 \rysunki
      
 \dodatkowo{DOWOLNANAZWA}
 
+
+
 \rzymskaNumeracjaDodatkow 
 \literowaNumeracjaDodatkow
 \sectionWzory
 \subsectionWzory
+
+
