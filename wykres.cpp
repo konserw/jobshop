@@ -243,7 +243,6 @@ void wykres::latex(const QString &filename)
     painter.end();
 
     s =     "\n%Tabela\n\n"
-
             "\t\\begin{table}[h]\n"
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
@@ -270,9 +269,7 @@ void wykres::latex(const QString &filename)
             "\t\\end{tabular}\n"
             "\t\\end{table}\n";
 
-
     s +=    "\n%Wyznaczniki\n\n"
-
             "\t\\begin{equation}\n"
             "\t\tC_{max} = ";
     s +=    QString::number(c);
@@ -280,7 +277,7 @@ void wykres::latex(const QString &filename)
             "\t\t\\label{eqn:Cmax}\n"
             "\t\\end{equation}\n"
             "\t\\begin{equation}\n"
-            "\t\tF_{śr} = ";
+            "\t\t\bar{F} = ";
     s +=    QString::number(f);
     s +=    "\n"
             "\t\t\\label{eqn:Fsr}\n"
@@ -307,7 +304,6 @@ void wykres::latex(const QString &filename)
             "\t\\end{equation}\n";
 
     s +=    "%wykres w landscape\n"
-
            "\t\\begin{landscape}\n"
            "\t\\begin{figure}[htb]\n"
            "\t\t\\centering\n"
@@ -317,7 +313,6 @@ void wykres::latex(const QString &filename)
             "\t\t\\caption{Gantt chart}\n"
             "\t\\end{figure}\n"
             "\t\\end{landscape}\n";
-
 
     QFile f(*texName);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
