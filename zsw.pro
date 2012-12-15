@@ -39,7 +39,8 @@ SOURCES += \
     maszyna.cpp \
     zadanie.cpp \
     wykres.cpp \
-    grafZadanie.cpp
+    grafZadanie.cpp \
+    common.cpp
 HEADERS += \
     MainWindow.h \
     marszruta.h \

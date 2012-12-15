@@ -12,8 +12,11 @@ extern int fmt;
 
 #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
+int run(const QString& program, const QStringList& args);
+void save(const QString& fileName, const QString& content);
+
 template <typename T>
-struct PtrLess // public std::binary_function<bool, const T*, const T*>
+struct PtrLess
 {
     bool operator()(const T* a, const T* b) const
     {
