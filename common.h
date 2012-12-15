@@ -12,6 +12,18 @@ extern int fmt;
 
 #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
+template <typename T>
+struct PtrLess // public std::binary_function<bool, const T*, const T*>
+{
+    bool operator()(const T* a, const T* b) const
+    {
+        if(a == NULL) return false;
+        if(b == NULL) return true;
+        return *a < *b;
+    }
+};
+
+
 class stat
 {
 public:
@@ -31,23 +43,33 @@ public:
         }
     }
 
-    int j()
+    bool operator<(const stat other) const
+    {
+        return this->j() < other.j();
+    }
+
+    bool operator>(const stat other) const
+    {
+        return this->j() > other.j();
+    }
+
+    int j() const
     {
         return _j;
     }
-    int fj()
+    int fj() const
     {
         return _fj;
     }
-    int cj()
+    int cj() const
     {
         return _cj;
     }
-    int lj()
+    int lj() const
     {
         return _lj;
     }
-    int ej()
+    int ej() const
     {
         return _ej;
     }

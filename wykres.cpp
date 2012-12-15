@@ -9,6 +9,7 @@
 #include <QTextStream>
 #include <QDir>
 #include <QProcess>
+#include <QtAlgorithms>
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -146,7 +147,7 @@ void wykres::bazinga(const QString &filename)   //start cli mode
     zadan = 0;
 }
 
-void wykres::pdf() //bo do connecta jest potrzeban funkcja bezargumentowa
+void wykres::pdf()
 {
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
@@ -243,11 +244,14 @@ void wykres::latex(const QString &filename)
     painter.end();
 
     s =     "\n%Tabela\n\n"
-            "\t\\begin{table}[h]\n"
+            "\t\\begin{table}[htb]\n"
+            "\t\t\\caption{Parametry zleceń}"
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(F_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
+
+    qSort(stats.begin(), stats.end(), PtrLess<stat>());
 
     foreach(st, stats)
     {
@@ -310,7 +314,7 @@ void wykres::latex(const QString &filename)
            "\t\t\\def\\svgwidth{\\columnwidth}\n"
            "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
-            "\t\t\\caption{Gantt chart}\n"
+            "\t\t\\caption{Wykres Gantt'a}\n"
             "\t\\end{figure}\n"
             "\t\\end{landscape}\n";
 
