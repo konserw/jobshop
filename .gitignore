@@ -9,6 +9,6 @@ zsw.pro.*
 Makefile
 ui_*
 temp/*
-*.pdf
+praca.pdf
 info_*
 output/*
