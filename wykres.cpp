@@ -140,11 +140,9 @@ void wykres::pdf()
 
 void wykres::pdf(const QString &fileName)
 {
-    const QString tempFile("output/temp.tex");
     const QString texFile("output/wrapped.tex");
-    const QString pdfFile("output/wrapped.pdf");
 
-    this->latex(tempFile);
+    this->latex("output/temp.tex");
 
     QString s;
     s =     "\\documentclass[11pt,a4paper]{article}\n"
@@ -160,7 +158,7 @@ void wykres::pdf(const QString &fileName)
             "\\date{}\n"
             "\\begin{document}\n"
             "\t\\input{";
-    s +=    tempFile;
+    s +=    "temp.tex";
     s +=    "}\n"
             "\\end{document}\n";
 
@@ -171,10 +169,10 @@ void wykres::pdf(const QString &fileName)
     run("rubber", args);
 
     args.clear();
-    args << "--clean" << texFile;
+    args << "--clean" << "--inplace" << texFile;
     run("rubber", args);
 
-    QDir::current().rename(pdfFile, fileName);
+    QDir::current().rename("output/wrapped.pdf", fileName);
 }
 
 void wykres::latex()
@@ -194,7 +192,7 @@ void wykres::latex(const QString &texName)
     QFileInfo fi(texName);
     const QString name = fi.baseName();
     const QString svgName(tr("output/gantt_%1.svg").arg(name));
-    const QString pdfName(tr("output/gantt_%1.pdf").arg(name));
+    const QString pdfName(tr("gantt_%1.pdf").arg(name));
 
     QSvgGenerator svgGen;
     svgGen.setFileName(svgName);
@@ -207,12 +205,11 @@ void wykres::latex(const QString &texName)
     painter.end();
 
     QStringList args;
-    args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << pdfName << "-D";
+    args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << tr("output/%1").arg(pdfName) << "-D";
     run("inkscape", args);
 
     s =     "\n%Tabela\n\n"
             "\t\\begin{table}[htb]\n"
-            "\t\t\\caption{Parametry zleceń}"
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
             "\t\t\\hline\n"
@@ -238,6 +235,7 @@ void wykres::latex(const QString &texName)
 
     s +=    // "\t\t\\hline\n"
             "\t\\end{tabular}\n"
+            "\t\t\\caption{Parametry zleceń}"
             "\t\\end{table}\n";
 
     s +=    "\n%Wyznaczniki\n\n"
