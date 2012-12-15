@@ -22,16 +22,14 @@ public slots:
     void finished(stat* x);
     void set(int _maszyn, double _alfa, double _beta);
     void bazinga();
-    void bazinga(const QString& filename);
+    void bazinga(const QString&);
     void pdf();
-    void pdf(const QString& filename);
+    void pdf(const QString&fileName);
     void latex();
-    void latex(const QString& filename);
+    void latex(const QString&);
     void evalStats();
     void setupScene();
-    void cdOutput();
-    void cdBack();
-
+    void clean();
 
 protected:
     void changeEvent(QEvent *e);
@@ -46,8 +44,6 @@ private:
     double f, l, e, w1, w2, alfa, beta;
 
     QGraphicsScene* scene;
-    QString* texName;
-    QDir* cur;
 };
 
 #endif // WYKRES_H
