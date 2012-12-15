@@ -277,7 +277,7 @@ void wykres::latex(const QString &filename)
             "\t\t\\label{eqn:Cmax}\n"
             "\t\\end{equation}\n"
             "\t\\begin{equation}\n"
-            "\t\t\bar{F} = ";
+            "\t\t\\bar{F} = ";
     s +=    QString::number(f);
     s +=    "\n"
             "\t\t\\label{eqn:Fsr}\n"
