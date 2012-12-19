@@ -74,6 +74,8 @@ void wykres::set(int _maszyn, double _alfa, double _beta)
 
 void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
 {
+    DEBUG << "bazinga gui mode";
+
     zadania = zad;
 
     int j, cols;
@@ -131,7 +133,7 @@ void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //st
     QFileInfo fi(fileName);
     const QString name = tr("output/%1.tex").arg(fi.baseName());
 
-    DEBUG << "bazinga do pliku: " << fileName;
+    DEBUG << "bazinga pliku: " << fileName;
 
     if(fmt == 1)
         this->pdf(name);
@@ -270,6 +272,30 @@ void wykres::latex(const QString &texName)
             "\t\t\\caption{Parametry wykonanych zleceń}\n"
             "\t\\end{table}\n";
 
+    s +=    "\n%Tabela wyznacznikow\n\n"
+            "\t\\begin{table}[htb]\n"
+            "\t\t\\centering\n"
+            "\t\t\\begin{tabular}{ l l}\n"
+            "\t\t\\(C_{max} = ";
+    s +=    QString::number(c);
+    s +=    " \\)\t& \\(\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
+    s +=    QString::number(w1);
+    s +=    "\\)\t\\\\\n"
+            "\t\t\\(\\bar{F} = ";
+    s +=    QString::number(f);
+    s +=    " \\)\t& \\(\\left.\\alpha*\\sum e_j + \\beta*\\sum l_j\\right\\big|_{\\substack{\\alpha = ";
+    s +=    QString::number(alfa);
+    s +=    "\\\\ \\beta = ";
+    s +=    QString::number(beta);
+    s +=    "}} = ";
+    s +=    QString::number(w2);
+    s +=    " \\)\t\\\\ \n";
+
+    s +=    "\t\t\\end{tabular}\n"
+    //        "\t\t\\caption{Parametry wykonanych zleceń}\n"
+            "\t\\end{table}\n";
+
+/*
     s +=    "\n%Wyznaczniki\n\n"
             "\t\\begin{equation}\n"
             "\t\tC_{max} = ";
@@ -303,7 +329,7 @@ void wykres::latex(const QString &texName)
     s +=    QString::number(beta);
     s +=    "\n"
             "\t\\end{equation}\n";
-
+*/
     s +=    "%wykres w landscape\n"
            "\t\\begin{landscape}\n"
            "\t\\begin{figure}[htb]\n"
