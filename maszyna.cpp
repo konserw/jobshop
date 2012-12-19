@@ -76,9 +76,20 @@ void maszyna::up2()
         return;
     }
 
-    bool konflikt = false;
-    if(kolejka.size() > 1)
-        konflikt = true;
+    int size = kolejka.size();
+    if(size > 1)        //konflikt -> krecha i numery konfliktowych zadan
+    {
+        scene->addLine(x, y-1.5*dy, x, y+0.5*dy, *penKonflikt);
+        QString s("(");
+        for(int i=0; i<size-1; ++i)
+            s += QString::number(kolejka[i]->number()) + ", ";
+        s += QString::number(kolejka[size-1]->number()) + ")";
+
+        QGraphicsTextItem* text = scene->addText(s, *font);
+        text->setDefaultTextColor(QColor(255, 0, 0));
+        text->setX(x + 2);
+        text->setY(y);// + (0.5*dy));// - text->boundingRect().height());
+    }
 
     switch(method)
     {
@@ -90,12 +101,5 @@ void maszyna::up2()
         start(kolejka.last());
         kolejka.removeLast();
         break;
-    }
-
-
-    if(konflikt)
-    {
-        //DEBUG << "konflikt";
-        scene->addLine(x, y-1.5*dy, x, y+0.5*dy, *penKonflikt);
     }
 }

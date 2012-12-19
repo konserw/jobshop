@@ -6,6 +6,7 @@
 struct stat;
 class QGraphicsScene;
 class QDir;
+class zadanie;
 
 namespace Ui {
     class wykres;
@@ -21,17 +22,15 @@ public slots:
     void setText(const QString& text);
     void finished(stat* x);
     void set(int _maszyn, double _alfa, double _beta);
-    void bazinga();
-    void bazinga(const QString& filename);
+    void bazinga(const QList<zadanie *>*);
+    void bazinga(const QString&, const QList<zadanie *>*);
     void pdf();
-    void pdf(const QString& filename);
+    void pdf(const QString&fileName);
     void latex();
-    void latex(const QString& filename);
+    void latex(const QString&);
     void evalStats();
     void setupScene();
-    void cdOutput();
-    void cdBack();
-
+    void clean();
 
 protected:
     void changeEvent(QEvent *e);
@@ -45,9 +44,8 @@ private:
     int c;
     double f, l, e, w1, w2, alfa, beta;
 
+    const QList<zadanie*> *zadania;
     QGraphicsScene* scene;
-    QString* texName;
-    QDir* cur;
 };
 
 #endif // WYKRES_H

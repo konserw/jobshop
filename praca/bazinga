@@ -5,4 +5,4 @@ rm output/*
 cd praca
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
-evince praca.pdf
+# evince praca.pdf

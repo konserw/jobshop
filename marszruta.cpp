@@ -117,6 +117,12 @@ qint32 marszruta::machines() const
     return m;
 }
 
+QString marszruta::print() const
+{
+    return tr("%1 (%2)").arg(ui->machine->currentText(), QString::number(this->time()));
+}
+
+
 QDataStream &operator<<(QDataStream &out, const marszruta &mar)
 {
     out << mar.machines()
