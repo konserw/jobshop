@@ -43,7 +43,7 @@ QString zadanie::print() const
         if(m->time() > 0)
         {
             if(f)
-                s += " => ";
+                s += " - ";
 
             s += m->print();
 

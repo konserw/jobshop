@@ -131,7 +131,7 @@ void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //st
     QFileInfo fi(fileName);
     const QString name = tr("output/%1.tex").arg(fi.baseName());
 
-    DEBUG << "bazinga do pliku: " << filename;
+    DEBUG << "bazinga do pliku: " << fileName;
 
     if(fmt == 1)
         this->pdf(name);
@@ -198,7 +198,6 @@ void wykres::latex()
 void wykres::latex(const QString &texName)
 {
     QString s;
-    int j;
     stat* st;
 
     QFileInfo fi(texName);
@@ -220,12 +219,12 @@ void wykres::latex(const QString &texName)
     args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << tr("output/%1").arg(pdfName) << "-D";
     run("inkscape", args);
 
-    s =     "\n%Tabela\n\n"
+    s =     "\n%Tabela danych\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | r | c | c | l | }\n"
             "\t\t\\hline\n"
-            "\t\\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
+            "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
     zadanie* z;
     foreach(z, *zadania)
     {
@@ -235,12 +234,12 @@ void wykres::latex(const QString &texName)
         s += QString::number(z->arrive());
         s += "\t& ";
         s += QString::number(z->due());
-        s += "\t";
+        s += "\t& ";
         s += z->print();
         s += "\t\\\\ \\hline\n";
     }
-    s +=    "\t\\end{tabular}\n"
-            "\t\t\\caption{Dane wejściowe}"
+    s +=    "\t\t\\end{tabular}\n"
+            "\t\t\\caption{Dane wejściowe}\n"
             "\t\\end{table}\n";
 
     s +=    "\n%Tabela wynikowa\n\n"
@@ -248,15 +247,14 @@ void wykres::latex(const QString &texName)
             "\t\t\\centering\n"
             "\t\t\\begin{tabular}{ | r | c | c | c | c |}\n"
             "\t\t\\hline\n"
-            "\t\tj\t& \\(c_j\\)\t& \\(F_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
+            "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
     qSort(stats.begin(), stats.end(), PtrLess<stat>());
 
     foreach(st, stats)
     {
-        j = st->j() - 1;
         s += "\t\t";
-        s += QString::number(j);
+        s += QString::number(st->j());
         s += "\t& ";
         s += QString::number(st->cj());
         s += "\t& ";
@@ -268,8 +266,8 @@ void wykres::latex(const QString &texName)
         s += "\t\\\\ \\hline\n";
     }
 
-    s +=    "\t\\end{tabular}\n"
-            "\t\t\\caption{Parametry wykonanych zleceń}"
+    s +=    "\t\t\\end{tabular}\n"
+            "\t\t\\caption{Parametry wykonanych zleceń}\n"
             "\t\\end{table}\n";
 
     s +=    "\n%Wyznaczniki\n\n"

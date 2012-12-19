@@ -119,7 +119,7 @@ qint32 marszruta::machines() const
 
 QString marszruta::print() const
 {
-    return tr("%1 (%2)").arg(QString::number(this->machine(), this->time()));
+    return tr("%1 (%2)").arg(ui->machine->currentText(), QString::number(this->time()));
 }
 
 
