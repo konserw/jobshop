@@ -102,7 +102,7 @@ void MainWindow::rout(qint32 col)
     ui->tableWidget->setColumnCount(3 + col);
 
     QStringList labels;
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Due date");
+    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("dj");
     for(qint32 i=1; i<=col; ++i)
         labels << QString::number(i);
     ui->tableWidget->setHorizontalHeaderLabels(labels);
@@ -153,9 +153,9 @@ void MainWindow::solve(const QString &arg)
 
     gant->set(maszyn, ui->alfa->value(), ui->beta->value());
     if(cli)
-        gant->bazinga(arg);
+        gant->bazinga(arg, &zadania);
     else
-        gant->bazinga();
+        gant->bazinga(&zadania);
 
     foreach(z, zadania)
         delete z;

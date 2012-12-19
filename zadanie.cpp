@@ -33,6 +33,27 @@ void zadanie::add_rout(marszruta *m)
     DEBUG << "dodalem punkt marszruty do zadania " << j;
 }
 
+QString zadanie::print() const
+{
+    QString s;
+    marszruta* m;
+    bool f = false;
+    foreach(m, this->rout)
+    {
+        if(m->time() > 0)
+        {
+            if(f)
+                s += " => ";
+
+            s += m->print();
+
+            if(!f)
+                f = true;
+        }
+    }
+    return s;
+}
+
 int zadanie::time()
 {
    return rout[cur]->time();

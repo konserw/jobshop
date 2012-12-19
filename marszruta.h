@@ -20,6 +20,8 @@ public:
 
     qint32 machines()const;
 
+    QString print()const;
+
 public slots:
     void setMachines(int);
 

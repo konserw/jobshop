@@ -6,6 +6,9 @@
 #include <QFileDialog>
 #include <QtSvg/QSvgGenerator>
 #include <QtAlgorithms>
+#include <QList>
+#include "zadanie.h"
+
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -69,8 +72,10 @@ void wykres::set(int _maszyn, double _alfa, double _beta)
     setupScene();
 }
 
-void wykres::bazinga()  //start gui mode
+void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
 {
+    zadania = zad;
+
     int j, cols;
     QTableWidgetItem* it;
     QStringList list;
@@ -119,12 +124,19 @@ void wykres::bazinga()  //start gui mode
     this->clean();
 }
 
-void wykres::bazinga(const QString &filename)   //start cli mode
+void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //start cli mode
 {
+    zadania = zad;
+
+    QFileInfo fi(fileName);
+    const QString name = tr("output/%1.tex").arg(fi.baseName());
+
+    DEBUG << "bazinga do pliku: " << filename;
+
     if(fmt == 1)
-        this->pdf(filename);
+        this->pdf(name);
     else
-        this->latex(filename);
+        this->latex(name);
 
     this->clean();
 }
@@ -211,7 +223,30 @@ void wykres::latex(const QString &texName)
     s =     "\n%Tabela\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
-            "\t\t\\begin{tabular}{ | c | c | c | c | c |}\n"
+            "\t\t\\begin{tabular}{ | r | c | c | l | }\n"
+            "\t\t\\hline\n"
+            "\t\\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
+    zadanie* z;
+    foreach(z, *zadania)
+    {
+        s += "\t\t";
+        s += QString::number(z->number());
+        s += "\t& ";
+        s += QString::number(z->arrive());
+        s += "\t& ";
+        s += QString::number(z->due());
+        s += "\t";
+        s += z->print();
+        s += "\t\\\\ \\hline\n";
+    }
+    s +=    "\t\\end{tabular}\n"
+            "\t\t\\caption{Dane wejściowe}"
+            "\t\\end{table}\n";
+
+    s +=    "\n%Tabela wynikowa\n\n"
+            "\t\\begin{table}[htb]\n"
+            "\t\t\\centering\n"
+            "\t\t\\begin{tabular}{ | r | c | c | c | c |}\n"
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(F_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
@@ -233,9 +268,8 @@ void wykres::latex(const QString &texName)
         s += "\t\\\\ \\hline\n";
     }
 
-    s +=    // "\t\t\\hline\n"
-            "\t\\end{tabular}\n"
-            "\t\t\\caption{Parametry zleceń}"
+    s +=    "\t\\end{tabular}\n"
+            "\t\t\\caption{Parametry wykonanych zleceń}"
             "\t\\end{table}\n";
 
     s +=    "\n%Wyznaczniki\n\n"

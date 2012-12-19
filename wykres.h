@@ -6,6 +6,7 @@
 struct stat;
 class QGraphicsScene;
 class QDir;
+class zadanie;
 
 namespace Ui {
     class wykres;
@@ -21,8 +22,8 @@ public slots:
     void setText(const QString& text);
     void finished(stat* x);
     void set(int _maszyn, double _alfa, double _beta);
-    void bazinga();
-    void bazinga(const QString&);
+    void bazinga(const QList<zadanie *>*);
+    void bazinga(const QString&, const QList<zadanie *>*);
     void pdf();
     void pdf(const QString&fileName);
     void latex();
@@ -43,6 +44,7 @@ private:
     int c;
     double f, l, e, w1, w2, alfa, beta;
 
+    const QList<zadanie*> *zadania;
     QGraphicsScene* scene;
 };
 
