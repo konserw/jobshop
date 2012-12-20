@@ -1,5 +1,5 @@
 %Praca inżynierska (c) Kamil Strzempowicz
-\documentclass[twoside]{pracaInzynierskaMS}
+\documentclass[twoside]{kInzynierka}
 %\documentclass[11pt,a4paper]{article}
 \usepackage{polski}
 %\usepackage[polish]{babel}
@@ -22,7 +22,7 @@
 \sectionWzory  
 %\drukJednostronny
 \literowaNumeracjaDodatkow %% w³¹czy numeracjê dodatków literami
-\bezWyjasnien
+%\bezWyjasnien
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% Podstawowe info %%%
@@ -46,9 +46,9 @@ System produkcyjny jest to celowo zaprojektowany i zorganizowany układ material
 Systemy produkcyjne można podzielić ze względu na strukturę na:
 \begin{itemize}
 \item Systemy gniazdowe - zwykle wykorzystywane do pojedyńczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a każde z nich wymaga przeprowadzenia zestawu operacji na maszynach w ustalonym porządku, innym dla każdego zadania.
-\item System przepływowy - Kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{flowshop}
-\item Pojedyńcza maszyna - system składający się z jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{single}
-\item Maszyny równoległe - system składający się z m identycznych maszyn. Podobnie jak w problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{paralel}
+\item System przepływowy - Kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{grzechca}
+\item Pojedyńcza maszyna - system składający się z jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{grzechca}
+\item Maszyny równoległe - system składający się z m identycznych maszyn. Podobnie jak w problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{grzechca}
 \item Linia montażowa -  zespół stanowisk roboczych (maszynowych, ręcznych lub mieszanych) ugrupowanych według kolejności operacji procesu technologicznego. \cite{wiki}
 \end{itemize}
 
@@ -58,33 +58,35 @@ Problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) jest u
  
 
 \section        [Metody szeregowania zadań \ldots]
-		         {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
+		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
 \subsection     {Metody heurystyczne}
-\subsubsection  {First In First Out}
+Metody heurystyczne pozwalają na stosunkowo szybkie i łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie rozwiązania optymalnego, ze względu na czas i zasoby wymagane do jego odnalezienia. W szczególności w sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod. Metody te zwykle polegają na nadawaniu priorytetu, na podstawie danych zlecenia i chwili czasu, zadaniom w momencie wystąpienia konflktu. 
 
-\subsubsection  {Last In First Out}
+Konflikt jest to sytuacja gdy w tym samym momencie na dany wolny zasób (maszynę) czeka więcej niż jedno zadanie. Trzeba wtedy zdecydować które z zadań zostanie obsłużone jako pirwsze. 
 
-\subsubsection  {Earliest Due Date}
-
-\subsubsection  {Least Work Remaining}
-
-\subsubsection  {Shortest Procesing Time}
-
-\subsubsection  {Longest Procesing Time}
-
-\subsubsection  {Slack Time}
-
+Najpopularniejsze heurystyki:
+\begin{itemize}
+\item First In First Out - 
+\item Last In First Out - 
+\item Earliest Due Date - 
+\item Least Work Remaining - 
+\item Shortest Procesing Time - 
+\item Longest Procesing Time - 
+\item Slack Time - 
+\item Random - 
+\end{itemize}
 \subsection     {Inne metody}
-\subsubsection  {Algorytmy genetyczne}
+\begin{itemize}
+\item Algorytmy genetyczne - 
+\item Metoda ścieżki krytycznej - 
 
-\subsubsection  {Metoda ścieżki krytycznej}
-
+\end{itemize}
 
 %\newlineTekst
 %\newlineSpis
 \section        [Heurystyki LIFO i FIFO \ldots]
-                 {Heurystyki LIFO i FIFO w JSSP \newline - przykłady obliczeniowe}
+                {Heurystyki LIFO i FIFO w JSSP \newline - przykłady obliczeniowe}
 
 \subsection     {Różne rozwiązania}
 \subsubsection  {FIFO}
@@ -103,19 +105,19 @@ Program kSzereg został wykonany na potrzeby tej pracy dyplomowej.\\
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./main}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
     \caption{Główne okno programu}
 \end{figure}
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./wykres}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/wykres}
     \caption{Prezentacja wyznaczonego uszeregowania}
 \end{figure}
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./pdf}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/pdf}
     \caption{Wyeksportowany plik .pdf}
 \end{figure}
 
@@ -123,7 +125,7 @@ Program kSzereg został wykonany na potrzeby tej pracy dyplomowej.\\
   Cały kod źródłowy znajduje się na załączonej płycie cd-rom. \\
 Natomiast istotne metody  zosstały przytoczone w dodtku Program \\     
 \section        [Przykładowe problemy \ldots]
-                 {Przykładowe problemy rozwiązane przy pomocy programu kSzereg}
+                {Przykładowe problemy \newline rozwiązane przy pomocy programu kSzereg}
        
 \subsection     {Probelm 1}
 \subsubsection  {FIFO}
@@ -170,27 +172,17 @@ Natomiast istotne metody  zosstały przytoczone w dodtku Program \\
 Zarządzanie logistyczne Podstawowe definicje \\
 dr Zbigniew Pastuszak
 
-\bibitem{flowshop}
-Wykład szeregowanie zadań dla procesów przepływowych \\
-dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
-
-\bibitem{single}
-Wykład szeregowanie zadań na pojedynczej maszynie \\
-dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
-
-\bibitem{paralel}
-Wykład szeregowanie zadań na maszynach równoległych \\
-dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
-
+\bibitem{grzechca}
+Wykłady z przedmiotu Zautomatyzowane Systemy Wytwarzania\\
+dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego \\
+Źródło: \url{http://platforma.polsl.pl/rau1} [dostęp:~20.12.12]
 \bibitem{wiki}
-Linia produkcyjna, źródło: \\
-\url{http://pl.wikipedia.org/wiki/Linia_produkcyjna} [dostęp: 20.12.12]
+Linia produkcyjna \\
+Źródło: \url{http://pl.wikipedia.org/wiki/Linia_produkcyjna} [dostęp:~20.12.12]
 
 \bibitem{antColony}
     Ant Colony Algorithm for Just-in-Time Job Shop Scheduling with Transportation Times and Multirobots \\
     Fatima El Khoukhi, Tarik Lamoudan, Jaouad Boukachour, Ahmed El Hilali Alaoui
-
-
 
 
 
