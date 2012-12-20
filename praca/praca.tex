@@ -9,13 +9,16 @@
 \usepackage{graphicx}
 \usepackage{transparent}
 \usepackage{lscape}
-\mathtoolsset{showonlyrefs}
+\usepackage[section]{placeins}
 
+%hyperref musi być ostatnie
+\usepackage[hidelinks]{hyperref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Przełączniki stylu %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\mathtoolsset{showonlyrefs}
 \sectionWzory  
 %\drukJednostronny
 \literowaNumeracjaDodatkow %% w³¹czy numeracjê dodatków literami
@@ -25,7 +28,7 @@
 %%% Podstawowe info %%%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Strategia Just in Time w systemach produkcyjnych - analiza struktury gniazdowej dla heurystyk\\ FIFO i LIFO.}
+\title{Strategia Just in Time w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
 \promotor{dr inż. Waldemar Grzechca}
 \autor{Kamil Strzempowicz}{100}{Napisanie całej pracy}
 %% dedykacja mile widziana
@@ -37,11 +40,25 @@
 
 \begin{document}
 \section        {Wstęp}
+Celem tej pracy jest przedstawienie strategii Just in Time dla szeregowania zadań w systemach produkcyjnych o strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk First In First Out i Last In First Out. Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania według heurystyk FIFO i LIFO, oraz obliczający wyznaczniki jakosci uszeregowania w kontekście strategii JIT.
 
-Tutaj będzie wstęp \cite{Poz1} jak tylko go wymyślę, na razie walnę lorem impsum :D \\
+System produkcyjny jest to celowo zaprojektowany i zorganizowany układ materialny, energetyczny i informacyjny eksploatowany przez człowieka i służący produkowaniu określonych produktów (wyrobów lub usług) w celu zaspokajania różnorodnych potrzeb konsumentów. \cite{pastuszak}
+Systemy produkcyjne można podzielić ze względu na strukturę na:
+\begin{itemize}
+\item Systemy gniazdowe - zwykle wykorzystywane do pojedyńczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a każde z nich wymaga przeprowadzenia zestawu operacji na maszynach w ustalonym porządku, innym dla każdego zadania.
+\item System przepływowy - Kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{flowshop}
+\item Pojedyńcza maszyna - system składający się z jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{single}
+\item Maszyny równoległe - system składający się z m identycznych maszyn. Podobnie jak w problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe. \cite{paralel}
+\item Linia montażowa -  zespół stanowisk roboczych (maszynowych, ręcznych lub mieszanych) ugrupowanych według kolejności operacji procesu technologicznego. \cite{wiki}
+\end{itemize}
+
+Szeregowanie może zostać zdefiniowne jako przydział zasobów w czasie do zadań w celu optymalizacji kryterium. Z punktu widzenia szeregowania w systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania. \cite{antColony} 
+
+Problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) jest uważany za silnie NP-trudny, czyli co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a często trudniejszy. W związku z tym często nie opłaca się tracić czasu i zasobów na poszukiwanie optymalnego rozwiązania JSSP, przyjmuje się natomiast rozwiązanie dopuszczalne uzyskiwane na podstwie przyjętej heurystyki. 
+ 
 
 \section        [Metody szeregowania zadań \ldots]
-		        {Metody szeregowania zadań w systemach wytwarzania gniazdowego}
+		         {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
 \subsection     {Metody heurystyczne}
 \subsubsection  {First In First Out}
@@ -50,18 +67,24 @@ Tutaj będzie wstęp \cite{Poz1} jak tylko go wymyślę, na razie walnę lorem i
 
 \subsubsection  {Earliest Due Date}
 
+\subsubsection  {Least Work Remaining}
 
+\subsubsection  {Shortest Procesing Time}
+
+\subsubsection  {Longest Procesing Time}
+
+\subsubsection  {Slack Time}
 
 \subsection     {Inne metody}
 \subsubsection  {Algorytmy genetyczne}
 
-\subsubsection  {Metoda mrówkek}
+\subsubsection  {Metoda ścieżki krytycznej}
 
 
 %\newlineTekst
 %\newlineSpis
 \section        [Heurystyki LIFO i FIFO \ldots]
-                {Heurystyki LIFO i FIFO dla gniazdowej struktury systemu produkcyjnego - przykłady obliczeniowy}
+                 {Heurystyki LIFO i FIFO w JSSP \newline - przykłady obliczeniowe}
 
 \subsection     {Różne rozwiązania}
 \subsubsection  {FIFO}
@@ -77,25 +100,57 @@ Tutaj będzie wstęp \cite{Poz1} jak tylko go wymyślę, na razie walnę lorem i
 \section        {Program kSzereg}
 \subsection     {Front-end}
 Program kSzereg został wykonany na potrzeby tej pracy dyplomowej.\\
-Cały kod źródłowy znajduje się na załączonej płycie cd-rom. \\
-Natomiast istotne metody  zosstały przytoczone w dodtku Program
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./main}
+    \caption{Główne okno programu}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./wykres}
+    \caption{Prezentacja wyznaczonego uszeregowania}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./pdf}
+    \caption{Wyeksportowany plik .pdf}
+\end{figure}
 
 \subsection     {Back-end}
-Jakiś podrożdział żeby było spoko
-       
+  Cały kod źródłowy znajduje się na załączonej płycie cd-rom. \\
+Natomiast istotne metody  zosstały przytoczone w dodtku Program \\     
 \section        [Przykładowe problemy \ldots]
-                {Przykładowe problemy rozwiązane przy pomocy programu kSzereg}
+                 {Przykładowe problemy rozwiązane przy pomocy programu kSzereg}
        
 \subsection     {Probelm 1}
-\input{zad1.tex}
+\subsubsection  {FIFO}
+\input {zad1_FIFO.tex}
+\subsubsection  {LIFO}
+\input{ zad1_LIFO.tex}
 
 \newpage
 \subsection     {Problem 2}
-\input{zad2.tex}
+\subsubsection  {FIFO}
+\input {zad2_FIFO.tex}
+\subsubsection  {LIFO}
+\input {zad2_LIFO.tex}
 
 \newpage
 \subsection     {Problem 3}
-\input {zad3.tex}
+\subsubsection  {FIFO}
+\input {zad3_FIFO.tex}
+\subsubsection  {LIFO}
+\input {zad3_LIFO.tex}
+
+\newpage
+\subsection     {Problem 3}
+\subsubsection  {FIFO}
+\input {zad4_FIFO.tex}
+\subsubsection  {LIFO}
+\input {zad4_LIFO.tex}
 
 \section        {Wnioski}
 
@@ -109,10 +164,36 @@ Jakiś podrożdział żeby było spoko
 %}
 %\end{verbatim}              
    
-\begin{thebibliography}{2}
+\begin{thebibliography}{99}
 
-\bibitem{Poz1} Jakaś pozycja literatury
-\bibitem{InnPoz} Jakaś pozycja literatury
+\bibitem{pastuszak} 
+Zarządzanie logistyczne Podstawowe definicje \\
+dr Zbigniew Pastuszak
+
+\bibitem{flowshop}
+Wykład szeregowanie zadań dla procesów przepływowych \\
+dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
+
+\bibitem{single}
+Wykład szeregowanie zadań na pojedynczej maszynie \\
+dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
+
+\bibitem{paralel}
+Wykład szeregowanie zadań na maszynach równoległych \\
+dr inż. Waldemar Grzechca na podstawie materiałów prof. dr hab. inż. Mirosława Zaborowskiego
+
+\bibitem{wiki}
+Linia produkcyjna, źródło: \\
+\url{http://pl.wikipedia.org/wiki/Linia_produkcyjna} [dostęp: 20.12.12]
+
+\bibitem{antColony}
+    Ant Colony Algorithm for Just-in-Time Job Shop Scheduling with Transportation Times and Multirobots \\
+    Fatima El Khoukhi, Tarik Lamoudan, Jaouad Boukachour, Ahmed El Hilali Alaoui
+
+
+
+
+
 
 \end{thebibliography}
 \end{document}        

@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
+    const int maxMethod = 2;
+    bool all = false;
+
     QStringList* files;
     QStringList* args = new QStringList(app.arguments());
 
@@ -59,6 +62,7 @@ int main(int argc, char *argv[])
         qDebug() << "Aviable heuristics:";
         qDebug() << "\tFIFO\t\t\tFirst In First Out";
         qDebug() << "\tLIFO\t\t\tLast In First Out";
+        qDebug() << "\tall\t\tapply all heuristics subsequently";
         delete args;
         return 0;
     }
@@ -121,6 +125,8 @@ int main(int argc, char *argv[])
             maszyna::method = 0;
         else if(args->at(where) == "LIFO")
             maszyna::method = 1;
+        else if(args->at(where) == "all")
+            all = true;
         else
         {
             qDebug() << "Only FIFO and LIFO heuristics are aviable atm.";
@@ -135,7 +141,16 @@ int main(int argc, char *argv[])
 
     for(int i=0; i<files->count(); ++i)
     {
-        MainWindow w(files->at(i));
+        if(all)                                //wszystkie metody
+        {
+            for(int j=0; j<maxMethod; ++j)
+            {
+                maszyna::method = j;
+                MainWindow w(files->at(i));
+            }
+        }
+        else                                    //tylko 1 metoda
+            MainWindow w(files->at(i));
     }
 
     delete args;

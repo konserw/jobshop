@@ -46,6 +46,8 @@ private:
 
     const QList<zadanie*> *zadania;
     QGraphicsScene* scene;
+
+    static QString metoda(int n);
 };
 
 #endif // WYKRES_H

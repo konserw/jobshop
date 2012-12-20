@@ -18,11 +18,13 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("kSzereg"));
 
+    this->setWindowIcon(QIcon(":/kico"));
+
     ui->label_alfa->setText(tr("α"));
     ui->alfa->setMinimum(0);
     ui->alfa->setValue(0.5);
     ui->alfa->setMaximum(1);
-    ui->beta->setSingleStep(0.1);
+    ui->alfa->setSingleStep(0.1);
 
     ui->label_beta->setText(tr("β"));
     ui->beta->setMinimum(0);
