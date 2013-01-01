@@ -73,9 +73,18 @@ Najpopularniejsze heurystyki:
 \item Least Work Remaining - Pierwsze jest przetwarzane zadanie do ukończenia którego pozostało najmniej pracy.
 \item Shortest Procesing Time - Pierwsze jest przetwarzane zadanie którego całkowity czas przetwarzania jest najkrótszy.
 \item Longest Procesing Time - Pierwsze jest przetwarzane zadanie którego całkowity czas przetwarzania jest najdłuższy.
-\item Slack Time - Pierwsze jest przetwarzane zadanie którego różnica między czasem potrzebnym do jego ukończenia a czesem pozostałym do terminu zakończenia pracy jest najmniejsza. Formalnie WZÓR
+\item Shortest Imminent Procesing Time - Pierwsze jest przetwarzane zadanie którego czas przetwarzania na tej maszynie jest najkrótszy.
+\item Longest Imminent Procesing Time - Pierwsze jest przetwarzane zadanie którego czas przetwarzania na tej maszynie jest najdłuższy.
+\item Fewest Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba najmniejszej ilości operacji.
+\item Most Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba największej ilości operacji.
+\item Least Slack Time - Pierwsze jest przetwarzane zadanie którego różnica między czasem potrzebnym do jego ukończenia a czesem pozostałym do terminu zakończenia pracy jest najmniejsza. %Formalnie \cite{slack}
+%\begin{math}
+%(d - t) - c'
+%\end{math}
+\item Least Slack Time per Operation - Pierwsze jest przetwarzane zadanie którego stosunek czasu 'Slack' do ilości pozoostałych do wykonania operacji jest najmniejszy. 
 \item Random - Losowe zadanie jest przetwarzane jako pierwsze.
 \end{itemize}
+
 \subsection     {Inne metody}
 \begin{itemize}
 \item Algorytmy genetyczne - 
