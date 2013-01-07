@@ -1,8 +1,8 @@
 #!/bin/sh
-#cd ../
-#rm output/*
-#./kSzereg -l lista -h all
-#cd praca
+cd ../
+rm output/*
+./kSzereg -l lista -h all
+cd praca
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
 evince praca.pdf
