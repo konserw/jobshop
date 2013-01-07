@@ -5,6 +5,8 @@
 
 struct stat;
 class QGraphicsScene;
+class QDir;
+class zadanie;
 
 namespace Ui {
     class wykres;
@@ -13,14 +15,22 @@ namespace Ui {
 class wykres : public QDialog {
     Q_OBJECT
 public:
-    wykres(QWidget *parent, QGraphicsScene* s);
+    wykres(QWidget *parent, QGraphicsScene* _scene);
     ~wykres();
 
 public slots:
-    void setText(QString& s);
+    void setText(const QString& text);
     void finished(stat* x);
-    void set(int maszyn);
-    void up(int);
+    void set(int _maszyn, double _alfa, double _beta);
+    void bazinga(const QList<zadanie *>*);
+    void bazinga(const QString&, const QList<zadanie *>*);
+    void pdf();
+    void pdf(const QString&fileName);
+    void latex();
+    void latex(const QString&);
+    void evalStats();
+    void setupScene();
+    void clean();
 
 protected:
     void changeEvent(QEvent *e);
@@ -28,11 +38,16 @@ protected:
 private:
     Ui::wykres *ui;
 
-    QList<stat*> s;
-    int zadan;
+    QList<stat*> stats;
+    int zadan, maszyn;
 
     int c;
-    double f, l, e, sum;
+    double f, l, e, w1, w2, alfa, beta;
+
+    const QList<zadanie*> *zadania;
+    QGraphicsScene* scene;
+
+    static QString metoda(int n);
 };
 
 #endif // WYKRES_H

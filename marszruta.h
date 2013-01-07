@@ -12,7 +12,6 @@ class marszruta : public QWidget {
 public:
     marszruta(QWidget *parent = 0);
     marszruta(qint32 machines, qint32 machine, qint32 time, QWidget *parent = 0);
- //   marszruta(const marszruta &);
     marszruta& operator=(const marszruta &in);
     ~marszruta();
 
@@ -21,8 +20,10 @@ public:
 
     qint32 machines()const;
 
+    QString print()const;
+
 public slots:
-    void setMachines(qint32);
+    void setMachines(int);
 
 protected:
     void changeEvent(QEvent *e);

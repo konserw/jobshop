@@ -24,13 +24,23 @@ public:
         return j;
     }
 
+    int due() const
+    {
+        return dj;
+    }
+
+    int arrive() const
+    {
+        return rj;
+    }
+
+    QString print()const;
+
 public slots:
     void update();
     void done();
 
     QGraphicsItem* gItem();
-
-
 signals:
     void next(qint32, zadanie*);
     void finished(stat*);
