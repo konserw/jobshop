@@ -1,0 +1,14 @@
+*.autosave
+.*
+*~
+~*
+*.o
+moc_*
+kSzereg
+zsw.pro.*
+Makefile
+ui_*
+temp/*
+praca.pdf
+info_*
+output/*
