@@ -1,6 +1,5 @@
 %Praca inżynierska (c) Kamil Strzempowicz
 \documentclass[twoside]{kInzynierka}
-%\documentclass[11pt,a4paper]{article}
 \usepackage{polski}
 %\usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
@@ -22,7 +21,7 @@
 \sectionWzory  
 %\drukJednostronny
 \literowaNumeracjaDodatkow %% w³¹czy numeracjê dodatków literami
-%\bezWyjasnien
+
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% Podstawowe info %%%
@@ -31,7 +30,6 @@
 \title{Strategia Just in Time w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
 \promotor{dr inż. Waldemar Grzechca}
 \autor{Kamil Strzempowicz}{100}{Napisanie całej pracy}
-%% dedykacja mile widziana
 \dedykacja{Rodzicom\\bez Was nie udałoby mi się}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,18 +50,18 @@ Systemy produkcyjne można podzielić ze względu na strukturę na:
 \item Linia montażowa -  zespół stanowisk roboczych (maszynowych, ręcznych lub mieszanych) ugrupowanych według kolejności operacji procesu technologicznego. \cite{wiki}
 \end{itemize}
 
-Szeregowanie może zostać zdefiniowne jako przydział zasobów w czasie do zadań w celu optymalizacji kryterium. Z punktu widzenia szeregowania w systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania. \cite{antColony} 
-
-Problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) jest uważany za silnie NP-trudny, czyli co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a często trudniejszy. W związku z tym często nie opłaca się tracić czasu i zasobów na poszukiwanie optymalnego rozwiązania JSSP, przyjmuje się natomiast rozwiązanie dopuszczalne uzyskiwane na podstwie przyjętej heurystyki. 
- 
+Szeregowanie może zostać zdefiniowne jako przydział zasobów w czasie do zadań w celu optymalizacji kryterium. Z punktu widzenia szeregowania w systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania. \cite{antColony}  
 
 \section        [Metody szeregowania zadań \ldots]
 		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
-\subsection     {Metody heurystyczne}
-Metody heurystyczne pozwalają na stosunkowo szybkie i łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie rozwiązania optymalnego, ze względu na czas i zasoby wymagane do jego odnalezienia. W szczególności w sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod. Metody te zwykle polegają na nadawaniu priorytetu, na podstawie danych zlecenia i chwili czasu, zadaniom w momencie wystąpienia konflktu. 
+Teoretycznie optymalne rozwiązanie problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań jest skończona. Jednak problem ten jest uważany za silnie NP-trudny, czyli co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a często trudniejszy. W związku z tym nie opłaca się tracić czasu i zasobów na poszukiwanie optymalnego rozwiązania JSSP w ten sposób, przyjmuje się natomiast 
+rozwiązanie dopuszczalne uzyskiwane o wiele szybciej przy wykorzystaniu mniejszych zasobów.
 
-Konflikt jest to sytuacja gdy w tym samym momencie na dany wolny zasób (maszynę) czeka więcej niż jedno zadanie. Trzeba wtedy zdecydować które z zadań zostanie obsłużone jako pirwsze. 
+\subsection     {Metody heurystyczne}
+Metody heurystyczne pozwalają na stosunkowo szybkie i łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie lepszego rozwiązania, ze względu na czas i zasoby wymagane do jego odnalezienia. W szczególności w sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod. 
+
+Metody te zwykle polegają na nadawaniu priorytetu, na podstawie danych zlecenia i chwili czasu, zadaniom w momencie wystąpienia konflktu. Konflikt jest to sytuacja gdy w tym samym momencie na dany wolny zasób (maszynę) czeka więcej niż jedno zadanie. Trzeba wtedy zdecydować które z zadań zostanie obsłużone jako pirwsze. 
 
 Najpopularniejsze heurystyki:
 \begin{itemize}
@@ -77,42 +75,70 @@ Najpopularniejsze heurystyki:
 \item Longest Imminent Procesing Time - Pierwsze jest przetwarzane zadanie którego czas przetwarzania na tej maszynie jest najdłuższy.
 \item Fewest Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba najmniejszej ilości operacji.
 \item Most Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba największej ilości operacji.
-\item Least Slack Time - Pierwsze jest przetwarzane zadanie którego różnica między czasem potrzebnym do jego ukończenia a czesem pozostałym do terminu zakończenia pracy jest najmniejsza. %Formalnie \cite{slack}
-%\begin{math}
-%(d - t) - c'
-%\end{math}
-\item Least Slack Time per Operation - Pierwsze jest przetwarzane zadanie którego stosunek czasu 'Slack' do ilości pozoostałych do wykonania operacji jest najmniejszy. 
+\item Least Slack Time - Pierwsze jest przetwarzane zadanie którego różnica między czasem potrzebnym do jego ukończenia a czesem pozostałym do terminu zakończenia pracy jest najmniejsza.
+\item Least Slack Time per Operation - Pierwsze jest przetwarzane zadanie którego stosunek czasu 'Slack' w
 \item Critical Ratio - Pierwsze jest przetwarzane zadanie którego stosunek czasu pozostałego do terminu ukończenia pracy i czasu potrzebnego do jego ukończenia jest najmniejszy.
 \item Random - Losowe zadanie jest przetwarzane jako pierwsze.
 \end{itemize}
 
 \subsection     {Inne metody}
-\begin{itemize}
-\item Algorytmy genetyczne - 
-\item Metoda podziałów i oszacowań - 
-\item Metoda ścieżki krytycznej - 
+Istnieją też nieheurystyczne metody szeregowania zadań w systemach wytwarzania gniazdowego. Zwykle wymagają one więcej czasu i zasobów niż metody heurystyczne, jednocześnie nie gwarantują uzyskania lepszego rozwiązania. Na przykład metoda podziałów i oszacowań, która pozwala 'odciąć' nieoptymalne gałęzie z grafu wszystkich rozwiązań i pozwala na znalezienie rozwiązania optymalnego, jednak przy wielu zadaniach trwa to na tyle długo, że zwykle po znalezieniu satysfakcjonującego rozwiązania algorytm jest przerywany.
 
-\end{itemize}
+Do znalezienia JSSP można wykorzystać także algorytmy genetyczne, których skuteczność jednak też zależy od czasu ich działania. Istnieją też inne metody, np. ścieżki krytycznej, jednak ich omówienie nie jest przedmiotem tej pracy.
 
 %\newlineTekst
 %\newlineSpis
-\section        [Heurystyki LIFO i FIFO \ldots]
-                {Heurystyki LIFO i FIFO w JSSP \newline - przykłady obliczeniowe}
+\section        [Heurystyki FIFO i LIFO \ldots]
+                {Heurystyki FIFO i LIFO w JSSP \newlineTekst - przykład obliczeniowy}
+Algorytm rozwiązywania problemu szeregowania zadań w systemie wytwarzania gniazdowego za pomocą heurystyk FIFO i LIFO ilustruje poniższy przykład. Dane zlecenia zostały przedstawione w formie tabeli, gdzie: \\
+j - numer zadania \\
+\(r_j\) - czas pojawienia się zadania w systemie \\
+\(d_j\) - termin ukończenia zadania \\
+m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym w nawiasie.
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ | r | c | c | l | }
+	\hline
+	j	& \(r_j\)	& \(d_j\)	& Marszruta technologiczna	\\ \hline
+	1	& 0	& 20	& m4 (4) - m2 (6) - m4 (5)	\\ \hline
+	2	& 3	& 29	& m4 (3) - m3 (6) - m1 (5) - m4 (5)	\\ \hline
+	3	& 0	& 20	& m1 (5) - m5 (4)	\\ \hline
+	4	& 0	& 20	& m5 (4) - m1 (4) - m2 (6)	\\ \hline
+	5	& 3	& 20	& m1 (3) - m5 (4)	\\ \hline
+	\end{tabular}
+	\caption{Struktura zlecenia}
+\end{table}
 
-\subsection     {Różne rozwiązania}
-\subsubsection  {FIFO}
 
-\subsubsection  {LIFO}
 
-\subsection     {Identyczne rozwiązania}
-\subsubsection  {FIFO}
 
-\subsubsection  {LIFO}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \caption{Uszeregowanie zadań w chwili wystąpienia konfliktu}
+\end{figure}
+
+
+\subsection{First In First Out}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \caption{Uszeregowanie przy użyciu heurystyki FIFO}
+\end{figure}
+
+\subsection{Last In First Out}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \caption{Uszeregowanie przy użyciu heurystyki LIFO}
+\end{figure}
 
        
 \section        {Program kSzereg}
-\subsection     {Front-end}
-Program kSzereg został wykonany na potrzeby tej pracy dyplomowej.\\
+%\subsection     {Front-end}
+Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Prezentuje on wyniki działania w postaci wykresu Gantt'a wraz z tabelą prezentującą czasy wykonania, przepływ, spóźnienia i przedwczesności (earliness) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\(F_{Śr}\)) paarametry strategii Just in Time.
 
 \begin{figure}[htb]
     \centering
@@ -136,7 +162,7 @@ Program kSzereg został wykonany na potrzeby tej pracy dyplomowej.\\
   Cały kod źródłowy znajduje się na załączonej płycie cd-rom. \\
 Natomiast istotne metody  zosstały przytoczone w dodtku Program \\     
 \section        [Przykładowe problemy \ldots]
-                {Przykładowe problemy \newline rozwiązane przy pomocy programu kSzereg}
+                {Przykładowe problemy \newlineTekst rozwiązane przy pomocy \newline programu kSzereg}
        
 \subsection     {Probelm 1}
 \subsubsection  {FIFO}

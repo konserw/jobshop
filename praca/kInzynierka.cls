@@ -1062,7 +1062,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \topmargin=-1in
 \advance\topmargin \marginesGorny\relax
 \@settopoint\topmargin
-\textheight=22.0cm
+\textheight=24.0cm
 %
 % wyrownanie wysokosci dla bez akapitow
 %
@@ -1132,8 +1132,6 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \@settopoint\textwidth
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  naglowki
@@ -1361,13 +1359,13 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\wnioski
+%\wnioski
      
-\rysunki
+%\rysunki
      
-\dodatkowo{DOWOLNANAZWA}
+%\dodatkowo{DOWOLNANAZWA}
 
-\rzymskaNumeracjaDodatkow 
-\literowaNumeracjaDodatkow
-\sectionWzory
-\subsectionWzory
+%\rzymskaNumeracjaDodatkow 
+%\literowaNumeracjaDodatkow
+%\sectionWzory
+%\subsectionWzory
