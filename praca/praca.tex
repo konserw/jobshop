@@ -12,15 +12,15 @@
 
 %hyperref musi być ostatnie
 \usepackage[hidelinks]{hyperref}
-
+%\usepackage{hyperref}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Przełączniki stylu %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mathtoolsset{showonlyrefs}
-\sectionWzory  
+%\mathtoolsset{showonlyrefs}
+%\sectionWzory  
 %\drukJednostronny
-\literowaNumeracjaDodatkow %% w³¹czy numeracjê dodatków literami
+%\literowaNumeracjaDodatkow %% w³¹czy numeracjê dodatków literami
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -52,26 +52,27 @@ Systemy produkcyjne można podzielić ze względu na strukturę na:
 
 Szeregowanie może zostać zdefiniowne jako przydział zasobów w czasie do zadań w celu optymalizacji kryterium. Z punktu widzenia szeregowania w systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania. \cite{antColony}  
 
-W strategi Just in Time zadanie powinno być ukończone możliwie blisko swojego terminu zakończenia (due date) jak to tylko możliwe. Zbyt wczesne zakończenie zadania pociąga za sobą koszty utrzymania, takie jak magazynowania czy ubezpieczenia. Z drugiej jednak strony spóźnione zlecenie często skutkuje karami umownymi czy nadszarpnięciem reputacji przedsiębiorstwa. Mimo to często przedsiębiorstwu bardziej opłaca się zakończyć zadanie krótko po terminie, niż ponosić koszty związane ze zbyt wczesnym zakończeniem pracy. Należy się więc zastanowić jak matematycznie opisać opłacalność zarówno spóźnienia jak i przedwczesnego ukończenia zadania. Taką rolę pełnią tzw. funkcje kosztu. Na potrzeby tej pracy wybrano następujące funkcje:
+W strategi Just in Time zadanie powinno być ukończone możliwie blisko swojego terminu zakończenia (due date) jak to tylko możliwe. Zbyt wczesne zakończenie zadania pociąga za sobą koszty utrzymania, takie jak magazynowania czy ubezpieczenia. Z drugiej jednak strony spóźnione zlecenie często skutkuje karami umownymi czy nadszarpnięciem reputacji przedsiębiorstwa. Mimo to często przedsiębiorstwu bardziej opłaca się zakończyć zadanie krótko po terminie, niż ponosić koszty związane ze zbyt wczesnym zakończeniem pracy. Należy się więc zastanowić jak matematycznie opisać opłacalność zarówno spóźnienia jak i przedwczesnego ukończenia zadania. Taką rolę pełnią tzw. funkcje kosztu. \cite{genetyczne} Na potrzeby tej pracy wybrano następujące funkcje:
 
 \begin{equation}
     \sqrt{(\sum e_j^2 + \sum l_j^2}
-    \ref{eq:w1}
+    \label{eq:w1}
 \end{equation}
 \begin{equation}
-    \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0\\ \beta = 0}} 
-    \ref{eq:w2}
+    \alpha*\sum e_j + \beta*\sum l_j
+    \label{eq:w2}
 \end{equation}
 , gdzie \\
-\(\alpha, \beta\) - parametry zakładane przy formuowaniu problemu\\
+\(e_j\) - przedwczesność j-tego zadania, \\
+\(l_j\) - spóźnienie j-tego zadania, \\
+\(\alpha, \beta\) - wagi przedwczesności i spóźnienia zakładane przy formuowaniu problemu\\
 
 Zastosowanie strategi Just in Time w systemach produkcyjnych o strukturze gniazdowej można więc sprowadzić do poszukiwania takiego rozwiązania problemu harmonogramowania, aby minimalizować funckję \ref{eq:w1} lub \ref{eq:w2}.
 
 \section        [Metody szeregowania zadań \ldots]
 		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
-Teoretycznie optymalne rozwiązanie problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań jest skończona. Jednak problem ten jest uważany za silnie NP-trudny, czyli co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a często trudniejszy. W związku z tym nie opłaca się tracić czasu i zasobów na poszukiwanie optymalnego rozwiązania JSSP w ten sposób, przyjmuje się natomiast 
-rozwiązanie dopuszczalne uzyskiwane o wiele szybciej przy wykorzystaniu mniejszych zasobów.
+Teoretycznie optymalne rozwiązanie problem szeregowania zadań w systmie wytwarzania gniazdowego (skr. JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań zawsze jest skończona. Jednak problem ten jest silnie NP-trudny, czyli pozaostaje NP-trudny nawet przy ograniczeniu maksymalnej wartości występujących w jego opisie liczb. Natomiat problem NP-trudny jest co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a często trudniejszy. Oznacza to, że już przy niewielkiej ilości zadania problem przestaje być rozwiązywalny w rozsądnym czasie nawet przy użyciu superkomputerów. W związku z tym wykorzystuje się metody pozwalające uzyskać nieoptymalne, ale akceptowalne rozwiązanie bez potrzeby rozpatrywania każdego możliwego rozwiązania. \cite{np}
 
 \subsection     {Metody heurystyczne}
 Metody heurystyczne pozwalają na stosunkowo szybkie i łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie lepszego rozwiązania, ze względu na czas i zasoby wymagane do jego odnalezienia. W szczególności w sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod. 
@@ -99,7 +100,7 @@ Najpopularniejsze heurystyki:
 \subsection     {Inne metody}
 Istnieją też nieheurystyczne metody szeregowania zadań w systemach wytwarzania gniazdowego. Zwykle wymagają one więcej czasu i zasobów niż metody heurystyczne, jednocześnie nie gwarantują uzyskania lepszego rozwiązania. Na przykład metoda podziałów i oszacowań, która pozwala 'odciąć' nieoptymalne gałęzie z grafu wszystkich rozwiązań i pozwala na znalezienie rozwiązania optymalnego, jednak przy wielu zadaniach trwa to na tyle długo, że zwykle po znalezieniu satysfakcjonującego rozwiązania algorytm jest przerywany.
 
-Do znalezienia JSSP można wykorzystać także algorytmy genetyczne, których skuteczność jednak też zależy od czasu ich działania. Istnieją też inne metody, np. ścieżki krytycznej, jednak ich omówienie nie jest przedmiotem tej pracy.
+Do znalezienia rozwiązania JSSP można wykorzystać także algorytmy genetyczne, które są adaptacyjnym narzędziem ukierunkowanego poszukiwania optimum funkcji celu (np. \ref{eq:w1}, czy \ref{eq:w2}), które pozwala na równoległe przeszukiwanie zakodowanej przestrzeni alternatywnych rozwiązań. Procedura ta wykorzystuje procesy losowe do określenia kierunku przeszukiwania. Idea algorytmów genetycznych naśladuje zasadę działania rzeczywistego mechanizmu ewolucyjnego, czyli darwinowską strategię przetrwania osobników biologicznie najlepiej przystosowanych. Możemy zasymulować ten proces i zastosować go do rozwiązywania problemów trudnych obliczeniowo, dla których nie jesteśmy w stanie skonstruować algorytmu dającego dokładne rozwiązanie w rozsądnym czasie (problemy klasy NP), przy czym w ogólnym przypadku uzyskujemy rozwiązania suboptymalne, za to stosunkowo szybko. Dodatkowo wyniki działania algorytmu genetycznego można poprawić stosując Lokalne Poszukiwanie. \cite{grzechca} \cite{genetyczne}
 
 %\newlineTekst
 %\newlineSpis
@@ -124,37 +125,71 @@ m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym
 	\caption{Struktura zlecenia}
 \end{table}
 
-
-
+\begin{table}[htb]
+    \begin{tabular}{ p{0.75cm} | p{13cm} }
+    t & Zdarzenie \\ \hline
+    0 & Do systemu wchodzą zadania 1, 3 i 4 które zostają przydzielone zgodnie ze swoimi marszrutami technologicznymi odpowiednio do maszyn m4, m1 i m5.  \\ \hline
+    3 & Do systemu wchodzą zadania 2 i 5, lecz maszyny na których powinno zacząć się ich przetwarzanie są zajęte, czekają więc na zwolnienie maszyny. \\ \hline
+    4 & Na maszynie 5 zakończyło się przetwarzanie zadania 4. Na tę maszynę żadne zadanie nie oczekiwało. Na maszynie 4 zakończyło się przetwarzanie zadania 1. Na tę maszynę oczekuje tylko zadanie 2, które zostaje od razu na niej uruchomione. Zadanie 1 natomiast czeka na zwolnienie się maszyny 1. \\ \hline
+    5 & Przetwarzanie zadanie 3 na maszynie 1 dobiegło końca. Na tę maszynę oczekiwały dwa zadania: 1 i 5, więc nastąpił tzw. konflikt.   
+    \end{tabular}
+    \caption{Algorytm szeregowania zadań - cz.1}
+\end{table}
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/konf}
     \caption{Uszeregowanie zadań w chwili wystąpienia konfliktu}
 \end{figure}
 
+Heurystyki służą do rozwiązywania takich właśnie konfliktów. Jeżeli zdecydujemy się na heurystykę FIFO dostęp do maszyny uzyska to zadanie które oczekuje najdłużej (jako pierwsze "zajęło miejsce w kolejce"), w tym przypadku jest to zadanie 5. Heurystyka LIFO faworyzuje zadania najkrócej oczekujące na zasób, w tym przypadku więc będzie to zadanie 4. Jeżeli nastąpiłby konflikt między dwoma równoprawnymi pod względem wybranej heurystyki zadaniami, należy wtedy zastosować dowolną inną "pomocniczą" heurystykę, choćby Random, czyli wybranie losowego zadania.
 
+Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane, natomiast końcowe uszeregowanie w zależności od wybranej heurystyki przedstawiają poniższe wykresy Gantt'a oraz wyznaczniki jakości uszeregowania. Różnice między tymi dwoma uszeregowaniami wydają się być kosmetyczne, wynika to jednak z trywialności omawianego przykładu. Podczas analizy tych wyznaczników widać różnice między uszeregowaniami. W tym konkretnym przypadku wybór heurystyki nie wpłyną na \(C_max\), czyli czas ukończenia całego zlecenia. Jednak trochę lepsze rozwiązanie, ze względu na \(\bar{F}\) oraz \(\sqrt{(\sum e_j^2 + \sum l_j^2}\), dała heurystyka FIFO.
 
+\FloatBarrier
 \subsection{First In First Out}
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/fifo}
     \caption{Uszeregowanie przy użyciu heurystyki FIFO}
 \end{figure}
-
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{ l l }
+    \(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 15.3297\)	\\
+    \(\bar{F} = 15.6 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0\\ \beta = 0}} = 0 \)	\\ 
+    \end{tabular}
+    \caption{Wyznaczniki jakości uszeregowania}
+\end{table}
+	
+\FloatBarrier
 \subsection{Last In First Out}
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/main}
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/lifo}
     \caption{Uszeregowanie przy użyciu heurystyki LIFO}
 \end{figure}
-
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ | r | c | c | c | c |}
+	\hline
+	j	& \(c_j\)	& \(f_j\)	& \(l_j\)	& \(e_j\)	\\ \hline
+	1	& 18	& 18	& 0	& 2	\\ \hline
+	2	& 23	& 23	& 0	& 6	\\ \hline
+	3	& 12	& 12	& 0	& 8	\\ \hline
+	4	& 19	& 19	& 0	& 1	\\ \hline
+	5	& 8	& 8	& 0	& 12	\\ \hline
+	\end{tabular}
+	\caption{Parametry wykonanych zadań}
+\end{table}
        
 \section        {Program kSzereg}
 %\subsection     {Front-end}
-Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Prezentuje on wyniki działania w postaci wykresu Gantt'a wraz z tabelą zawierającą czasy wykonania (\(C_j\)), przepływu (\(f_j\)), spóźnienia (\(l_j\)) i przedwczesności (earliness, \(e_j\)) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\( \bar{F} \)), oraz wartości funkcji kosztów \ref{eq:w1} oraz \ref{eq:w2} opisanych we wstępie do niniejszej pracy. 
+Program kSzereg został napisany w C++ na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Wprowadzanie danych odbywa się za pośrednictwem graficznego interface'u opartego o framework Qt. Na górnej belce programu po prawej stronie znajdują się kontroli umożliwiające wybór heurystyki używanej do rozwiązania zadania oraz parametrów \(\alpha, \beta\) podstawianych do wzoru \eqref{eq:w2}. Znajdują się tam też przyciski umożliwiające zapisanie zlecenia da pliku binarnego z rozszerzeniem .mar (eksport), oraz wczytanie zleenia z takiego pliku (import). 
+
+Przed dodaniem zadań do zlecenia należy ustalić maksymalną długość marszruty. W zadaniach z krótszą marszrutą technologiczną należy pozostawić operacje z zerowym czasem, które nie będą brane pod uwagę podczas rozwiązywania JSSP. Po dodaniu zadania możliwość zmiany długości marszruty jest blokowana. Każda operacja jest definiowana prze numer maszyny na której ma zostać wykonana oraz czas jej wykonywania. Ilość maszyn możliwych do wyboru może być zmieniana w czasie edycji zlecenia (po dodaniu zadań). Poza marszrutą technologiczną zadanie definiują czasy rozpoczęcia (\(r_j\)) i zakończenia (\(d_j\)) zadania. Możliwe jest też nadanie zadaniu nazwy.
 
 \begin{figure}[htb]
     \centering
@@ -162,11 +197,15 @@ Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on
     \caption{Główne okno programu}
 \end{figure}
 
+Program kSzereg rezentuje wyniki działania w postaci wykresu Gantt'a wraz z tabelą zawierającą czasy wykonania (\(C_j\)), przepływu (\(f_j\)), spóźnienia (\(l_j\)) i przedwczesności (earliness, \(e_j\)) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\( \bar{F} \)), oraz wartości funkcji kosztów \eqref{eq:w1} oraz \eqref{eq:w2} opisanych we wstępie do niniejszej pracy. 
+
 \begin{figure}[htb]
     \centering
     \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/wykres}
     \caption{Prezentacja wyznaczonego uszeregowania}
 \end{figure}
+
+Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wyników działania programu w postaci pliku .tex z kodem \LaTeX{}'a lub .pdf. W obu przypadkach sam wykres Gantt'a jest eksportowany do pliku .svg w folderze output. Opcje te korzystają jednak z zewnętrznych programów inkscape oraz rubber (wraz z odpowiednimi paczkami texlive), które muszą być zainstalowane w systemie. 
 
 \begin{figure}[htb]
     \centering
@@ -174,9 +213,15 @@ Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on
     \caption{Wyeksportowany plik .pdf}
 \end{figure}
 
-\subsection     {Back-end}
-  Cały kod źródłowy znajduje się na załączonej płycie cd-rom. \\
-Natomiast istotne metody  zosstały przytoczone w dodtku Program \\     
+Dodatkowo istnieje możliwość obsługi programu kSzereg z poziomu terminalu tekstowego korzystając z wcześniej zapisanych plików .mar, nie jest bowiem możliwa konfiguracja zadaniam jedynie rozwiązanie problemu i eksport wyników do pliku .tex lub .pdf. Zaletą obsługi programu z termianlu jest możliwość podania jako parametr nazwy pliku tekstowego z zapisanymi ścieżkami dostępu do wielu plików .mar, a nawet wybranie obu heurystyk do rozwiązania tych zleceń, co spowoduje rozwiązanie JSSP dla każdego z tych zadań po kolei bez ingerencji użytkownika. Bardziej szczegółowy opis interfejsu lini poleceń jest dostępny po uruchomieniu programu z przełącznikiem '--help'.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/cli}
+    \caption{Pomoc interface'u linii poleceń}
+\end{figure}
+
+   
 \section        [Przykładowe problemy \ldots]
                 {Przykładowe problemy \newlineTekst rozwiązane przy pomocy \newline programu kSzereg}
        
@@ -221,6 +266,10 @@ Natomiast istotne metody  zosstały przytoczone w dodtku Program \\
    
 \begin{thebibliography}{99}
 
+%\bibitem{lagrange}
+%Lagrangian Bounds for Just-In-Time Job-Shop Scheduling \\
+%Philippe Baptiste Marta Flamini Francis Sourd
+
 \bibitem{pastuszak} 
 Zarządzanie logistyczne Podstawowe definicje \\
 dr Zbigniew Pastuszak
@@ -234,8 +283,16 @@ Linia produkcyjna \\
 Źródło: \url{http://pl.wikipedia.org/wiki/Linia_produkcyjna} [dostęp:~20.12.12]
 
 \bibitem{antColony}
-    Ant Colony Algorithm for Just-in-Time Job Shop Scheduling with Transportation Times and Multirobots \\
-    Fatima El Khoukhi, Tarik Lamoudan, Jaouad Boukachour, Ahmed El Hilali Alaoui
+Ant Colony Algorithm for Just-in-Time Job Shop Scheduling with Transportation Times and Multirobots \\
+Fatima El Khoukhi, Tarik Lamoudan, Jaouad Boukachour, Ahmed El Hilali Alaoui
+
+\bibitem{np}
+Algorithms and Theory of Computation Handbook, CRC Press LLC, 1999, "strongly NP-hard", in \href{http://xlinux.nist.gov/dads/}{Dictionary of Algorithms and Data Structures} [online], Paul E. Black, ed., U.S. \href{http://www.nist.gov/}{National Institute of Standards and Technology}. 17 December 2004. Available from: \url{http://www.nist.gov/dads/HTML/stronglyNP.html} [dostęp:~7.01.2013]
+
+\bibitem{genetyczne}
+Genetic Algorithm and Local Search for Just-in-Time Job–Shop Scheduling \\
+Rodolfo Pereira Araujo, André Gustavo dos Santos, José Elias Cláudio Arroyo \\
+2009 IEEE Congress on Evolutionary Computation (CEC 2009)
 
 
 

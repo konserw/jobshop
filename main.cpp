@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     bool m = false;
     cli = (args->count() > 1);
-    if(cli && args->contains("-m", Qt::CaseInsensitive))
+    if(cli && (args->contains("-m") || args->contains("--maximize")))
     {
         cli = false;
         m = true;
@@ -46,23 +46,23 @@ int main(int argc, char *argv[])
     //display cli help text
     if(args->contains("--help", Qt::CaseInsensitive))
     {
-        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [<file> ...] --pdf";
+        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [--help]"; //[<file> ...] ";
         qDebug() << "or kSzereg without arguments for GUI operation";
         qDebug() << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis";
         qDebug() << "for job shop problem.";
         qDebug() << "";
         qDebug() << "OPTIONS:";
-        qDebug() << "\t--help\t\t\t\tDisplay this help text and exit";
-        qDebug() << "\t-m\t\tGUI operation with maximized window";
+        qDebug() << "\t--help\t\t\tDisplay this help text and exit";
+        qDebug() << "\t-m, --maximize\t\tGUI operation with maximized window";
         qDebug() << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default";
         qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
-        qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
-        qDebug() << "\t-p --pdf\t\tCompile LaTeX output to .pdf format";
+      //  qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
+        qDebug() << "\t-p, --pdf\t\tCompile LaTeX output to .pdf format";
         qDebug() << "";
         qDebug() << "Aviable heuristics:";
         qDebug() << "\tFIFO\t\t\tFirst In First Out";
         qDebug() << "\tLIFO\t\t\tLast In First Out";
-        qDebug() << "\tall\t\tapply all heuristics subsequently";
+        qDebug() << "\tall\t\t\tApply all heuristics subsequently";
         delete args;
         return 0;
     }

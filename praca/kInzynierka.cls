@@ -1062,7 +1062,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \topmargin=-1in
 \advance\topmargin \marginesGorny\relax
 \@settopoint\topmargin
-\textheight=24.0cm
+\textheight=23.5cm
 %
 % wyrownanie wysokosci dla bez akapitow
 %
