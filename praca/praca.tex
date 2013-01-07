@@ -52,6 +52,21 @@ Systemy produkcyjne można podzielić ze względu na strukturę na:
 
 Szeregowanie może zostać zdefiniowne jako przydział zasobów w czasie do zadań w celu optymalizacji kryterium. Z punktu widzenia szeregowania w systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania. \cite{antColony}  
 
+W strategi Just in Time zadanie powinno być ukończone możliwie blisko swojego terminu zakończenia (due date) jak to tylko możliwe. Zbyt wczesne zakończenie zadania pociąga za sobą koszty utrzymania, takie jak magazynowania czy ubezpieczenia. Z drugiej jednak strony spóźnione zlecenie często skutkuje karami umownymi czy nadszarpnięciem reputacji przedsiębiorstwa. Mimo to często przedsiębiorstwu bardziej opłaca się zakończyć zadanie krótko po terminie, niż ponosić koszty związane ze zbyt wczesnym zakończeniem pracy. Należy się więc zastanowić jak matematycznie opisać opłacalność zarówno spóźnienia jak i przedwczesnego ukończenia zadania. Taką rolę pełnią tzw. funkcje kosztu. Na potrzeby tej pracy wybrano następujące funkcje:
+
+\begin{equation}
+    \sqrt{(\sum e_j^2 + \sum l_j^2}
+    \ref{eq:w1}
+\end{equation}
+\begin{equation}
+    \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0\\ \beta = 0}} 
+    \ref{eq:w2}
+\end{equation}
+, gdzie \\
+\(\alpha, \beta\) - parametry zakładane przy formuowaniu problemu\\
+
+Zastosowanie strategi Just in Time w systemach produkcyjnych o strukturze gniazdowej można więc sprowadzić do poszukiwania takiego rozwiązania problemu harmonogramowania, aby minimalizować funckję \ref{eq:w1} lub \ref{eq:w2}.
+
 \section        [Metody szeregowania zadań \ldots]
 		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
@@ -119,6 +134,7 @@ m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym
 \end{figure}
 
 
+
 \subsection{First In First Out}
 
 \begin{figure}[htb]
@@ -138,7 +154,7 @@ m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym
        
 \section        {Program kSzereg}
 %\subsection     {Front-end}
-Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Prezentuje on wyniki działania w postaci wykresu Gantt'a wraz z tabelą prezentującą czasy wykonania, przepływ, spóźnienia i przedwczesności (earliness) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\(F_{Śr}\)) paarametry strategii Just in Time.
+Program kSzereg został napisany na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Prezentuje on wyniki działania w postaci wykresu Gantt'a wraz z tabelą zawierającą czasy wykonania (\(C_j\)), przepływu (\(f_j\)), spóźnienia (\(l_j\)) i przedwczesności (earliness, \(e_j\)) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\( \bar{F} \)), oraz wartości funkcji kosztów \ref{eq:w1} oraz \ref{eq:w2} opisanych we wstępie do niniejszej pracy. 
 
 \begin{figure}[htb]
     \centering
