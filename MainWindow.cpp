@@ -307,8 +307,8 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
 {
     qint32 tasks = qint32(win.ui->tableWidget->rowCount());
     qint32 routLength = qint32(win.ui->rout->value());
-    qreal alfa = qint32(win.ui->alfa->value());
-    qreal beta = qint32(win.ui->beta->value());
+    qreal alfa = qreal(win.ui->alfa->value());
+    qreal beta = qreal(win.ui->beta->value());
     out << qint32(win.ui->machines->value())                        //nbumber of machines
         << routLength                                               //number of operations for each task
         << tasks                                                    //number of tasks

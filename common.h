@@ -7,8 +7,9 @@ extern int t;
 extern bool cli;
 extern int fmt;
 
-#define dx 20
+#define dx 9
 #define dy 20
+#define X0 35
 
 #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 

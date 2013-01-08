@@ -353,8 +353,8 @@ void wykres::setupScene()
     QGraphicsSimpleTextItem* text;
     QFont font("Arial", 12);
     qreal x;
-    qreal x0 = 80;
-    qreal ym = (maszyn*40)+20;
+    qreal x0 = X0;
+    qreal ym = (maszyn*2*dy)+dy;
 
     for(int i=0; i<c; i+=5)
     {
@@ -364,12 +364,13 @@ void wykres::setupScene()
         text->setX(x+3);
         text->setY(ym-18);
     }
-
+/*  ilnia z Cmax
     x = x0 + dx*c;
     scene->addLine(x, 0, x, ym);
     text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
     text->setX(x+3);
     text->setY(ym-18);
+*/
 }
 
 void wykres::clean()

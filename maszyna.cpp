@@ -10,25 +10,25 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     _id = id;
     cur = NULL;
 
-    QString s = tr("Maszyna ");
+    QString s = tr("m");
     s += QString::number(id);
 
     scene = sc;
-    y = (id-1)*40;
+    y = (id-1)*(2*dy); //40
     x = 0;
     font = new QFont("Arial", 10, QFont::Normal, false);
     pen = new QPen();
+    pen->setWidth(1);
     penKonflikt = new QPen(QColor(255, 0, 0));
     penKonflikt->setWidth(5);
-    pen->setWidth(1);
 
     QGraphicsTextItem* text = scene->addText(s, *font);
     text->setX(x);
     text->setY(y);
 
-    x += 80;
-    scene->addLine(x, y, x, y+20, *pen);
-    y += 20;
+    x += X0;
+    scene->addLine(x, y, x, y+2*dy, *pen);
+    y += dy;
 
     DEBUG << "utworzono maszyne nr " << id;
 }
