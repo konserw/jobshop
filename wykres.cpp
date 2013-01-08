@@ -317,7 +317,8 @@ void wykres::latex(const QString &texName)
            "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
             "\t\t\\caption{Wykres Gantt'a}\n"
-            "\t\\end{figure}\n";
+            "\t\\end{figure}\n"
+            "\t\\FloatBarrier\n";
     //        "\t\\end{landscape}\n";
 
     save(texName, s);
