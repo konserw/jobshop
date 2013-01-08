@@ -227,7 +227,9 @@ void wykres::latex(const QString &texName)
     svgGen.setViewBox(QRect(0, 0, 1000, 500));
     svgGen.setTitle(tr("Gantt chart"));
     svgGen.setDescription(tr("Gantt chart"));
-    QPainter painter(&svgGen);
+    QPainter painter;
+    painter.begin(&svgGen);
+    painter.rotate(90);
     scene->render(&painter);
     painter.end();
 
@@ -238,6 +240,7 @@ void wykres::latex(const QString &texName)
     s =     "\n%Tabela danych\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
+            "\t\t\\caption{Struktura zlecenia}\n"
             "\t\t\\begin{tabular}{ | r | c | c | l | }\n"
             "\t\t\\hline\n"
             "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
@@ -255,12 +258,12 @@ void wykres::latex(const QString &texName)
         s += "\t\\\\ \\hline\n";
     }
     s +=    "\t\t\\end{tabular}\n"
-            "\t\t\\caption{Struktura zlecenia}\n"
             "\t\\end{table}\n";
 
     s +=    "\n%Tabela wynikowa\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
+            "\t\t\\caption{Parametry wykonanych zadań}\n"
             "\t\t\\begin{tabular}{ | r | c | c | c | c |}\n"
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
@@ -283,7 +286,6 @@ void wykres::latex(const QString &texName)
     }
 
     s +=    "\t\t\\end{tabular}\n"
-            "\t\t\\caption{Parametry wykonanych zadań}\n"
             "\t\\end{table}\n";
 
     s +=    "\n%Tabela wyznacznikow\n\n"
@@ -304,21 +306,19 @@ void wykres::latex(const QString &texName)
     s +=    "}} = ";
     s +=    QString::number(w2);
     s +=    " \\)\t\\\\ \n";
-
     s +=    "\t\t\\end{tabular}\n"
-            "\t\t\\caption{Wyznaczniki jakości uszeregowania}\n"
             "\t\\end{table}\n";
 
-    s +=    "%wykres w landscape\n"
-           "\t\\begin{landscape}\n"
+    s +=    "%wykres gantt'a\n" //  w landscape\n"
+  //         "\t\\begin{landscape}\n"
            "\t\\begin{figure}[htb]\n"
            "\t\t\\centering\n"
            "\t\t\\def\\svgwidth{\\columnwidth}\n"
            "\t\t\\input{";
     s +=    pdfName + "_tex}\n"
             "\t\t\\caption{Wykres Gantt'a}\n"
-            "\t\\end{figure}\n"
-            "\t\\end{landscape}\n";
+            "\t\\end{figure}\n";
+    //        "\t\\end{landscape}\n";
 
     save(texName, s);
 }
