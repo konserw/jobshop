@@ -229,7 +229,7 @@ void wykres::latex(const QString &texName)
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter;
     painter.begin(&svgGen);
-    painter.rotate(90);
+    painter.rotate(-90);
     scene->render(&painter);
     painter.end();
 
