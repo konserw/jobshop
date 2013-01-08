@@ -189,7 +189,10 @@ void MainWindow::more()
     qint32 rows = ui->tableWidget->rowCount();
     qint32 cols = ui->tableWidget->columnCount();
 
+
     ui->tableWidget->insertRow(rows);
+    item = new QTableWidgetItem("");
+    ui->tableWidget->setItem(rows, 0, item);
     item = new QTableWidgetItem("0");
     ui->tableWidget->setItem(rows, 1, item);
     item = new QTableWidgetItem("0");
@@ -304,8 +307,8 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
 {
     qint32 tasks = qint32(win.ui->tableWidget->rowCount());
     qint32 routLength = qint32(win.ui->rout->value());
-    qint32 alfa = qint32(win.ui->alfa->value());
-    qint32 beta = qint32(win.ui->beta->value());
+    qreal alfa = qint32(win.ui->alfa->value());
+    qreal beta = qint32(win.ui->beta->value());
     out << qint32(win.ui->machines->value())                        //nbumber of machines
         << routLength                                               //number of operations for each task
         << tasks                                                    //number of tasks
@@ -332,7 +335,8 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
     win.ui->exportButton->setEnabled(true);
     win.ui->importButton->setEnabled(false);
 
-    qint32 machines, routLength, tasks, alfa, beta;
+    qint32 machines, routLength, tasks;
+    qreal alfa, beta;
 
     in >> machines >> routLength >> tasks >> alfa >> beta;
     win.ui->machines->setValue(machines);
