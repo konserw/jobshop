@@ -42,7 +42,7 @@ private:
     int zadan, maszyn;
 
     int c;
-    double f, l, e, w1, w2, alfa, beta;
+    double f, l, e, w1, w2, alfa, beta, Tmax, Tsr;
 
     const QList<zadanie*> *zadania;
     QGraphicsScene* scene;

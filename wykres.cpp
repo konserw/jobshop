@@ -291,14 +291,18 @@ void wykres::latex(const QString &texName)
     s +=    "\n%Tabela wyznacznikow\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
-            "\t\t\\begin{tabular}{ l l }\n"
+            "\t\t\\begin{tabular}{ l l l }\n"
             "\t\t\\(C_{max} = ";
     s +=    QString::number(c);
-    s +=    " \\)\t& \\(\\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
+    s +=    " \\)\t& \\( T_{max} = ";
+    s +=    QString::number(Tmax);
+    s +=    " \\)\t& \\( \\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
     s +=    QString::number(w1);
     s +=    "\\)\t\\\\\n"
-            "\t\t\\(\\bar{F} = ";
+            "\t\t\\( \\bar{F} = ";
     s +=    QString::number(f);
+    s +=    " \\)\t& \\( \\bar{T} = ";
+    s +=    QString::number(Tsr);
     s +=    " \\)\t& \\( \\alpha*\\sum e_j + \\beta*\\sum l_j \\Big|_{\\substack{\\alpha = ";
     s +=    QString::number(alfa);
     s +=    "\\\\ \\beta = ";
@@ -310,7 +314,6 @@ void wykres::latex(const QString &texName)
             "\t\\end{table}\n";
 
     s +=    "%wykres gantt'a\n" //  w landscape\n"
-  //         "\t\\begin{landscape}\n"
            "\t\\begin{figure}[htb]\n"
            "\t\t\\centering\n"
            "\t\t\\def\\svgwidth{\\columnwidth}\n"
@@ -319,8 +322,6 @@ void wykres::latex(const QString &texName)
             "\t\t\\caption{Wykres Gantt'a}\n"
             "\t\\end{figure}\n"
             "\t\\FloatBarrier\n";
-    //        "\t\\end{landscape}\n";
-
     save(texName, s);
 }
 
@@ -331,6 +332,7 @@ void wykres::evalStats()
     f = 0;
     l = 0;
     e = 0;
+    Tmax = 0;
     double sum = 0;
 
     foreach(st, stats)
@@ -341,8 +343,11 @@ void wykres::evalStats()
 
         if(st->cj() > c)c = st->cj();               //find Cmax
         f += st->fj();                              //evaluate mean flow time
+
+        if(st->lj() > Tmax) Tmax = st->lj();
     }
     f /= zadan;
+    Tsr = l/zadan;
 
     w1 = sqrt(sum);
     w2 = (alfa*e) + (beta*l);
