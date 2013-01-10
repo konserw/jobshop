@@ -1,0 +1,50 @@
+
+%Tabela danych
+
+	\begin{table}[htb]
+		\centering
+		\caption{Struktura zlecenia}
+		\begin{tabular}{ | r | c | c | l | }
+		\hline
+		j	& \(r_j\)	& \(d_j\)	& Marszruta technologiczna	\\ \hline
+		1	& 0	& 20	& m4 (4) - m2 (6) - m4 (5)	\\ \hline
+		2	& 3	& 29	& m4 (3) - m3 (6) - m1 (5) - m4 (5)	\\ \hline
+		3	& 0	& 20	& m1 (5) - m5 (4)	\\ \hline
+		4	& 0	& 20	& m5 (4) - m1 (4) - m2 (6)	\\ \hline
+		5	& 3	& 20	& m1 (3) - m5 (4)	\\ \hline
+		\end{tabular}
+	\end{table}
+
+%Tabela wynikowa
+
+	\begin{table}[htb]
+		\centering
+		\caption{Parametry wykonanych zadań}
+		\begin{tabular}{ | r | c | c | c | c |}
+		\hline
+		j	& \(c_j\)	& \(f_j\)	& \(l_j\)	& \(e_j\)	\\ \hline
+		1	& 15	& 15	& 0	& 5	\\ \hline
+		2	& 23	& 20	& 0	& 6	\\ \hline
+		3	& 9	& 9	& 0	& 11	\\ \hline
+		4	& 16	& 16	& 0	& 4	\\ \hline
+		5	& 16	& 13	& 0	& 4	\\ \hline
+		\end{tabular}
+	\end{table}
+
+%Tabela wyznacznikow
+
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{ l l }
+		\(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 14.6287\)	\\
+		\(\bar{F} = 14.6 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.4\\ \beta = 0.6}} = 12 \)	\\ 
+		\end{tabular}
+	\end{table}
+%wykres gantt'a
+	\begin{figure}[htb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\input{gantt_x2.pdf_tex}
+		\caption{Wykres Gantt'a}
+	\end{figure}
+	\FloatBarrier

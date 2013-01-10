@@ -570,36 +570,13 @@
 \let\l@table\l@figure
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% orginalna wersja zmieniona:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newenvironment{thebibliography}[1]
-%     {\section*{\refname
-%        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
-%      \list{\@biblabel{\@arabic\c@enumiv}}%
-%           {\settowidth\labelwidth{\@biblabel{#1}}%
-%            \leftmargin\labelwidth
-%            \advance\leftmargin\labelsep
-%            \@openbib@code
-%            \usecounter{enumiv}%
-%            \let\p@enumiv\@empty
-%            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-%      \sloppy
-%      \clubpenalty4000
-%      \@clubpenalty \clubpenalty
-%      \widowpenalty4000%
-%      \sfcode`\.\@m}
-%     {\def\@noitemerr
-%       {\@latex@warning{Empty `thebibliography' environment}}%
-%      \endlist}
-%
-%  Po zmianach:
-%
+
+%zmiana bibliografii na 'zwykly' rozdzial
 \newenvironment{thebibliography}[1]
-     {\section*{\refname
-        \markboth{\MakeUppercase\refname\liniaA}{\liniaB\MakeUppercase\refname}%
-        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
-         \addcontentsline{toc}{section}{\refname}%
+     {\section{\refname}
+ %       \markboth{\MakeUppercase\refname\liniaA}{\liniaB\MakeUppercase\refname}%
+ %       \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+ %        \addcontentsline{toc}{section}{\refname}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -1343,6 +1320,10 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
     \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
 }}
 
+%konserw - polskie składanie - sieroty wdowy itp
+\widowpenalty=10000 %nie pozostawia wdów na ko«cu strony
+\clubpenalty=10000 %nie pozostawia sierot
+\brokenpenalty=10000 %nie dzieli stron je»eli podziaa wyrazu
 
 % dla kompatybilnosci:
 \let\xle\le \let\xge\ge
@@ -1351,21 +1332,3 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 %%         K O N I E C                                       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \endinput
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% \mathindent=45pt gdy  wzory do lewej i numery do lewej
-%%    Poprawic zaleŸno od sposobu numerowania wzor¢w
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\wnioski
-     
-%\rysunki
-     
-%\dodatkowo{DOWOLNANAZWA}
-
-%\rzymskaNumeracjaDodatkow 
-%\literowaNumeracjaDodatkow
-%\sectionWzory
-%\subsectionWzory

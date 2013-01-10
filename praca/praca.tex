@@ -15,16 +15,7 @@
 %hyperref musi być ostatnie
 \usepackage[hidelinks]{hyperref}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Przełączniki stylu %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \mathtoolsset{showonlyrefs}
-
-\widowpenalty=10000 %nie pozostawia wdów na ko«cu strony
-\clubpenalty=10000 %nie pozostawia sierot
-\brokenpenalty=10000 %nie dzieli stron je»eli podziaa wyrazu
-%\sloppy %zakaz wydau»ania linii (gdy nie mo»e zao»y¢)
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% Podstawowe info %%%
@@ -41,8 +32,6 @@
 
 \begin{document}
 
-%\bibliographystyle{plunsrt}  
-
 \section        {Wstęp}
 Celem tej pracy jest przedstawienie strategii \emph{Just in Time} (skr. JIT) dla szeregowania zadań w systemach produkcyjnych o strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk \emph{First In First Out} (skr. FIFO) i \emph{Last In First Out} (skr. LIFO). Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania wykorzystując obie te heurystyki, oraz obliczający wyznaczniki jakości uszeregowania w kontekście strategii JIT.
 
@@ -51,7 +40,7 @@ System produkcyjny jest to celowo zaprojektowany i zorganizowany układ material
 Systemy produkcyjne można podzielić ze względu na strukturę na:
 
 \begin{itemize}
-\item Systemy gniazdowe - zwykle wykorzystywane do pojedyńczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a każde z nich wymaga przeprowadzenia zestawu operacji na maszynach w ustalonym porządku, innym dla każdego zadania.
+\item Systemy gniazdowe - najczęściej wykorzystywane do pojedyńczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a każde z nich wymaga przeprowadzenia zestawu operacji na maszynach w ustalonym porządku, innym dla każdego zadania.
 \item System przepływowy - kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{grzechca}
 \item Pojedyńcza maszyna - system składający się z jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
 \item Maszyny równoległe - system składający się z m identycznych maszyn. Podobnie jak w problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
@@ -158,6 +147,7 @@ Heurystyki służą do rozwiązywania takich właśnie konfliktów. Jeżeli zdec
 Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane, natomiast końcowe uszeregowanie w zależności od wybranej heurystyki przedstawiają poniższe wykresy Gantt'a oraz wyznaczniki jakości uszeregowania. Różnice między tymi dwoma uszeregowaniami wydają się być kosmetyczne, wynika to jednak z trywialności omawianego przykładu. Podczas analizy tych wyznaczników widać różnice między uszeregowaniami. W tym konkretnym przypadku wybór heurystyki nie wpłyną na \(C_max\), czyli czas ukończenia całego zlecenia. Jednak trochę lepsze rozwiązanie, ze względu na \(\bar{F}\) oraz \(\sqrt{(\sum e_j^2 + \sum l_j^2}\), dała heurystyka FIFO.
 
 \FloatBarrier
+\newpage
 \subsection{First In First Out}
 
 \begin{figure}[htb]
@@ -165,15 +155,33 @@ Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane
     \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/fifo}
     \caption{Uszeregowanie przy użyciu heurystyki FIFO}
 \end{figure}
+
+%Tabela wynikowa
 \begin{table}[htb]
-    \centering
-    \begin{tabular}{ l l }
-    \(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 15.3297\)	\\
-    \(\bar{F} = 15.6 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0\\ \beta = 0}} = 0 \)	\\ 
-    \end{tabular}
+	\centering
+	\caption{Parametry wykonanych zadań}
+	\begin{tabular}{ | r | c | c | c | c |}
+	\hline
+	j	& \(c_j\)	& \(f_j\)	& \(l_j\)	& \(e_j\)	\\ \hline
+	1	& 15	& 15	& 0	& 5	\\ \hline
+	2	& 23	& 20	& 0	& 6	\\ \hline
+	3	& 9	& 9	& 0	& 11	\\ \hline
+	4	& 18	& 18	& 0	& 2	\\ \hline
+	5	& 13	& 10	& 0	& 7	\\ \hline
+	\end{tabular}
+\end{table}
+
+%Tabela wyznacznikow
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ l l }
+	\(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 15.3297\)	\\
+	\(\bar{F} = 14.4 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.4\\ \beta = 0.6}} = 12.4 \)	\\ 
+	\end{tabular}
 \end{table}
 	
 \FloatBarrier
+\newpage
 \subsection{Last In First Out}
 
 \begin{figure}[htb]
@@ -181,22 +189,32 @@ Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane
     \includegraphics[width=\textwidth, keepaspectratio=true]{./obrazki/lifo}
     \caption{Uszeregowanie przy użyciu heurystyki LIFO}
 \end{figure}
+
+%Tabela wynikowa
 \begin{table}[htb]
 	\centering
 	\caption{Parametry wykonanych zadań}
 	\begin{tabular}{ | r | c | c | c | c |}
 	\hline
 	j	& \(c_j\)	& \(f_j\)	& \(l_j\)	& \(e_j\)	\\ \hline
-	1	& 18	& 18	& 0	& 2	\\ \hline
-	2	& 23	& 23	& 0	& 6	\\ \hline
-	3	& 12	& 12	& 0	& 8	\\ \hline
-	4	& 19	& 19	& 0	& 1	\\ \hline
-	5	& 8	& 8	& 0	& 12	\\ \hline
+	1	& 15	& 15	& 0	& 5	\\ \hline
+	2	& 23	& 20	& 0	& 6	\\ \hline
+	3	& 9	& 9	& 0	& 11	\\ \hline
+	4	& 16	& 16	& 0	& 4	\\ \hline
+	5	& 16	& 13	& 0	& 4	\\ \hline
 	\end{tabular}
 \end{table}
-       
+
+%Tabela wyznacznikow
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ l l }
+	\(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 14.6287\)	\\
+	\(\bar{F} = 14.6 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.4\\ \beta = 0.6}} = 12 \)	\\ 
+	\end{tabular}
+\end{table}
+   
 \section        {Program kSzereg}
-%\subsection     {Front-end}
 Program kSzereg został napisany w C++ na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Wprowadzanie danych odbywa się za pośrednictwem graficznego interface'u opartego o framework Qt. Na górnej belce programu po prawej stronie znajdują się kontroli umożliwiające wybór heurystyki używanej do rozwiązania zadania oraz parametrów \(\alpha, \beta\) podstawianych do wzoru \eqref{eq:w2}. Znajdują się tam też przyciski umożliwiające zapisanie zlecenia da pliku binarnego z rozszerzeniem .mar (eksport), oraz wczytanie zlecenia z takiego pliku (import). 
 
 Przed dodaniem zadań do zlecenia należy ustalić maksymalną długość marszruty. W zadaniach z krótszą marszrutą technologiczną należy pozostawić operacje z zerowym czasem, które nie będą brane pod uwagę podczas rozwiązywania JSSP. Po dodaniu zadania możliwość zmiany długości marszruty jest blokowana. Każda operacja jest definiowana prze numer maszyny na której ma zostać wykonana oraz czas jej wykonywania. Ilość maszyn możliwych do wyboru może być zmieniana w czasie edycji zlecenia (po dodaniu zadań). Poza marszrutą technologiczną zadanie definiują czasy rozpoczęcia (\(r_j\)) i zakończenia (\(d_j\)) zadania. Możliwe jest też nadanie zadaniu nazwy.
@@ -207,7 +225,7 @@ Przed dodaniem zadań do zlecenia należy ustalić maksymalną długość marszr
     \caption{Główne okno programu}
 \end{figure}
 
-Program kSzereg rezentuje wyniki działania w postaci wykresu Gantt'a wraz z tabelą zawierającą czasy wykonania (\(C_j\)), przepływu (\(f_j\)), spóźnienia (\(l_j\)) i przedwczesności (earliness, \(e_j\)) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zadania (\(C_{max}\)), średni czas przepływu (\( \bar{F} \)), oraz wartości funkcji kosztów \eqref{eq:w1} oraz \eqref{eq:w2} opisanych we wstępie do niniejszej pracy. 
+Program kSzereg rezentuje wyniki działania w postaci wykresu Gantt'a wraz z tabelą zawierającą czasy wykonania (\(C_j\)), przepływu (\(f_j\)), spóźnienia (\(l_j\)) i przedwczesności (earliness, \(e_j\)) każdego zadania zlecenia. Dodatkowo prezentowane są wyznaczniki jakości uszeregowania zlecenia jako cołości: czas ukończenia całego zlecenia (\(C_{max}\)), średni czas przepływu (\( \bar{F} \)), maksymalne spóźnienie (\(T_{max}\)), średnie spóźnienie (\(\bar{T}\)) oraz wartości funkcji kosztów \eqref{eq:w1} oraz \eqref{eq:w2}.% opisanych we wstępie do niniejszej pracy. 
 
 \begin{figure}[htb]
     \centering
@@ -215,7 +233,7 @@ Program kSzereg rezentuje wyniki działania w postaci wykresu Gantt'a wraz z tab
     \caption{Prezentacja wyznaczonego uszeregowania}
 \end{figure}
 
-Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wyników działania programu w postaci pliku .tex z kodem \LaTeX{}'a lub .pdf. W obu przypadkach sam wykres Gantt'a jest eksportowany do pliku .svg w folderze output. Opcje te korzystają jednak z zewnętrznych programów inkscape oraz rubber (wraz z odpowiednimi paczkami texlive), które muszą być zainstalowane w systemie. 
+Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wyników działania programu w postaci pliku .tex z kodem \LaTeX{}'a lub .pdf. W obu przypadkach sam wykres Gantt'a jest eksportowany do pliku .svg w folderze output. Funkcje te korzystają z zewnętrznych programów inkscape oraz rubber (wraz z odpowiednimi paczkami texlive), które muszą być zainstalowane w systemie. 
 
 \begin{figure}[htb]
     \centering
@@ -223,7 +241,8 @@ Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wynik�
     \caption{Wyeksportowany plik .pdf}
 \end{figure}
 
-Dodatkowo istnieje możliwość obsługi programu kSzereg z poziomu terminalu tekstowego korzystając z wcześniej zapisanych plików .mar, nie jest bowiem możliwa konfiguracja zadaniam jedynie rozwiązanie problemu i eksport wyników do pliku .tex lub .pdf. Zaletą obsługi programu z termianlu jest możliwość podania jako parametr nazwy pliku tekstowego z zapisanymi ścieżkami dostępu do wielu plików .mar, a nawet wybranie obu heurystyk do rozwiązania tych zleceń, co spowoduje rozwiązanie JSSP dla każdego z tych zadań po kolei bez ingerencji użytkownika. Bardziej szczegółowy opis interfejsu lini poleceń jest dostępny po uruchomieniu programu z przełącznikiem '--help'.
+Dodatkowo istnieje możliwość obsługi programu kSzereg z poziomu terminalu tekstowego korzystając z wcześniej zapisanych plików .mar, nie jest bowiem możliwa konfiguracja zadaniam jedynie rozwiązanie problemu i eksport wyników do pliku .tex lub .pdf. Zaletą obsługi programu z termianlu jest możliwość podania jako parametr nazwy pliku tekstowego z zapisanymi ścieżkami dostępu do wielu plików .mar, a nawet wybranie obu heurystyk do rozwiązania tych zleceń, co spowoduje rozwiązanie JSSP dla każdego z tych zadań.% po kolei bez ingerencji użytkownika. 
+Szczegółowy opis interfejsu lini poleceń jest dostępny po uruchomieniu programu z przełącznikiem '--help'.
 
 \begin{figure}[htb]
     \centering
@@ -235,40 +254,76 @@ Dodatkowo istnieje możliwość obsługi programu kSzereg z poziomu terminalu te
 \section      %  [Przykładowe problemy \ldots]
                 {Zastosowanie programu kSzereg}
        
-\subsection     {Probelm 1}
-\subsubsection  {FIFO}
+\subsection     {Badane zlecenie}
+\label{sec:z1}
+\subsubsection  {Heurystyka FIFO}
+\label{sec:z1f}
 \input {zad1_FIFO.tex}
-\subsubsection  {LIFO}
+\subsubsection  {Heurystyka LIFO}
+\label{sec:z1l}
 \input{ zad1_LIFO.tex}
 
 \newpage
-\subsection     {Problem 2}
-\subsubsection  {FIFO}
+\subsection     {Poprawione zlecenie ze zmienioną marszrutą}
+\label{sec:z2}
+\subsubsection  {Heurystyka FIFO}
+\label{sec:z2f}
 \input {zad2_FIFO.tex}
-\subsubsection  {LIFO}
+\subsubsection  {Heurystyka LIFO}
+\label{sec:z2l}
 \input {zad2_LIFO.tex}
 
 \newpage
-\subsection     {Problem 3}
-\subsubsection  {FIFO}
-\input {zad3_FIFO.tex}
-\subsubsection  {LIFO}
-\input {zad3_LIFO.tex}
-
-\newpage
-\subsection     {Problem 4}
-\subsubsection  {FIFO}
+\subsection     {Poprawione zlecenie bez zmian w marszrucie}
+\label{sec:z3}
+\subsubsection  {Heurystyka FIFO}
+\label{sec:z3f}
 \input {zad4_FIFO.tex}
-\subsubsection  {LIFO}
+\subsubsection  {Heurystyka LIFO}
+\label{sec:z3l}
 \input {zad4_LIFO.tex}
 
+\newpage
+\subsection     {Poprawa uszeregowania FIFO z naciskiem na $e_j$ }
+\label{sec:z4}
+\subsubsection  {Heurystyka FIFO}
+\label{sec:z4f}
+\input {zad3_FIFO.tex}
+\subsubsection  {Heurystyka LIFO}
+\label{sec:z4l}
+\input {zad3_LIFO.tex}
+
+
+
 \section        {Wnioski}
-       
+W sekcji \ref{sec:z1} przedstawiono przykład zlecenia w systemie produkcyjnym o strukturze gniazdowej, który został rozwiązany przez program kSzereg z użyciem heurystyki FIFO oraz LIFO. Oba uzyskane uszeregowania są dopuszczalne i niezależnie od przyjętego kryterium oceny nieznacznie różnią się od siebie. Stanowią one punkt punkt odniesienia dla kolejnych trzech zleceń, które powstały poprzez modyfikacje tego zlecenia w myśl strategii Just in Time, a więc minimalizacji zarówno spóźnienia zadań jak i czasu magazynowania gotowych produktów przed terminem ich dostarczenia. 
+
+\begin{table}[htb]
+	\centering
+	\caption{Porównanie wyznaczników jakości uszeregowania}
+	\begin{tabular}{ r | c | c | c | c | c | c }
+	sekcja        & \(C_{max}\)	& \(\bar{F}\)   & \(T_{max}\) & \(\bar{T}\) & \(\sqrt{(\sum e_j^2 + \sum l_j^2}\) & \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.2\\ \beta = 0.8}} \) \\ \hline
+	\ref{sec:z1f} & 55          & 42,4286       & 10          & 3,28571      & 19,7999      & 22,6 \\ 
+	\ref{sec:z1l} & 54          & 44,4286       & 9           & 3,85714      & 17,5499      & 23,8 \\ \hline
+	\ref{sec:z2f} & 58          & 42            & 5           & 1,57143      & 13,1149      & 12,2 \\ 
+    \ref{sec:z2l} & 51          & 40,2857       & 6           & 0,857143     & 14,4222      & 9,6  \\ \hline
+	\ref{sec:z3f} & 58          & 43,2857       & 7           & 2,85714      & 15,3948      & 19,4 \\ 
+	\ref{sec:z3l} & 51          & 41,7143       & 6           & 1,42857      & 13,7113      & 11,6 \\ \hline
+	\ref{sec:z4f} & 54          & 42,8571       & 9           & 3,71429      & 13,5277      & 22,2 \\ 
+	\ref{sec:z4l} & 62          & 42,7143       & 17          & 4,85714      & 23,2379      & 30,4 \\ 
+	\end{tabular}
+\end{table}
+
+W sekcji \ref{sec:z2} zmodyfikowano wyjściowy problem tak, aby rozwiązanie z użyciem heurystyki LIFO pozwoliło na zmniejszenie spóźnień zadań, a więc i wyznacznika \eqref{eq:w2}, który jest w wym przypadku jest czterokrotnie bardziej wrażliwy na spóźnienia niż wczesność (\(\alpha = 0.2,~\beta = 0.8\)). Było to możliwe dzięki przesunięciu chwili rozpoczecia zadania nr 7 do początku czasu zlecenia oraz zmianie ostatniej operacji w marszrucie zadania nr 4, z 2 jednostek czasu na maszynie m6, na 4 jednostki czasu na maszynie m5. To wydłużenie czasu wykonywania operacji wyniknęło z założenia, że maszyna m5 najprawdopodobniej jest mniej odpowiednia do wykonania tej operacji od maszyny m6, jednak zamiana jest w ogóle możliwa. Te dwie zmiany spowodowały dyrastyczną poprawę wszystkich rozpatrywanych wyznaczników jakości uszeregowania, ponieważ tylko jedno zadanie pozostało spóźnione, szczególnie funkcji \eqref{eq:w2}. Pod względem tego właśnie współczynnika, jak i \(C_{max}\), \(\bar{F}\)  i (\(\bar{T}\)) jest to najlepsze spośród prezentowanych rozwiązań.
+
+Niestety założenie możliwości zmiany nawet jednego punktu marszruty technologicznej, nawet z dwukrotnym wydłużeniem czasu na wykonanie tej operacji, jest bardzo optymistyczne. Może się okazać, że wprowadzenie takich zmian wymaga dodatkowych nakładów finansowych, np. na dodatkowe narzędzia, czy szkolenie pracownika, lub jest wręcz niemożliwe bez przebudowy całego gniazda. Okazuje się jednak, że nawet nie zmieniając żadnej marszruty technologicznej, jedynie poprzez przyspieszenie realizacji zadania nr 7 jest możliwe uzyskanie niewiele gorszych wyników. Jak pokazano w sekcji \ref{sec:z3l} jedynie średnie spóźnienie zadań znacząco się zwiększyło, gdyż oprócz zadania 2 również zadanie 4 jest spóźnione, jednak wpłynęło to na poprawę wyznacznika \eqref{eq:w1}, ponieważ jest gotowe bliżej terminu.
+
+Nie zawsze istnieje możliwość wcześniejszego rozpoczęcia przetwarzania zadania, jednak nawet wtedy można zastosować strategię Just in Time, gdyż prawie zawsze można zdecydować o późniejszym rozpoczęciu przetwarzania zadania. Jak dowodzi uszeregowanie z sekcji \ref{z4f} takie przesunięcie w czasie rozpoczęcia trzech zadań o kilka jednostek czasowych może doprowadzić do skrócenia czasu magazynowania gotowych produktów nie wydłużając czasu przetwarzania całego zlecenia. W tym przypadku największej poprawie uległ wyznacznik \eqref{eq:w1}, ponieważ nie przykłada on większej wagi do spóźnień, jak wyznacznik \eqref{eq:w2}, który poprawił się jedynie nieznacznie.
+
+Podsumowując, strategia Just in Time w systemach produkcyjnych o strukturze gniazdowej pozwala na duże oszczędności poprzez obniżenie kosztów zbyt wczesnego wyprodukowania towaru, jak magazynowanie, czy ubezpieczenie, oraz spóźnionej produkcji, co może się wiązać między innymi z karami umownymi. Jak przedstawiono na przykładzie, wprowadzenie takiej strategii może być przeprowadzone kompleksowo - poprzez wymuszenie wcześniejszego ukończenia zadań na innych stanowiskach i zmiany w samej struktórze gniazda, aby umożliwić zmiany w marszrucie technologicznej - lub poprzez mniejsze przesunięcia w grafiku przetwarzania zadań. Zawsze warto więc przeanalizować rozpatrywany problem szeregowania zadań pod kątem strategii Just in Time.
 
 
-
-
-\begin{thebibliography}{99}
+\begin{thebibliography}{10}
 
 \bibitem{jit}
 Gordon Sinnamon, Susan Milner,
@@ -331,9 +386,6 @@ Algorithms and Theory of Computation Handbook, CRC Press LLC, 1999, "strongly NP
 Linia produkcyjna \\
 Źródło: \url{http://pl.wikipedia.org/wiki/Linia_produkcyjna} [dostęp:~20.12.12]
 
-
 \end{thebibliography}
-       
-%\bibliography{praca.bib}   
-\end{document}  
-      
+
+\end{document}        
