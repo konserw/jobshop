@@ -21,7 +21,7 @@
 %%% Podstawowe info %%%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Strategia Just in Time w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
+\title{Strategia \emph{Just in Time} w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
 \promotor{dr inż. Waldemar Grzechca}
 \autor{Kamil Strzempowicz}{100}{Napisanie całej pracy}
 \dedykacja{Rodzicom\\bez Was nie udałoby mi się}
@@ -33,14 +33,14 @@
 \begin{document}
 
 \section        {Wstęp}
-Celem tej pracy jest przedstawienie strategii \emph{Just in Time} (JIT) dla szeregowania zadań w~systemach produkcyjnych o~strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk \emph{First In First Out} (FIFO) i \emph{Last In First Out} (LIFO). Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania wykorzystując obie te heurystyki, oraz obliczający wyznaczniki jakości uszeregowania w~kontekście strategii JIT.
+Celem tej pracy jest przedstawienie strategii \emph{\emph{Just in Time}} (JIT) dla szeregowania zadań w~systemach produkcyjnych o~strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk \emph{First In First Out} (FIFO) i \emph{Last In First Out} (LIFO). Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania wykorzystując obie te heurystyki, oraz obliczający wyznaczniki jakości uszeregowania w~kontekście strategii JIT.
 
 System produkcyjny jest to celowo zaprojektowany i~zorganizowany układ materialny, energetyczny i~informacyjny eksploatowany przez człowieka i~służący produkowaniu określonych produktów (wyrobów lub usług) w~celu zaspokajania różnorodnych potrzeb konsumentów \cite{pastuszak}.
 
 Systemy produkcyjne można podzielić ze względu na strukturę na:
 
 \begin{itemize}
-\item Systemy gniazdowe - najczęściej wykorzystywane do pojedyńczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a~każde z~nich wymaga przeprowadzenia zestawu operacji na maszynach w~ustalonym porządku, innym dla każdego zadania.
+\item Systemy gniazdowe - najczęściej wykorzystywane do pojedynczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a~każde z~nich wymaga przeprowadzenia zestawu operacji na maszynach w~ustalonym porządku, innym dla każdego zadania.
 \item System przepływowy - kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{grzechca}
 \item Pojedyńcza maszyna - system składający się z~jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a~zlecenia jednostkowe. Stąd zlecenia są tożsame z~zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
 \item Maszyny równoległe - system składający się z~m~identycznych maszyn. Podobnie jak w~problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a~zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z~zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
@@ -49,12 +49,12 @@ Systemy produkcyjne można podzielić ze względu na strukturę na:
 
 Szeregowanie może zostać zdefiniowane jako przydział zasobów w~czasie do zadań w~celu optymalizacji kryterium. Z~punktu widzenia szeregowania w~systemach wytwarzania zasoby często są nazywane maszynami, natomiast jako kryterium optymalności uszeregowania często przyjmowany jest czas potrzebny do zakończenia wszystkich zadań, czy maksymalne spóźnienie zadania \cite{antColony}.
 
-W strategi Just in Time zadanie powinno być ukończone możliwie blisko swojego terminu zakończenia (due date) jak to tylko możliwe. Zbyt wczesne zakończenie zadania pociąga za sobą koszty utrzymania, takie jak magazynowania czy ubezpieczenia. Z~drugiej jednak strony spóźnione zlecenie często skutkuje karami umownymi czy nadszarpnięciem reputacji przedsiębiorstwa \cite{genetyczne}. Mimo to często przedsiębiorstwu bardziej opłaca się zakończyć zadanie krótko po terminie, niż ponosić koszty związane ze zbyt wczesnym zakończeniem pracy. Należy się więc zastanowić jak matematycznie opisać opłacalność zarówno spóźnienia jak i~przedwczesnego ukończenia zadania. Taką rolę pełnią tzw. funkcje kosztu.
+W strategi \emph{Just in Time} zadanie powinno być ukończone możliwie blisko swojego terminu zakończenia (due date) jak to tylko możliwe. Zbyt wczesne zakończenie zadania pociąga za sobą koszty utrzymania, takie jak magazynowania czy ubezpieczenia. Z~drugiej jednak strony spóźnione zlecenie często skutkuje karami umownymi czy nadszarpnięciem reputacji przedsiębiorstwa \cite{genetyczne}. Mimo to często przedsiębiorstwu bardziej opłaca się zakończyć zadanie krótko po terminie, niż ponosić koszty związane ze zbyt wczesnym zakończeniem pracy. Należy się więc zastanowić jak matematycznie opisać opłacalność zarówno spóźnienia jak i~przedwczesnego ukończenia zadania. Taką rolę pełnią tzw. funkcje kosztu.
 
 Na potrzeby tej pracy wybrano następujące funkcje (wyznaczniki):
 
 \begin{equation}
-    \sqrt{(\sum e_j^2 + \sum l_j^2}
+    \sqrt{\sum e_j^2 + \sum l_j^2}
     \label{eq:w1}
 \end{equation}
 \begin{equation}
@@ -66,33 +66,33 @@ gdzie: \\
 \(l_j\) - spóźnienie j-tego zadania, \\
 \(\alpha, \beta\) - wagi przedwczesności i~spóźnienia zakładane przy formułowaniu problemu\\
 
-Zastosowanie strategi Just in Time w~systemach produkcyjnych o~strukturze gniazdowej można więc sprowadzić do poszukiwania takiego rozwiązania problemu harmonogramowania, aby minimalizować funckcję \ref{eq:w1} lub \ref{eq:w2}.
+Zastosowanie strategi \emph{Just in Time} w~systemach produkcyjnych o~strukturze gniazdowej można więc sprowadzić do poszukiwania takiego rozwiązania problemu harmonogramowania, aby minimalizować funckcję \ref{eq:w1} lub \ref{eq:w2}.
 
 \section       [Metody szeregowania zadań \ldots]
 		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
-Teoretycznie optymalne rozwiązanie problem szeregowania zadań w~systemie wytwarzania gniazdowego (JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań zawsze jest skończona. Jednak, jak wynika m. in. z \cite{np1}\cite{np2}, problem ten jest silnie NP-trudny, czyli pozostaje NP-trudny nawet przy ograniczeniu maksymalnej wartości występujących w~jego opisie liczb. Natomiat problem NP-trudny jest co najmniej tak trudny jak każdy problem klasy NP (nondeterministic polynomial), a~często trudniejszy. Oznacza to, że już przy niewielkiej ilości zadania problem przestaje być rozwiązywalny w rozsądnym czasie nawet przy użyciu superkomputerów. W~związku z~tym wykorzystuje się metody pozwalające uzyskać nieoptymalne, ale akceptowalne rozwiązanie bez potrzeby rozpatrywania każdego możliwego rozwiązania \cite{np}.
+Teoretycznie optymalne rozwiązanie problem szeregowania zadań w~systemie wytwarzania gniazdowego (JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań zawsze jest skończona. Jednak, jak wynika m. in. z \cite{np1}\cite{np2}, problem ten jest silnie NP-trudny, czyli pozostaje NP-trudny nawet przy ograniczeniu maksymalnej wartości występujących w~jego opisie liczb. Natomiat problem NP-trudny jest co najmniej tak trudny, jak każdy problem klasy NP (nondeterministic polynomial), a~często trudniejszy. Oznacza to, że już przy niewielkiej ilości zadania problem przestaje być rozwiązywalny w rozsądnym czasie nawet przy użyciu superkomputerów. W~związku z~tym wykorzystuje się metody pozwalające uzyskać nieoptymalne, ale akceptowalne rozwiązanie bez potrzeby rozpatrywania każdego możliwego rozwiązania \cite{np}.
 
 \subsection     {Metody heurystyczne}
 Metody heurystyczne pozwalają na stosunkowo szybkie i~łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie lepszego rozwiązania, ze względu na czas i~zasoby wymagane do jego odnalezienia. W~szczególności w~sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod \cite{dynamic}. 
 
-Metody te zwykle polegają na nadawaniu priorytetu, na podstawie danych zlecenia i~chwili czasu, zadaniom w~momencie wystąpienia konfliktu. Konflikt jest to sytuacja gdy w~tym samym momencie na dany wolny zasób (maszynę) czeka więcej niż jedno zadanie. Trzeba wtedy zdecydować które z~zadań zostanie obsłużone jako pierwsze. 
+Metody te zwykle polegają na nadawaniu priorytetu zadaniom w~momencie wystąpienia konfliktu na podstawie danych zlecenia i~chwili czasu. Konflikt jest to sytuacja, gdy w~tym samym momencie na dany wolny zasób (maszynę) czeka więcej niż jedno zadanie. Trzeba wtedy zdecydować które z~zadań zostanie obsłużone jako pierwsze. 
 
 Najpopularniejsze heurystyki\cite{jobSlack}:
 \begin{itemize}
-\item First In First Out - Pierwsze jest przetwarzane zadanie które wpłynęło najwcześniej.
-\item Last In First Out - Pierwsze jest przetwarzane zadanie które wpłynęło najpóźniej.
-\item Earliest Due Date - Pierwsze jest przetwarzane zadanie które ma zostać wyprodukowane najwcześniej.
-\item Least Work Remaining - Pierwsze jest przetwarzane zadanie do ukończenia którego pozostało najmniej pracy.
-\item Shortest Procesing Time - Pierwsze jest przetwarzane zadanie którego całkowity czas przetwarzania jest najkrótszy.
-\item Longest Procesing Time - Pierwsze jest przetwarzane zadanie którego całkowity czas przetwarzania jest najdłuższy.
-\item Shortest Imminent Procesing Time - Pierwsze jest przetwarzane zadanie którego czas przetwarzania na tej maszynie jest najkrótszy.
-\item Longest Imminent Procesing Time - Pierwsze jest przetwarzane zadanie którego czas przetwarzania na tej maszynie jest najdłuższy.
-\item Fewest Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba najmniejszej ilości operacji.
-\item Most Operationns Remmaining - Pierwsze jest przetwarzane zadanie do ukończenia którego potrzeba największej ilości operacji.
-\item Least Slack Time - Pierwsze jest przetwarzane zadanie którego różnica między czasem potrzebnym do jego ukończenia a~czasem pozostałym do terminu zakończenia pracy jest najmniejsza.
-\item Least Slack Time per Operation - Pierwsze jest przetwarzane zadanie którego stosunek czasu 'Slack' w~stosunku do ilości pozostałych operacji jest najmniejsza.
-\item Critical Ratio - Pierwsze jest przetwarzane zadanie którego stosunek czasu pozostałego do terminu ukończenia pracy i czasu potrzebnego do jego ukończenia jest najmniejszy.
+\item First In First Out - Pierwsze jest przetwarzane zadanie, które wpłynęło najwcześniej.
+\item Last In First Out - Pierwsze jest przetwarzane zadanie, które wpłynęło najpóźniej.
+\item Earliest Due Date - Pierwsze jest przetwarzane zadanie, które ma zostać wyprodukowane najwcześniej.
+\item Least Work Remaining - Pierwsze jest przetwarzane zadanie, do ukończenia którego pozostało najmniej pracy.
+\item Shortest Processing Time - Pierwsze jest przetwarzane zadanie, którego całkowity czas przetwarzania jest najkrótszy.
+\item Longest Processing Time - Pierwsze jest przetwarzane zadanie, którego całkowity czas przetwarzania jest najdłuższy.
+\item Shortest Imminent Processing Time - Pierwsze jest przetwarzane zadanie, którego czas przetwarzania na tej maszynie jest najkrótszy.
+\item Longest Imminent Processing Time - Pierwsze jest przetwarzane zadanie, którego czas przetwarzania na tej maszynie jest najdłuższy.
+\item Fewest Operations Remaining - Pierwsze jest przetwarzane zadanie, do ukończenia którego potrzeba najmniejszej ilości operacji.
+\item Most Operations Remaining - Pierwsze jest przetwarzane zadanie, do ukończenia którego potrzeba największej ilości operacji.
+\item Least Slack Time - Pierwsze jest przetwarzane zadanie, którego różnica między czasem potrzebnym do jego ukończenia a~czasem pozostałym do terminu zakończenia pracy jest najmniejsza.
+\item Least Slack Time per Operation - Pierwsze jest przetwarzane zadanie, którego stosunek czasu 'Slack' w~stosunku do ilości pozostałych operacji jest najmniejsza.
+\item Critical Ratio - Pierwsze jest przetwarzane zadanie, którego stosunek czasu pozostałego do terminu ukończenia pracy i czasu potrzebnego do jego ukończenia jest najmniejszy.
 \item Random - Losowe zadanie jest przetwarzane jako pierwsze.
 \end{itemize}
 
@@ -126,8 +126,8 @@ m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym
     \caption{Algorytm szeregowania zadań}
     \begin{tabular}{ p{0.75cm} | p{13cm} }
     t & Zdarzenie \\ \hline
-    0 & Do systemu wchodzą zadania 1, 3 i 4 które zostają przydzielone zgodnie ze swoimi marszrutami technologicznymi odpowiednio do maszyn m4, m1 i~m5.  \\ \hline
-    3 & Do systemu wchodzą zadania 2 i 5, lecz maszyny na których powinno zacząć się ich przetwarzanie są zajęte, czekają więc na zwolnienie maszyny. \\ \hline
+    0 & Do systemu wchodzą zadania 1, 3 i 4, które zostają przydzielone zgodnie ze swoimi marszrutami technologicznymi odpowiednio do maszyn m4, m1 i~m5.  \\ \hline
+    3 & Do systemu wchodzą zadania 2 i 5, lecz maszyny, na których powinno zacząć się ich przetwarzanie są zajęte, czekają więc na zwolnienie maszyny. \\ \hline
     4 & Na maszynie 5 zakończyło się przetwarzanie zadania 4. Na tę maszynę żadne zadanie nie oczekiwało. Na maszynie 4 zakończyło się przetwarzanie zadania 1. Na tę maszynę oczekuje tylko zadanie 2, które zostaje od razu na niej uruchomione. Zadanie 1 natomiast czeka na zwolnienie się maszyny 1. \\ \hline
     5 & Przetwarzanie zadanie 3 na maszynie 1 dobiegło końca. Na tę maszynę oczekiwały dwa zadania: 1 i 5, więc nastąpił tzw. konflikt.
     \end{tabular}
@@ -139,9 +139,9 @@ m1-m5 - numer maszyny na której zadanie ma być przetwarzane w czasie zapisanym
     \caption{Uszeregowanie zadań w chwili wystąpienia konfliktu}
 \end{figure}
 
-Heurystyki służą do rozwiązywania takich właśnie konfliktów. Jeżeli zdecydujemy się na heurystykę FIFO dostęp do maszyny uzyska to zadanie które oczekuje najdłużej (jako pierwsze "zajęło miejsce w~kolejce"), w~tym przypadku jest to zadanie 5. Heurystyka LIFO faworyzuje zadania najkrócej oczekujące na zasób, w~tym przypadku więc będzie to zadanie 4. Jeżeli nastąpiłby konflikt między dwoma równoprawnymi pod względem wybranej heurystyki zadaniami, należy wtedy zastosować dowolną inną "pomocniczą" heurystykę, choćby Random, czyli wybranie losowego zadania.
+Heurystyki służą do rozwiązywania takich właśnie konfliktów. Jeżeli zdecydujemy się na heurystykę FIFO dostęp do maszyny uzyska to zadanie, które oczekuje najdłużej (jako pierwsze "zajęło miejsce w~kolejce"), w~tym przypadku jest to zadanie 5. Heurystyka LIFO faworyzuje zadania najkrócej oczekujące na zasób, w~tym przypadku więc będzie to zadanie 4. Jeżeli nastąpiłby konflikt między dwoma równoprawnymi pod względem wybranej heurystyki zadaniami, należy wtedy zastosować dowolną inną "pomocniczą" heurystykę, choćby Random, czyli wybranie losowego zadania.
 
-Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane, natomiast końcowe uszeregowanie w~zależności od wybranej heurystyki przedstawiają poniższe wykresy Gantt'a oraz wyznaczniki jakości uszeregowania. Różnice między tymi dwoma uszeregowaniami wydają się być kosmetyczne, wynika to jednak z~trywialności omawianego przykładu. Podczas analizy tych wyznaczników widać różnice między uszeregowaniami. W~tym konkretnym przypadku wybór heurystyki nie wpłyną na \(C_max\), czyli czas ukończenia całego zlecenia. Jednak trochę lepsze rozwiązanie, ze względu na \(\bar{F}\) oraz \(\sqrt{(\sum e_j^2 + \sum l_j^2}\), dała heurystyka FIFO.
+Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane, natomiast końcowe uszeregowanie w~zależności od wybranej heurystyki przedstawiają poniższe wykresy Gantt'a oraz wyznaczniki jakości uszeregowania. Różnice między tymi dwoma uszeregowaniami wydają się być kosmetyczne, wynika to jednak z~trywialności omawianego przykładu. Podczas analizy tych wyznaczników widać różnice między uszeregowaniami. W~tym konkretnym przypadku wybór heurystyki nie wpłyął na \(C_max\), czyli czas ukończenia całego zlecenia. Jednak trochę lepsze rozwiązanie, ze względu na \(\bar{F}\) oraz \(\sqrt{\sum e_j^2 + \sum l_j^2}\), dała heurystyka FIFO.
 
 \FloatBarrier
 \newpage
@@ -172,7 +172,7 @@ Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane
 \begin{table}[htb]
 	\centering
 	\begin{tabular}{ l l }
-	\(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 15.3297\)	\\
+	\(C_{max} = 23 \)	& \(\sqrt{\sum e_j^2 + \sum l_j^2} = 15.3297\)	\\
 	\(\bar{F} = 14.4 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.4\\ \beta = 0.6}} = 12.4 \)	\\ 
 	\end{tabular}
 \end{table}
@@ -206,15 +206,15 @@ Dalsze rozwiązanie tego przykładu krok po kroku nie zostanie tu zaprezentowane
 \begin{table}[htb]
 	\centering
 	\begin{tabular}{ l l }
-	\(C_{max} = 23 \)	& \(\sqrt{(\sum e_j^2 + \sum l_j^2} = 14.6287\)	\\
+	\(C_{max} = 23 \)	& \(\sqrt{\sum e_j^2 + \sum l_j^2} = 14.6287\)	\\
 	\(\bar{F} = 14.6 \)	& \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.4\\ \beta = 0.6}} = 12 \)	\\ 
 	\end{tabular}
 \end{table}
    
 \section        {Program kSzereg}
-Program kSzereg został napisany w~C++ na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w~systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Wprowadzanie danych odbywa się za pośrednictwem graficznego interface'u opartego o~framework Qt. Na górnej belce programu po prawej stronie znajdują się kontroli umożliwiające wybór heurystyki używanej do rozwiązania zadania oraz parametrów \(\alpha, \beta\) podstawianych do wzoru \eqref{eq:w2}. Znajdują się tam też przyciski umożliwiające zapisanie zlecenia da pliku binarnego z~rozszerzeniem .mar (eksport), oraz wczytanie zlecenia z~takiego pliku (import). 
+Program kSzereg został napisany w~C++ na potrzeby tej pracy dyplomowej. Umożliwia on przeprowadzenie szeregowania zadań w~systemie wytwarzania gniazdowego na podstawie heurystyki FIFO bądź LIFO. Wprowadzanie danych odbywa się za pośrednictwem graficznego interface'u opartego o~framework Qt. Na górnej belce programu po prawej stronie znajdują się kontrolki umożliwiające wybór heurystyki używanej do rozwiązania zadania oraz parametrów \(\alpha, \beta\) podstawianych do wzoru \eqref{eq:w2}. Znajdują się tam też przyciski umożliwiające zapisanie zlecenia do pliku binarnego z~rozszerzeniem .mar (eksport) oraz wczytanie zlecenia z~takiego pliku (import). 
 
-Przed dodaniem zadań do zlecenia należy ustalić maksymalną długość marszruty. W~zadaniach z~krótszą marszrutą technologiczną należy pozostawić operacje z~zerowym czasem, które nie będą brane pod uwagę podczas rozwiązywania JSSP. Po dodaniu zadania możliwość zmiany długości marszruty jest blokowana. Każda operacja jest definiowana prze numer maszyny na której ma zostać wykonana oraz czas jej wykonywania. Ilość maszyn możliwych do wyboru może być zmieniana w~czasie edycji zlecenia (po dodaniu zadań). Poza marszrutą technologiczną zadanie definiują czasy rozpoczęcia (\(r_j\)) i~zakończenia (\(d_j\)) zadania. Możliwe jest też nadanie zadaniu nazwy.
+Przed dodaniem zadań do zlecenia należy ustalić maksymalną długość marszruty. W~zadaniach z~krótszą marszrutą technologiczną należy pozostawić operacje z~zerowym czasem, które nie będą brane pod uwagę podczas rozwiązywania JSSP. Po dodaniu zadania możliwość zmiany długości marszruty jest blokowana. Każda operacja jest definiowana przez numer maszyny, na której ma zostać wykonana oraz czas jej wykonywania. Ilość maszyn możliwych do wyboru może być zmieniana w~czasie edycji zlecenia (po dodaniu zadań). Poza marszrutą technologiczną zadanie definiują czasy rozpoczęcia (\(r_j\)) i~zakończenia (\(d_j\)) zadania. Możliwe jest też nadanie zadaniu nazwy.
 
 \begin{figure}[htb]
     \centering
@@ -230,7 +230,7 @@ Program kSzereg rezentuje wyniki działania w~postaci wykresu Gantt'a wraz z~tab
     \caption{Prezentacja wyznaczonego uszeregowania}
 \end{figure}
 
-Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wyników działania programu w~postaci pliku .tex z kodem \LaTeX{}'a lub .pdf. W obu przypadkach sam wykres Gantt'a jest eksportowany do pliku .svg w~folderze output. Funkcje te korzystają z~zewnętrznych programów inkscape oraz rubber (wraz z~odpowiednimi paczkami texlive), które muszą być zainstalowane w~systemie. 
+Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wyników działania programu w~postaci pliku .tex z kodem w \LaTeX{}-u lub .pdf. W obu przypadkach sam wykres Gantt'a jest eksportowany do pliku .svg w~folderze output. Funkcje te korzystają z~zewnętrznych programów inkscape oraz rubber (wraz z~odpowiednimi paczkami texlive), które muszą być zainstalowane w~systemie. 
 
 \begin{figure}[htb]
     \centering
@@ -238,7 +238,7 @@ Z poziomu okna wyznaczonego uszeregowania istnieje możliwość zapisania wynik�
     \caption{Wyeksportowany plik .pdf}
 \end{figure}
 
-Dodatkowo istnieje możliwość obsługi programu kSzereg z~poziomu terminalu tekstowego korzystając z~wcześniej zapisanych plików .mar, nie jest bowiem możliwa konfiguracja zadania jedynie rozwiązanie problemu i~eksport wyników do pliku .tex lub .pdf. Zaletą obsługi programu z~termianlu jest możliwość podania jako parametr nazwy pliku tekstowego z~zapisanymi ścieżkami dostępu do wielu plików .mar, a~nawet wybranie obu heurystyk do rozwiązania tych zleceń, co spowoduje rozwiązanie JSSP dla każdego z~tych zadań. Szczegółowy opis interfejsu lini poleceń jest dostępny po uruchomieniu programu z~przełącznikiem '--help'.
+Dodatkowo istnieje możliwość obsługi programu kSzereg z~poziomu terminalu tekstowego korzystając z~wcześniej zapisanych plików .mar, nie jest bowiem możliwa konfiguracja zadania jedynie, rozwiązanie problemu i~eksport wyników do pliku .tex lub .pdf. Zaletą obsługi programu z~termianlu jest możliwość podania jako parametr nazwy pliku tekstowego z~zapisanymi ścieżkami dostępu do wielu plików .mar, a~nawet wybranie obu heurystyk do rozwiązania tych zleceń, co spowoduje rozwiązanie JSSP dla każdego z~tych zadań. Szczegółowy opis intreface'u linii poleceń jest dostępny po uruchomieniu programu z~przełącznikiem '--help'.
 
 \begin{figure}[htb]
     \centering
@@ -289,13 +289,13 @@ Dodatkowo istnieje możliwość obsługi programu kSzereg z~poziomu terminalu te
 \input {zad3_LIFO.tex}
 
 \section        {Wnioski}
-W sekcji \ref{sec:z1} przedstawiono przykład zlecenia w~systemie produkcyjnym o~strukturze gniazdowej, który został rozwiązany przez program kSzereg z~użyciem heurystyki FIFO oraz LIFO. Oba uzyskane uszeregowania są dopuszczalne i~niezależnie od przyjętego kryterium oceny nieznacznie różnią się od siebie. Stanowią one punkt punkt odniesienia dla kolejnych trzech zleceń, które powstały poprzez modyfikacje tego zlecenia w~myśl strategii Just in Time, a~więc minimalizacji zarówno spóźnienia zadań jak i~czasu magazynowania gotowych produktów przed terminem ich dostarczenia. 
+W sekcji \ref{sec:z1} przedstawiono przykład zlecenia w~systemie produkcyjnym o~strukturze gniazdowej, który został rozwiązany przez program kSzereg z~użyciem heurystyki FIFO oraz LIFO. Oba uzyskane uszeregowania są dopuszczalne i~niezależnie od przyjętego kryterium oceny nieznacznie różnią się od siebie. Stanowią one punkt odniesienia dla kolejnych trzech zleceń, które powstały poprzez modyfikacje tego zlecenia w~myśl strategii \emph{Just in Time}, a~więc minimalizacji zarówno spóźnienia zadań jak i~czasu magazynowania gotowych produktów przed terminem ich dostarczenia. 
 
 \begin{table}[htb]
 	\centering
 	\caption{Porównanie wyznaczników jakości uszeregowania}
 	\begin{tabular}{ r | c | c | c | c | c | c }
-	sekcja        & \(C_{max}\)	& \(\bar{F}\)   & \(T_{max}\) & \(\bar{T}\) & \(\sqrt{(\sum e_j^2 + \sum l_j^2}\) & \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.2\\ \beta = 0.8}} \) \\ \hline
+	sekcja        & \(C_{max}\)	& \(\bar{F}\)   & \(T_{max}\) & \(\bar{T}\) & \(\sqrt{\sum e_j^2 + \sum l_j^2}\) & \( \alpha*\sum e_j + \beta*\sum l_j \Big|_{\substack{\alpha = 0.2\\ \beta = 0.8}} \) \\ \hline
 	\ref{sec:z1f} & 55          & 42,4286       & 10          & 3,28571      & 19,7999      & 22,6 \\ 
 	\ref{sec:z1l} & 54          & 44,4286       & 9           & 3,85714      & 17,5499      & 23,8 \\ \hline
 	\ref{sec:z2f} & 58          & 42            & 5           & 1,57143      & 13,1149      & 12,2 \\ 
@@ -307,13 +307,13 @@ W sekcji \ref{sec:z1} przedstawiono przykład zlecenia w~systemie produkcyjnym o
 	\end{tabular}
 \end{table}
 
-W sekcji \ref{sec:z2} zmodyfikowano wyjściowy problem tak, aby rozwiązanie z~użyciem heurystyki LIFO pozwoliło na zmniejszenie spóźnień zadań, a~więc i~wyznacznika \eqref{eq:w2}, który jest w~tym przypadku jest czterokrotnie bardziej wrażliwy na spóźnienia niż wczesność (\(\alpha = 0.2,~\beta = 0.8\)). Było to możliwe dzięki przesunięciu chwili rozpoczęcia zadania nr 7 do początku czasu zlecenia oraz zmianie ostatniej operacji w~marszrucie zadania nr 4, z~2 jednostek czasu na maszynie m6, na 4 jednostki czasu na maszynie m5. To wydłużenie czasu wykonywania operacji wynikło z~założenia, że maszyna m5 najprawdopodobniej jest mniej odpowiednia do wykonania tej operacji od maszyny m6, jednak zamiana jest w~ogóle możliwa. Te dwie zmiany spowodowały znaczną poprawę wszystkich rozpatrywanych wyznaczników jakości uszeregowania, ponieważ tylko jedno zadanie pozostało spóźnione, szczególnie funkcji \eqref{eq:w2}. Pod względem tego właśnie współczynnika, jak i~\(C_{max}\), \(\bar{F}\) , oraz (\(\bar{T}\)) jest to najlepsze spośród prezentowanych rozwiązań.
+W sekcji \ref{sec:z2} zmodyfikowano wyjściowy problem tak, aby rozwiązanie z~użyciem heurystyki LIFO pozwoliło na zmniejszenie spóźnień zadań, a~więc i~wyznacznika \eqref{eq:w2}, który jest w~tym przypadku czterokrotnie bardziej wrażliwy na spóźnienia niż wczesność (\(\alpha = 0.2,~\beta = 0.8\)). Było to możliwe dzięki przesunięciu chwili rozpoczęcia zadania nr 7 do początku czasu zlecenia oraz zmianie ostatniej operacji w~marszrucie zadania nr 4, z~2 jednostek czasu na maszynie m6, na 4 jednostki czasu na maszynie m5. To wydłużenie czasu wykonywania operacji wynikło z~założenia, że maszyna m5 najprawdopodobniej jest mniej odpowiednia do wykonania tej operacji od maszyny m6, jednak zamiana jest w~ogóle możliwa. Te dwie zmiany spowodowały znaczną poprawę wszystkich rozpatrywanych wyznaczników jakości uszeregowania, ponieważ tylko jedno zadanie pozostało spóźnione, szczególnie funkcji \eqref{eq:w2}. Pod względem tego właśnie współczynnika, jak i~\(C_{max}\), \(\bar{F}\) , oraz (\(\bar{T}\)) jest to najlepsze spośród prezentowanych rozwiązań.
 
 Niestety założenie możliwości zmiany nawet jednego punktu marszruty technologicznej, nawet z~dwukrotnym wydłużeniem czasu na wykonanie tej operacji, jest bardzo optymistyczne. Może się okazać, że wprowadzenie takich zmian wymaga dodatkowych nakładów finansowych, np. na dodatkowe narzędzia, czy szkolenie pracownika, lub jest wręcz niemożliwe bez przebudowy całego gniazda. Okazuje się jednak, że nawet nie zmieniając żadnej marszruty technologicznej, jedynie poprzez przyspieszenie realizacji zadania nr 7 jest możliwe uzyskanie niewiele gorszych wyników. Jak pokazano w~sekcji \ref{sec:z3l} jedynie średnie spóźnienie zadań znacząco się zwiększyło, gdyż oprócz zadania 2 również zadanie 4 jest spóźnione, jednak wpłynęło to na poprawę wyznacznika \eqref{eq:w1}, ponieważ jest gotowe bliżej terminu.
 
-Nie zawsze istnieje możliwość wcześniejszego rozpoczęcia przetwarzania zadania, jednak nawet wtedy można zastosować strategię Just in Time, gdyż prawie zawsze można zdecydować o~późniejszym rozpoczęciu przetwarzania zadania. Jak dowodzi uszeregowanie z~sekcji \ref{sec:z4f} takie przesunięcie w~czasie rozpoczęcia trzech zadań o~kilka jednostek czasowych może doprowadzić do skrócenia czasu magazynowania gotowych produktów nie wydłużając czasu przetwarzania całego zlecenia. W~tym przypadku największej poprawie uległ wyznacznik \eqref{eq:w1}, ponieważ nie przykłada on większej wagi do spóźnień, jak wyznacznik \eqref{eq:w2}, który poprawił się jedynie nieznacznie.
+Nie zawsze istnieje możliwość wcześniejszego rozpoczęcia przetwarzania zadania, jednak nawet wtedy można zastosować strategię \emph{Just in Time}, gdyż prawie zawsze można zdecydować o~późniejszym rozpoczęciu przetwarzania zadania. Jak dowodzi uszeregowanie z~sekcji \ref{sec:z4f} takie przesunięcie w~czasie rozpoczęcia trzech zadań o~kilka jednostek czasowych może doprowadzić do skrócenia czasu magazynowania gotowych produktów nie wydłużając czasu przetwarzania całego zlecenia. W~tym przypadku największej poprawie uległ wyznacznik \eqref{eq:w1}, ponieważ nie przykłada on większej wagi do spóźnień, jak wyznacznik \eqref{eq:w2}, który poprawił się jedynie nieznacznie.
 
-Podsumowując, strategia Just in Time w~systemach produkcyjnych o~strukturze gniazdowej pozwala na duże oszczędności poprzez obniżenie kosztów zbyt wczesnego wyprodukowania towaru, jak magazynowanie, czy ubezpieczenie, oraz spóźnionej produkcji, co może się wiązać między innymi z~karami umownymi. Jak przedstawiono na przykładzie, wprowadzenie takiej strategii może być przeprowadzone kompleksowo - poprzez wymuszenie wcześniejszego ukończenia zadań na innych stanowiskach i~zmiany w~samej strukturze gniazda, aby umożliwić zmiany w~marszrucie technologicznej - lub poprzez mniejsze przesunięcia w~grafiku przetwarzania zadań. Zawsze warto więc przeanalizować rozpatrywany problem szeregowania zadań pod kątem strategii Just in Time.
+Podsumowując, strategia \emph{Just in Time} w~systemach produkcyjnych o~strukturze gniazdowej pozwala na duże oszczędności poprzez obniżenie kosztów zbyt wczesnego wyprodukowania towaru, jak magazynowanie, czy ubezpieczenie, oraz spóźnionej produkcji, co może się wiązać między innymi z~karami umownymi. Jak przedstawiono na przykładzie, wprowadzenie takiej strategii może być przeprowadzone kompleksowo - poprzez wymuszenie wcześniejszego ukończenia zadań na innych stanowiskach i~zmiany w~samej strukturze gniazda, aby umożliwić zmiany w~marszrucie technologicznej - lub poprzez mniejsze przesunięcia w~grafiku przetwarzania zadań. Zawsze warto więc przeanalizować rozpatrywany problem szeregowania zadań pod kątem strategii \emph{Just in Time}.
 
 \begin{thebibliography}{10}
 
