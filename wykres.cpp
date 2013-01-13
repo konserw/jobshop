@@ -296,7 +296,7 @@ void wykres::latex(const QString &texName)
     s +=    QString::number(c);
     s +=    " \\)\t& \\( T_{max} = ";
     s +=    QString::number(Tmax);
-    s +=    " \\)\t& \\( \\sqrt{(\\sum e_j^2 + \\sum l_j^2} = ";
+    s +=    " \\)\t& \\( \\sqrt{\\sum e_j^2 + \\sum l_j^2} = ";
     s +=    QString::number(w1);
     s +=    "\\)\t\\\\\n"
             "\t\t\\( \\bar{F} = ";
