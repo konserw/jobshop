@@ -4,14 +4,23 @@
 \ProvidesClass{prezentacja}
               [2013/01/20
  nonStandard LaTeX presentation class]
-\LoadClass{beamer}
+\LoadClass[compress]{beamer}
 
 \RequirePackage[polish]{babel}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[OT4]{fontenc}
 \RequirePackage{datetime}
-\RequirePackage[labelformat=empty,font=scriptsize,labelsep=period]{caption}
-\RequirePackage[section]{placeins}
+\RequirePackage[labelformat=empty]{caption}
+%\RequirePackage[section]{placeins}
+
+
+
+\setbeamertemplate{frametitle}
+{ 
+    \scshape
+    \insertframetitle 
+    \par 
+}
 
 \def\today{\ifcase\month\or styczeń\or luty\or marzec\or kwiecień\or maj\or czerwiec\or lipec\or sierpień\or wrzesień\or październik\or listopad\or grudzień\fi \space\number\year}
 
