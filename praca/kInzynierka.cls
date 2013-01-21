@@ -16,32 +16,34 @@
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{kInzynierka}
-              [2005/05/10 v2.4
- nonStandard LaTeX document class]
+    [2013/01/20
+    nonStandard LaTeX document class]
+        
+\RequirePackage[polish]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[OT4]{fontenc}
+\RequirePackage{mathtools}
+\RequirePackage[section]{placeins}
+\RequirePackage[justification=raggedright,singlelinecheck=false,labelsep=period]{caption}
+\RequirePackage{datetime}
+\RequirePackage{bold-extra}
+
+\def\miech{\ifcase\month\or styczeń\or luty\or marzec\or kwiecień\or maj\or czerwiec\or lipec\or sierpień\or wrzesień\or październik\or listopad\or grudzień\fi \space\number\year}    
+
 \newcommand\@ptsize{}
 \newif\if@restonecol
 \newif\if@titlepage
 \@titlepagefalse
-
-% PRZEDEFINIOWANIE !!!!
 
 \def\refstepcounter#1{\stepcounter{#1}%
     \protected@edef\@currentlabel
        {\csname p@#1\endcsname\csname the#1\endcsname\protect}%
 }
 
-\def\backslashDYPMF{\char92\relax}
-\def\NawOtwDYPMF{\char123\relax}
-\def\NawZamDYPMF{\char125\relax}
-
-\def\WyjasnienieRodz{\hfill}
-\def\WyjasnienieTyt{\hfill}
-\def\WyjasnienieAut{\hfill}
-\def\WyjasnienieProm{\hfill}
 
 \let\rodzajKodow\relax
-\DeclareOption{dos}     {\def\rodzajKodow{\usepackage[cp852]{inputenc}}}
-\DeclareOption{win}     {\def\rodzajKodow{\usepackage[cp1250]{inputenc}}}
+\DeclareOption{dos}     {\def\rodzajKodow{\RequirePackage[cp852]{inputenc}}}
+\DeclareOption{win}     {\def\rodzajKodow{\RequirePackage[cp1250]{inputenc}}}
 
 \if@compatibility
   \renewcommand\@ptsize{0}
@@ -477,8 +479,8 @@
 \newenvironment{table*}
                {\@dblfloat{table}}
                {\end@dblfloat}
-\newlength\abovecaptionskip
-\newlength\belowcaptionskip
+%\newlength\abovecaptionskip
+%\newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
 \setlength\belowcaptionskip{0\p@}
 
@@ -652,10 +654,7 @@
 \newcommand\partname{Part}
 \newcommand\appendixname{Appendix}
 \newcommand\abstractname{Abstract}
-\def\today{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi
-  \space\number\day, \number\year}
+
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
 \pagestyle{plain}
@@ -681,15 +680,6 @@
 
 \def\newoddpage{\newpage\ifodd\c@page \else\hbox{} \thispagestyle{empty} \newpage\fi}
 
-\newcommand{\fontnag}{\Large}
-\newcommand{\fonttyt}{\huge\bfseries\sffamily}
-\newcommand{\fontpromotor}{\large\itshape}
-\newcommand{\fontautor}{\large\itshape}
-\newcommand{\fontautoretyk}{\large}
-\newcommand{\fontpromotoretyk}{\large}
-\newcommand{\fontrodzpracy}{\Large\sffamily}
-\newcommand{\fontmiasto}{\large\itshape\bfseries}
-
 \let\newoddpagex\newoddpage
 
 \def\newoddpagexxx{\let\newoddpage\newoddpagex }
@@ -700,58 +690,11 @@
 \def\CzyJest#1{%\edef\ListaPlikow{\@filelist}%
 \def\CzyJestTMP{#1}\@for\CzyJestTMPA:=\@filelist\do\CzyJestCD\relax}
 
-\def\kierunek{Automatyka i Robotyka}
-\def\kierunekInformatyka{\def\kierunek{Informatyka}}
-\def\kierunekElektronika{\def\kierunek{Elektronika i Telekomunikacja}}
-\def\ustawKierunekW#1{\def\kierunek{#1}}
-
-\def\miasto#1{\global\def\miastoname{#1}}
-\miasto{Gliwice}
-%% przedefiniowanie \title
-\def\title#1{\gdef\@title{#1}}
-\let\tytul\title
 \def\promotor#1{\gdef\@promotor{#1}}
-\let\prowadzacyPrace\promoto
-
-\def\nazwa@autorow{Autor}
-%%%\let\@@aut\empty
-%%%\let\@author\empty
-\def\chron{\noexpand\chron\noexpand}
-%%%%\def\author#1{\global\advance\nr@@tora1
-%%%%	\expandafter\gdef\csname @autor\the\nr@@tora\endcsname{#1}%
-%%%%	\ifx\@author\empty
-%%%%	\global\edef\@author{\chron\fontautor\chron\csname @autor1\endcsname}%
-%%%%	\else
-%%%%	\def\nazwa@autorow{Autorzy}%
-%%%%	\global\edef\@author{\@author\chron\\\chron\fontautor\chron\csname @autor\the\nr@@tora\endcsname}%
-%%%%	\fi
-%%%%	}
-
-
-\newcount\nr@@tora
-\nr@@tora=0
-
-\long\def\autor#1#2#3{%
-\global\advance\nr@@tora1\relax
-\expandafter\gdef\csname aut@@or\the\nr@@tora\endcsname{#1}%
-\expandafter\gdef\csname proc@@or\the\nr@@tora\endcsname{#2}%
-\expandafter\gdef\csname opaut@@or\the\nr@@tora\endcsname{#3}%
-\ifnum\nr@@tora=1\relax  
-     \def\nazwa@autorow{Autor}%
-     \def\nazwa@autorowa{autora}%
-     \def\nazwa@autorowb{Podpis autora pracy}%
-     \def\dodMnogiAut##1##2{##1}%
-    \else
-     \def\nazwa@autorow{Autorzy}%
-     \def\nazwa@autorowa{autor\'ow}
-     \def\nazwa@autorowb{Podpisy autor\'ow pracy}%
-     \def\dodMnogiAut##1##2{##2}
-     \fi
-}
-\def\nazwa@autorow{}
-\def\nazwa@autorowa{}
-\def\nazwa@autorowb{}
-\def\dodMnogiAut#1#2{}
+\def\title#1{\gdef\@title{#1}}
+\def\autor#1{\gdef\@autor{#1}}
+\def\rodzPracy#1{\gdef\@rodzPracy{#1}}
+\def\kierunek#1{\gdef\@kierunek{#1}}
 
 \def\streszczenie#1{\gdef\@streszczenie{#1}}
 
@@ -805,129 +748,29 @@
 
 \def\poczatek{\ZmianyOstateczne
 \let\ZmianyOstateczne\@empty
-\StonaTyt
+\StronaTyt
  \hbox{}\thispagestyle{empty}
- %\wyjasnienia
+
 \newpage
 \podziek
 \global\count0=1
-%% wywalenie listy autorowi oswiadczen
-%% konserw
-%\stronaDruga
-%\stronaTrzecia
+
 
 \gdef\kernsekcyjny{}
 \gdef\kernsubsekcyjny{}
 \gdef\kernsubsubsekcyjny{}
 \global\let\savenumberline\numberline
 \def\numberline##1{\hbox{##1. }}
-%% zwi¹zane z mo¿liwoci¹ pisania Rozdzia³ 1. itd
+
 \def\numberlineN##1{\hbox{##1. }}
 \def\numberlineR##1{\hbox{Rozdzia\l \ ##1. }}
 
 \spistresc
 
 \global\let\numberline\savenumberline
-%Wstep jako normalny rozdzial
-%konserw
-%\wstep
+
 }
 
-\def\stronaTrzecia{
-\thispagestyle{empty}
-\subsection*{O\'swiadczenie prowadz\k acego prac\k e}
-Potwierdzam, \.ze niniejsza praca zosta\l a przygotowana pod
-moim kierunkiem i~kwalifikuje si\k e do przedstawienia jej w 
-post\k epowaniu o nadanie tytu\l u zawodowego 
-in\.zyniera informatyka.
-\par\vskip2cm\par Data \hfill Podpis prowadz\k acego prac\k e\par
-
-\bigskip\bigskip\bigskip
-
-\subsection*{O\'swiadczenie \nazwa@autorowa}
-
-\'Swiadom odpowiedzialno\'sci prawnej o\'swiadczam, \.ze niniejsze opracowanie
-zosta\l o napisane  samodzielnie i nie zawiera tre\'sci uzyskanych w spos\'ob niezgodny 
-z~obowi\k azuj\k acym prawem.\par
-O\'swiadczam r\'ownie\.z, \.ze przedstawione opracowanie 
-nie by\l o wcze\'sniej przedmiotem procedur zwi\k azanych
-z uzyskaniem tytu\l u zawodowego w  wy\.zszej uczelni.\par
-O\'swiadczam ponadto, \.ze niniejsza wersja opracowania 
-jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
-\par\vskip2cm\par Data \hfill 
-\begin{minipage}[t]{6cm}\t@mpnumer=0
-\noindent \nazwa@autorowb
-
-\bigskip
-
-\begin{tabular}{rl}
- \wypisz@autorowcdxx
-\end{tabular}
-\end{minipage}
-
-\newpage
-\thispagestyle{empty}
-\hbox{}
-\newpage
-}
-
-
-\def\next@@wiersz{\\}\def\next@@kom{&}
-
-\newcount\t@mpnumer
-\def\wypisz@Klasy{\t@mpnumer=0
-\begin{tabular}{ll}
-\wypisz@klasycd
-\end{tabular}
-}
-
-\def\wypisz@klasycd{\global\advance\t@mpnumer1		
-	\ifnum\t@mpnumer<\nr@@klasy\relax
-			\csname klasa@@a\the\t@mpnumer\endcsname
-			\global\advance\t@mpnumer1\relax
-			\next@@kom
-			\csname klasa@@a\the\t@mpnumer\endcsname
-			\next@@wiersz
-			\let\next\wypisz@klasycd
-	\else \let\next\relax\fi
-	\next
-	}
-
-\def\wypisz@autorowcd{\global\advance\t@mpnumer1
-	\ifnum\t@mpnumer>\nr@@tora\relax
-	\let\next\relax
-	\else
-			\csname aut@@or\the\t@mpnumer\endcsname
-			\next@@wiersz
-			\let\next\wypisz@autorowcd
-		\fi			
-	\next
-	}
-
-
-\def\wypisz@autorowcdx{\global\advance\t@mpnumer1
-	\ifnum\t@mpnumer>\nr@@tora\relax
-	\let\next\relax
-	\else
-	\element@aut{\the\t@mpnumer}{\csname aut@@or\the\t@mpnumer\endcsname}{\csname proc@@or\the\t@mpnumer\endcsname}{\csname opaut@@or\the\t@mpnumer\endcsname}
-			\let\next\wypisz@autorowcdx
-		\fi			
-	\next
-}
-
-\def\wypisz@autorowcdxx{\global\advance\t@mpnumer1
-	\ifnum\t@mpnumer>\nr@@tora\relax
-	\let\next\relax
-	\else
-			\the\t@mpnumer.
-			\next@@kom
-			\hbox to 4cm{\dotfill}
-			\next@@wiersz
-			\let\next\wypisz@autorowcdxx
-		\fi			
-	\next
-}
-	
 \def\ewpodziek{%
   \thispagestyle{empty}%
   \hrule height0pt depth0pt
@@ -977,7 +820,21 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
      
 \let\spistresc\tableofcontents
 
-\def\StonaTyt{\thispagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+% Strona tytulowa
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\fontnag}{\Large\scshape}
+\newcommand{\fontrodzpracy}{\Large}
+\newcommand{\fonttyt}{\Large}
+\newcommand{\fontpromotor}{\Large}
+\newcommand{\fontautor}{\Large}
+\newcommand{\fontautoretyk}{\Large}
+\newcommand{\fontpromotoretyk}{\Large}
+\newcommand{\fontmiasto}{\large}
+
+\def\StronaTyt{\thispagestyle{empty}
+    \logo
     \GornaczescSytronyTyT
     \odstepGoraTytNap
     \wypisRodzajuPracy
@@ -989,38 +846,38 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
     \dolnaczescStronyTyt
     \wykonajInneOperacje
 }
+
+\def\logo{
+    \begin{figure}[th]
+    \centering
+    \includegraphics[width=75px, keepaspectratio=true]{./polsl}
+    \end{figure}
+}
+
 \def\GornaczescSytronyTyT{%
          \begin{center}\fontnag
-%% poprawka na inny wydział / kierunek
-                  Politechnika \'Sl\k aska\\
+         Politechnika \'Sl\k aska\\
          Wydzia\l\ Automatyki, Elektroniki i Informatyki\\
-         Kierunek \kierunek
+         Kierunek \@kierunek
       \end{center}\par
       }
+
 \def\wypisanieTyt{\begin{center}\fonttyt
 \@title
 \end{center}
 }
 
 \def\wypisRodzajuPracy{\begin{center}{\fontrodzpracy
-\TheRodzPracy}\end{center}}
+\@rodzPracy}\end{center}}
 
-\def\defspec{\def\\{\egroup\hbox\bgroup\fontpromotor}}
-
-\def\wypisanieAutorPromotor{\hbox to \hsize{
-   \vtop{\hbox{\fontpromotoretyk Prowadz\k acy prac\k e:}\hbox\bgroup\fontpromotor\defspec \@promotor\egroup}\hfill
-
-\vtop{\hbox{\fontautoretyk \nazwa@autorow:}
-      \hbox{\global\t@mpnumer=0%
-      \begin{tabular}[t]{l}%      
-      \wypisz@autorowcd
-      \end{tabular}
-      }}}
+\def\wypisanieAutorPromotor{
+    {\fontautoretyk Autor: }{\fontautor \@autor} \\
+    {\fontpromotoretyk Kierujący pracą: }{\fontpromotor \@promotor} 
 }
 
 \def\dolnaczescStronyTyt{%
     \begin{center}
-   {\fontmiasto \miastoname\ \@rok }
+   {\fontmiasto Gliwice, \miech }
      \end{center}\par\break
 }
 
@@ -1028,6 +885,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \def\odstepGoraTytNap{\vfill\vfill}
 \def\odsteptytAutorProm{\vfill\vfill\vfill\vfill\vfill\vfill}
 \def\odstepAutorPromDol{\vskip0.5in\vfill}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1246,12 +1104,6 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \author{}
 \title{}
 
-%%\def\pracaMagisterska{\def\TheRodzPracy{Praca dyplomowa magisterska}}
-%%\def\pracaInzynierska{\def\TheRodzPracy{Praca dyplomowa in\.zynierska}}
-%%\def\projektInzynierski{\def\TheRodzPracy{Projekt in\.zynierski}}
-\def\TheRodzPracy{Projekt in\.zynierski}
-
-
 \rodzajKodow
 
 \def\@seccntformatSPEC#1{
@@ -1320,7 +1172,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
     \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
 }}
 
-%konserw - polskie składanie - sieroty wdowy itp
+%polskie składanie - sieroty wdowy itp
 \widowpenalty=10000 %nie pozostawia wdów na ko«cu strony
 \clubpenalty=10000 %nie pozostawia sierot
 \brokenpenalty=10000 %nie dzieli stron je»eli podziaa wyrazu
@@ -1328,7 +1180,4 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 % dla kompatybilnosci:
 \let\xle\le \let\xge\ge
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%         K O N I E C                                       %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \endinput

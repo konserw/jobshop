@@ -15,7 +15,7 @@
 %%   Right brace   \}     Tilde         \~}
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{pracaInzynierskaMS}
+\ProvidesClass{kInzynierka}
               [2005/05/10 v2.4
  nonStandard LaTeX document class]
 \newcommand\@ptsize{}
@@ -570,36 +570,13 @@
 \let\l@table\l@figure
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% orginalna wersja zmieniona:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newenvironment{thebibliography}[1]
-%     {\section*{\refname
-%        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
-%      \list{\@biblabel{\@arabic\c@enumiv}}%
-%           {\settowidth\labelwidth{\@biblabel{#1}}%
-%            \leftmargin\labelwidth
-%            \advance\leftmargin\labelsep
-%            \@openbib@code
-%            \usecounter{enumiv}%
-%            \let\p@enumiv\@empty
-%            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-%      \sloppy
-%      \clubpenalty4000
-%      \@clubpenalty \clubpenalty
-%      \widowpenalty4000%
-%      \sfcode`\.\@m}
-%     {\def\@noitemerr
-%       {\@latex@warning{Empty `thebibliography' environment}}%
-%      \endlist}
-%
-%  Po zmianach:
-%
+
+%zmiana bibliografii na 'zwykly' rozdzial
 \newenvironment{thebibliography}[1]
-     {\section*{\refname
-        \markboth{\MakeUppercase\refname\liniaA}{\liniaB\MakeUppercase\refname}%
-        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
-         \addcontentsline{toc}{section}{\refname}%
+     {\section{\refname}
+ %       \markboth{\MakeUppercase\refname\liniaA}{\liniaB\MakeUppercase\refname}%
+ %       \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+ %        \addcontentsline{toc}{section}{\refname}%
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -830,7 +807,7 @@
 \let\ZmianyOstateczne\@empty
 \StonaTyt
  \hbox{}\thispagestyle{empty}
- \wyjasnienia
+ %\wyjasnienia
 \newpage
 \podziek
 \global\count0=1
@@ -855,50 +832,6 @@
 %konserw
 %\wstep
 }
-
-\def\stronaDruga{
-\thispagestyle{empty}
-\noindent
-Praca in\.zynierska:\\
-\textbf{\@title}\vrule width0pt\\
-prowadz\k acy: \@promotor
-
-\vskip2cm
-
-\t@mpnumer=0
-
-\begingroup
-\leftskip=2cm
-\parindent=0pt
-
- \wypisz@autorowcdx
-
-\endgroup
-
-\vfill
-
-\begin{minipage}[t]{6cm}\t@mpnumer=0
-\noindent \nazwa@autorowb
-
-\bigskip
-
-\begin{tabular}{rl}
- \wypisz@autorowcdxx
-\end{tabular}
-\end{minipage}
-\hfill
-\begin{tabular}[t]{c}
-Podpis prowadz\k acego prac\k e\\[20pt]
-\dotfill
-\end{tabular}
-
-\break
-\thispagestyle{empty}
-\hbox{}
-\newpage
-}
-
-\def\element@aut#1#2#3#4{\noindent\hskip-2cm #1. \textbf{#2} -- (#3\%)\par#4\par\bigskip\par}
 
 \def\stronaTrzecia{
 \thispagestyle{empty}
@@ -1106,7 +1039,7 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \topmargin=-1in
 \advance\topmargin \marginesGorny\relax
 \@settopoint\topmargin
-\textheight=22.0cm
+\textheight=23.5cm
 %
 % wyrownanie wysokosci dla bez akapitow
 %
@@ -1177,12 +1110,8 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 %  naglowki
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\liniaA{\vrule width-\textwidth depth3pt height-2.6pt
@@ -1195,10 +1124,9 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \markboth{\MakeUppercase{Spis Tre\'sci}\liniaA}{\liniaB \MakeUppercase{Spis Tre\'sci}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 %  r¢wnania
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\PrzedSection\relax
 \let\PrzedSubSection\relax
 
@@ -1225,10 +1153,9 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
       \let\PrzedSubSectionx\zerujLicznikRysunkow          }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 %  sekcja do nag¢wka
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \def\ustawKernyNorm{
 \def\kernsekcyjny{\kern-1em. }
 \def\kernsubsekcyjny{\kern-1em. }
@@ -1288,7 +1215,6 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \@ifnextchar*{\dodatekX}{\@dblarg\dodatekY}}
 \def\dodatekX*{\@dblarg\dodatekXY}
 
-
 \def\dodatekY[#1]#2{\def\xtmp{#1}%
 \section*{Dodatek\dodatekNr}\vskip-30pt
 \subsection*{#2}\vskip30pt
@@ -1311,10 +1237,8 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
 \subsection*{#2}\vskip30pt
 \ifx\xtmp\@empty
 \def\NagText{Dodatek\dodatekNr}%
-%\addcontentsline{toc}{section}{Dodatek\dodatekNr}%
 \else
 \def\NagText{Dodatek \dodatekNr: #1}%
-%\addcontentsline{toc}{section}{Dodatek\dodatekNr: #2}%
 \fi
 \markboth{\MakeUppercase\NagText\liniaA}{\liniaB\MakeUppercase\NagText}%
 }
@@ -1396,129 +1320,15 @@ jest identyczna z za\l \k aczon\k a wersj\k a elektroniczn\k a.
     \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
 }}
 
+%konserw - polskie składanie - sieroty wdowy itp
+\widowpenalty=10000 %nie pozostawia wdów na ko«cu strony
+\clubpenalty=10000 %nie pozostawia sierot
+\brokenpenalty=10000 %nie dzieli stron je»eli podziaa wyrazu
 
 % dla kompatybilnosci:
 \let\xle\le \let\xge\ge
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%         WYJANIENIA                                       %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\wyjasnienia{
-
-\noindent
-w preambule (czyli przed \texttt{\char`\\begin\char`\{document\char`\}}) musz\k a by\'c 
-u\.zyte nast\k epuj\k ace komendy (przyk³adowo)
-
-\smallskip
-
-\texttt{\char`\\title\char`\{Tytu{\l} pracy \char`\}}
-
-\texttt{\char`\\promotor\char`\{dr in\.z Marek Xsi\'nski\char`\}} 
-
-\medskip
- 
-\noindent
-Dla ka\.zdego autora (liczba 12 jest procentem wk\l adu pracy)
-
-\texttt{\char`\\autor\char`\{Tomasz Xsi\'nski\char`\}\char`\{12\char`\}
-\char`\{Opis wk³adu pracy\char`\}
-}
-
-\bigskip
-
-Aby zmieni\'c spos\'ob robienia margines\'ow (nie zmienia numeracji stron) u\.zywamy komendy:
-
-\texttt{\char`\\drukJednostronny} 
-
-
-\bigskip
-
-\noindent
-Spis tre\'sci pojawia si\k e automatycznie. Podobnie Wst\k ep przed pierwszym rozdzia\l em.
-
-\noindent
-Kolejne rozdzia\l y wprowadzamy komend\k a:
-
-\smallskip
-
-\texttt{\char`\\section\char`\{Tytu\l\  rozdzia\l u \char`\}}
-
-\smallskip
-
-\noindent
-lub gdy tytu\l{} nie mie\'sci si\k e w nag\l\'owku:
-
-\smallskip
-
-\texttt{\char`\\section[skr\'ocony tytu\l{} do nag.\ldots]\char`\{Tytu\l\  rozdzia\l u \char`\}}
-
-\medskip
-
-\noindent
-Mo\.zna te\.z zastosowa\'c komendy:
-
-\texttt{\char`\\newlineSpis} --- dzia\l a tylko gdy tytu\l rozdzia\l u jest w spisie tre\'sci
-
-\texttt{\char`\\newlineTekst} ---  dzia\l a tylko gdy tytu\l rozdzia\l u jest w tek\'scie
-
-\bigskip
-
-Mo\'zemy te\.z zrobi\'c dedykacj\k e:
-
-\texttt{\char`\\dedykacja\char`\{Dedykacja\char`\\\char`\\podzielona\char`\\\char`\\na linie\char`\}}
-
-
-\bigskip
-
-\noindent
-Inne ciekawe komendy (ich nazwa powinna wyja\'sni\'c zastosowanie)
-
-\begin{tabular}{|clc|cl}
-&\texttt{\char`\\dodatek\char`\{TYT\char`\}} && 
-&\texttt{\char`\\dodatek[skr]\char`\{TYT\char`\}}\\
-&\texttt{\char`\\dodatek*\char`\{TYT\char`\}}&&
-&\texttt{\char`\\wnioski}\\
-&\texttt{\char`\\rysunki}&&
-&\texttt{\char`\\dodatkowo\char`\{DOWOLNANAZWA\char`\}}\\
-&\texttt{\char`\\rzymskaNumeracjaDodatkow}&&
-&\texttt{\char`\\literowaNumeracjaDodatkow}\\
-&\texttt{\char`\\sectionRysunki}&&
-&\texttt{\char`\\subsectionRysunki}\\
-&\texttt{\char`\\sectionWzory}&&
-&\texttt{\char`\\subsectionWzory}\\
-&\texttt{\char`\\rozdzialy}&& 
-&\texttt{\char`\\rzymskieRozdzialy}\\
-\end{tabular}
-
-\bigskip\bigskip
-
-U\.zyj komendy \texttt{\char`\\bezWyjasnien} aby nie drukowa\'c tej strony
-
-Pytania i uwagi prosz\k e kierowaæ na adres: \texttt{marek.zabka@polsl.pl}
-
-}
-
-\def\bezWyjasnien{\let\wyjasnienia\relax}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%         K O N I E C                                       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \endinput
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% \mathindent=45pt gdy  wzory do lewej i numery do lewej
-%%    Poprawic zaleŸno od sposobu numerowania wzor¢w
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\wnioski
-     
-\rysunki
-     
-\dodatkowo{DOWOLNANAZWA}
-
-\rzymskaNumeracjaDodatkow 
-\literowaNumeracjaDodatkow
-\sectionWzory
-\subsectionWzory

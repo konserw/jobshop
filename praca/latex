@@ -2,9 +2,9 @@
 #cd ../
 #rm output/*
 #./compile
-#./kSzereg -l lista -h all
+#./kSzereg -l lista -h all -r -90
 #cd praca
 rubber --pdf -I ../output praca.tex
 rubber --clean praca.tex
-evince praca.pdf
+#evince praca.pdf
 #rm praca.pdf

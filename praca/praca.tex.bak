@@ -1,10 +1,18 @@
 %Praca inżynierska (c) Kamil Strzempowicz
 \documentclass[twoside]{kInzynierka}
-
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage{mathtools}
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{transparent}
+%\usepackage{lscape}
+\usepackage[section]{placeins}
+\usepackage[justification=raggedright,singlelinecheck=false,labelsep=period]{caption}
 
+%hyperref musi być ostatnie
 \usepackage[hidelinks]{hyperref}
 
 \mathtoolsset{showonlyrefs}
@@ -12,11 +20,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% Podstawowe info %%%
 %%%%%%%%%%%%%%%%%%%%%%%
-\rodzPracy{Projekt in\.zynierski}
-\kierunek{Automatyka i Robotyka}
-\title{Strategia Just in Time w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
+
+\title{Strategia \emph{Just in Time} w systemach produkcyjnych\\ - analiza struktury gniazdowej dla heurystyk FIFO i LIFO.}
 \promotor{dr inż. Waldemar Grzechca}
-\autor{Kamil Strzempowicz}
+\autor{Kamil Strzempowicz}{100}{Napisanie całej pracy}
 \dedykacja{Rodzicom\\bez Was nie udałoby mi się}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,7 +33,7 @@
 \begin{document}
 
 \section        {Wstęp}
-Celem tej pracy jest przedstawienie strategii \emph{Just in Time} (JIT) dla szeregowania zadań w~systemach produkcyjnych o~strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk \emph{First In First Out} (FIFO) i \emph{Last In First Out} (LIFO). Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania wykorzystując obie te heurystyki, oraz obliczający wyznaczniki jakości uszeregowania w~kontekście strategii JIT.
+Celem tej pracy jest przedstawienie strategii \emph{\emph{Just in Time}} (JIT) dla szeregowania zadań w~systemach produkcyjnych o~strukturze gniazdowej. Szeregowanie przeprowadzono na podstawie heurystyk \emph{First In First Out} (FIFO) i \emph{Last In First Out} (LIFO). Na potrzeby tej pracy powstał program \emph{kSzereg} szeregujący zadania wykorzystując obie te heurystyki, oraz obliczający wyznaczniki jakości uszeregowania w~kontekście strategii JIT.
 
 System produkcyjny jest to celowo zaprojektowany i~zorganizowany układ materialny, energetyczny i~informacyjny eksploatowany przez człowieka i~służący produkowaniu określonych produktów (wyrobów lub usług) w~celu zaspokajania różnorodnych potrzeb konsumentów \cite{pastuszak}.
 
@@ -35,7 +42,7 @@ Systemy produkcyjne można podzielić ze względu na strukturę na:
 \begin{itemize}
 \item Systemy gniazdowe - najczęściej wykorzystywane do pojedynczych zamówień, bądź krótkich serii. Takie systemy zwykle zmieniają swoje zastosowanie po zakończeniu każdego zlecenia. Zlecenie składa się ze skończonej liczby zadań, a~każde z~nich wymaga przeprowadzenia zestawu operacji na maszynach w~ustalonym porządku, innym dla każdego zadania.
 \item System przepływowy - kierunek przepływu wszystkich zleceń przez maszyny jest ten sam. Dla idealnego systemu przepływowego liczba zadań jest równa liczbie maszyn dla każdego zlecenia. \cite{grzechca}
-\item Pojedyncza maszyna - system składający się z~jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a~zlecenia jednostkowe. Stąd zlecenia są tożsame z~zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
+\item Pojedyńcza maszyna - system składający się z~jednej tylko maszyny. Zakłada się, że procesy wytwarzania produktów są jednostadialne, a~zlecenia jednostkowe. Stąd zlecenia są tożsame z~zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
 \item Maszyny równoległe - system składający się z~m~identycznych maszyn. Podobnie jak w~problemie jednomaszynowym zakłada się, że procesy wytwarzania produktów są jednostadialne, a~zlecenia jednostkowe. Stąd, podobnie jak tam, zlecenia są tożsame z~zadaniami, przy czym nie istnieją ograniczenia kolejnościowe \cite{grzechca}.
 \item Linia montażowa -  zespół stanowisk roboczych (maszynowych, ręcznych lub mieszanych) ugrupowanych według kolejności operacji procesu technologicznego \cite{wiki}.
 \end{itemize}
@@ -64,7 +71,7 @@ Zastosowanie strategi \emph{Just in Time} w~systemach produkcyjnych o~strukturze
 \section       [Metody szeregowania zadań \ldots]
 		        {Metody szeregowania zadań \newline w systemach wytwarzania gniazdowego}
 
-Teoretycznie optymalne rozwiązanie problem szeregowania zadań w~systemie wytwarzania gniazdowego (JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań zawsze jest skończona. Jednak, jak wynika m. in. z \cite{np1}\cite{np2}, problem ten jest silnie NP-trudny, czyli pozostaje NP-trudny nawet przy ograniczeniu maksymalnej wartości występujących w~jego opisie liczb. Natomiast problem NP-trudny jest co najmniej tak trudny, jak każdy problem klasy NP (nondeterministic polynomial), a~często trudniejszy. Oznacza to, że już przy niewielkiej ilości zadania problem przestaje być rozwiązywalny w rozsądnym czasie nawet przy użyciu superkomputerów. W~związku z~tym wykorzystuje się metody pozwalające uzyskać nieoptymalne, ale akceptowalne rozwiązanie bez potrzeby rozpatrywania każdego możliwego rozwiązania \cite{np}.
+Teoretycznie optymalne rozwiązanie problem szeregowania zadań w~systemie wytwarzania gniazdowego (JSSP) można dokonać na podstawie przeglądu zupełnego, ponieważ zawsze ilość możliwych rozwiązań zawsze jest skończona. Jednak, jak wynika m. in. z \cite{np1}\cite{np2}, problem ten jest silnie NP-trudny, czyli pozostaje NP-trudny nawet przy ograniczeniu maksymalnej wartości występujących w~jego opisie liczb. Natomiat problem NP-trudny jest co najmniej tak trudny, jak każdy problem klasy NP (nondeterministic polynomial), a~często trudniejszy. Oznacza to, że już przy niewielkiej ilości zadania problem przestaje być rozwiązywalny w rozsądnym czasie nawet przy użyciu superkomputerów. W~związku z~tym wykorzystuje się metody pozwalające uzyskać nieoptymalne, ale akceptowalne rozwiązanie bez potrzeby rozpatrywania każdego możliwego rozwiązania \cite{np}.
 
 \subsection     {Metody heurystyczne}
 Metody heurystyczne pozwalają na stosunkowo szybkie i~łatwe znalezienie dopuszczalnego rozwiązania. Zwykle jednak nie jest to rozwiązanie optymalne, lecz niejednokrotnie bardziej opłacalne jest wdrożenie takiego rozwiązania, niż żmudne poszukiwanie lepszego rozwiązania, ze względu na czas i~zasoby wymagane do jego odnalezienia. W~szczególności w~sytuacji awaryjnej, gdy nie ma czasu na wykorzystanie bardziej zaawansowanych metod \cite{dynamic}. 
