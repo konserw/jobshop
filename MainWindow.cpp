@@ -104,7 +104,7 @@ void MainWindow::rout(qint32 col)
     ui->tableWidget->setColumnCount(3 + col);
 
     QStringList labels;
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("dj");
+    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zkończenia");
     for(qint32 i=1; i<=col; ++i)
         labels << QString::number(i);
     ui->tableWidget->setHorizontalHeaderLabels(labels);

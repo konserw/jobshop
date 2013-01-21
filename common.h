@@ -6,6 +6,7 @@
 extern int t;
 extern bool cli;
 extern int fmt;
+extern double rot;
 
 #define dx 9
 #define dy 20

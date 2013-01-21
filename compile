@@ -11,6 +11,7 @@
 #texlive-latex-recommended
 #texlive-lang-polish
 #texlive-latex-extra
+#texlive-fonts-extra
 #inkscape
 
 make clean

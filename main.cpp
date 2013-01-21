@@ -11,6 +11,7 @@
 bool cli;
 int t = 0;
 int fmt = 0;
+double rot = 0;
 
 int main(int argc, char *argv[])
 {
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     //display cli help text
     if(args->contains("--help", Qt::CaseInsensitive))
     {
-        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [--help]"; //[<file> ...] ";
+        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [-r] [--help]"; //[<file> ...] ";
         qDebug() << "or kSzereg without arguments for GUI operation";
         qDebug() << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis";
         qDebug() << "for job shop problem.";
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
         qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
       //  qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
         qDebug() << "\t-p, --pdf\t\tCompile LaTeX output to .pdf format";
+        qDebug() << "\t-r, --rotate <deg>\tRotate Gantt chart by <deg> degrees clockwise, default 0";
         qDebug() << "";
         qDebug() << "Aviable heuristics:";
         qDebug() << "\tFIFO\t\t\tFirst In First Out";
@@ -117,7 +119,7 @@ int main(int argc, char *argv[])
 
         if(args->count() < where+1)
         {
-            qDebug() << "You have to specify name of list heuristic after -h option (ater white char)";
+            qDebug() << "You have to specify heuristic after -h option (ater white char)";
             qDebug() << "See 'kSzereg --help'' for more information.";
             return 1;
         }
@@ -138,6 +140,27 @@ int main(int argc, char *argv[])
         maszyna::method = 0; //defaults to FIFO
 
     DEBUG << "wybrana heurystyka: " << maszyna::method;
+
+    if(args->contains("-r") || args->contains("--rotate"))
+    {
+        int where = args->indexOf("-r");
+        if(where == -1)
+            where = args->indexOf("--rotate");
+        ++where;
+
+        if(args->count() < where+1)
+        {
+            qDebug() << "You have to specify <deg> after -r option (ater white char)";
+            qDebug() << "See 'kSzereg --help'' for more information.";
+            return 1;
+        }
+
+        rot = args->at(where).toDouble();
+    }
+
+    /*
+      Koniec przetwarzania argumentów
+      */
 
     for(int i=0; i<files->count(); ++i)
     {

@@ -20,7 +20,7 @@ wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
 
     this->setWindowTitle(tr("Podsumowanie obliczeń"));
 
-    ui->doPdf->setText(tr("export do pdf"));
+    ui->doPdf->setText(tr("eksport do pdf"));
     ui->doLatexu->setText(tr("eksport do LaTeXu"));
 
     ui->graphicsView->setScene(scene);
@@ -133,7 +133,8 @@ void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
     ui->label->setStyleSheet("QLabel { background-color : white; color : black; }");
     ui->label->setText(str);
 
-    this->showMaximized();
+   // this->showMaximized();
+    this->show();
     this->exec();
 
     ui->tableWidget->clear();
@@ -229,7 +230,7 @@ void wykres::latex(const QString &texName)
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter;
     painter.begin(&svgGen);
-    painter.rotate(-90);
+    painter.rotate(rot);
     scene->render(&painter);
     painter.end();
 
