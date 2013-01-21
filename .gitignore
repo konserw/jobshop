@@ -8,7 +8,6 @@ kSzereg
 Makefile
 ui_*
 temp/*
-praca.pdf
 info_*
 output/*
 *.user
