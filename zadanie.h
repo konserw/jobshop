@@ -6,7 +6,7 @@
 #include "grafZadanie.h"
 
 class marszruta;
-class stat;
+class Result;
 
 class zadanie : public QObject
 {
@@ -43,7 +43,7 @@ public slots:
     QGraphicsItem* gItem();
 signals:
     void next(qint32, zadanie*);
-    void finished(stat*);
+    void finished(Result*);
 private:
     int j;
     int rj;

@@ -1,6 +1,8 @@
 #include "maszyna.h"
 #include "zadanie.h"
-#include <qdebug.h>
+#include <QtDebug>
+#include <QGraphicsScene>
+#include <QGraphicsTextItem>
 #include "common.h"
 
 int maszyna::method = 0;

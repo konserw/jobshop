@@ -9,7 +9,7 @@
 #include <QList>
 #include "zadanie.h"
 #include "maszyna.h"
-
+#include "result.h"
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
@@ -68,7 +68,7 @@ void wykres::setText(const QString &text)
 }
 
 
-void wykres::finished(stat* x)
+void wykres::finished(Result* x)
 {
     DEBUG << "ukonczono zadanie: " << x->j();
 
@@ -95,7 +95,7 @@ void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
     int j, cols;
     QTableWidgetItem* it;
     QStringList list;
-    stat* st;
+    Result* st;
 
     list << tr("cj") << tr("fj") << tr("lj") << tr("ej");
     cols = list.count();
@@ -215,7 +215,7 @@ void wykres::latex()
 void wykres::latex(const QString &texName)
 {
     QString s;
-    stat* st;
+    Result* st;
 
     QFileInfo fi(texName);
     const QString name = fi.baseName();
@@ -269,7 +269,7 @@ void wykres::latex(const QString &texName)
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
-    qSort(stats.begin(), stats.end(), PtrLess<stat>());
+    qSort(stats.begin(), stats.end(), PtrLess<Result>());
 
     foreach(st, stats)
     {
@@ -328,7 +328,7 @@ void wykres::latex(const QString &texName)
 
 void wykres::evalStats()
 {
-    stat* st;
+    Result* st;
     c = 0;
     f = 0;
     l = 0;
@@ -382,7 +382,7 @@ void wykres::setupScene()
 
 void wykres::clean()
 {
-    stat* st;
+    Result* st;
     foreach(st, stats)
     {
         delete st;

@@ -7,7 +7,7 @@
 #include "wykres.h"
 
 class marszruta;
-class stat;
+class Result;
 class maszyna;
 class zadanie;
 
@@ -33,7 +33,7 @@ public slots:
     void rout(int);
 
     void next(qint32, zadanie*);
-    void finished(stat*);
+    void finished(Result*);
 
     void imp();
     void exp();

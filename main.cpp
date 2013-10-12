@@ -1,5 +1,5 @@
 #include "maszyna.h"
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "MainWindow.h"
 #include <QTextCodec>
 #include "common.h"
@@ -16,8 +16,7 @@ double rot = 0;
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     const int maxMethod = 2;
     bool all = false;

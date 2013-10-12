@@ -3,13 +3,14 @@
 #include "marszruta.h"
 #include "maszyna.h"
 #include "zadanie.h"
-#include <QStringList>
 #include "common.h"
+#include "result.h"
 
 #include <QMessageBox>
 #include <QFile>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QStringList>
 
 MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     QMainWindow(parent),
@@ -138,8 +139,8 @@ void MainWindow::solve(const QString &arg)
             z->add_rout(qobject_cast<marszruta*>(ui->tableWidget->cellWidget(i, j)));
 
         connect(z, SIGNAL(next(qint32,zadanie*)), this, SLOT(next(qint32,zadanie*)));
-        connect(z, SIGNAL(finished(stat*)), this, SLOT(finished(stat*)));
-        connect(z, SIGNAL(finished(stat*)), gant, SLOT(finished(stat*)));
+        connect(z, SIGNAL(finished(Result*)), this, SLOT(finished(Result*)));
+        connect(z, SIGNAL(finished(Result*)), gant, SLOT(finished(Result*)));
         connect(this, SIGNAL(tick()), z, SLOT(update()));
 
         zadania.append(z);
@@ -244,7 +245,7 @@ void MainWindow::next(qint32 m, zadanie* z)
     maszyny[m-1]->add(z);
 }
 
-void MainWindow::finished(stat* x)
+void MainWindow::finished(Result* x)
 {
     DEBUG << "zadanie " << x->j() << "zakonczone";
     skonczone++;

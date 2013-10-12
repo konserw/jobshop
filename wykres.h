@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-struct stat;
+class Result;
 class QGraphicsScene;
 class QDir;
 class zadanie;
@@ -20,7 +20,7 @@ public:
 
 public slots:
     void setText(const QString& text);
-    void finished(stat* x);
+    void finished(Result* x);
     void set(int _maszyn, double _alfa, double _beta);
     void bazinga(const QList<zadanie *>*);
     void bazinga(const QString&, const QList<zadanie *>*);
@@ -38,7 +38,7 @@ protected:
 private:
     Ui::wykres *ui;
 
-    QList<stat*> stats;
+    QList<Result*> stats;
     int zadan, maszyn;
 
     int c;

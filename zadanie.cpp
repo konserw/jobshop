@@ -2,7 +2,7 @@
 #include "marszruta.h"
 #include <qdebug.h>
 #include "common.h"
-
+#include "result.h"
 
 zadanie::zadanie(int number, int start_time, int due_date)
 {
@@ -66,7 +66,7 @@ void zadanie::update()
     {
         blocked = true;
 
-        stat* x = new stat(j, t, dj, rj);
+        Result* x = new Result(j, t, dj, rj);
 
         emit finished(x);
         return;
