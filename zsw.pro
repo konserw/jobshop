@@ -20,17 +20,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #----------------------------------------------------------------------------
-TARGET = kSzereg
+TARGET = jobshop
 
-QT = core gui svg
+QT = core gui svg widgets
 
 TEMPLATE = app
 #QMAKE_CXXFLAGS += -Wall -Werror -Wextra
 
-OBJECTS_DIR =   temp/obj
-UI_DIR =        temp/ui
-MOC_DIR =       temp/moc
-RCC_DIR =       temp/rcc
+#OBJECTS_DIR =   temp
+#UI_DIR =        temp
+#MOC_DIR =       temp
+#RCC_DIR =       temp
 
 SOURCES += \
     main.cpp \
@@ -40,7 +40,8 @@ SOURCES += \
     zadanie.cpp \
     wykres.cpp \
     grafZadanie.cpp \
-    common.cpp
+    common.cpp \
+    result.cpp
 HEADERS += \
     MainWindow.h \
     marszruta.h \
@@ -48,7 +49,8 @@ HEADERS += \
     zadanie.h \
     common.h \
     wykres.h \
-    grafZadanie.h
+    grafZadanie.h \
+    result.h
 FORMS += \
     MainWindow.ui \
     marszruta.ui \
