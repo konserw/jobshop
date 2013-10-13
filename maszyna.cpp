@@ -16,7 +16,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     s += QString::number(id);
 
     scene = sc;
-    y = (id - 1) * (2 * grafZadanie::dy); //40
+    y = (id - 1) * (2 * grafZadanie::dy);
     x = 0;
     font = new QFont("Arial", 10, QFont::Normal, false);
     pen = new QPen();
@@ -90,7 +90,7 @@ void maszyna::up2()
         QGraphicsTextItem* text = scene->addText(s, *font);
         text->setDefaultTextColor(QColor(255, 0, 0));
         text->setX(x + 2);
-        text->setY(y);// + (0.5*dy));// - text->boundingRect().height());
+        text->setY(y);
     }
 
     switch(method)

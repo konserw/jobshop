@@ -314,7 +314,7 @@ void wykres::latex(const QString &texName)
     s +=    "\t\t\\end{tabular}\n"
             "\t\\end{table}\n";
 
-    s +=    "%wykres gantt'a\n" //  w landscape\n"
+    s +=    "%wykres gantt'a\n"
            "\t\\begin{figure}[htb]\n"
            "\t\t\\centering\n"
            "\t\t\\def\\svgwidth{\\columnwidth}\n"
