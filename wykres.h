@@ -48,6 +48,20 @@ private:
     QGraphicsScene* scene;
 
     static QString metoda(int n);
+
+
+    //for result sorting:
+    template <typename T>
+    class PtrLess
+    {
+    public:
+        bool operator()(const T* a, const T* b) const
+        {
+            if(a == nullptr) return false;
+            if(b == nullptr) return true;
+            return *a < *b;
+        }
+    };
 };
 
 #endif // WYKRES_H
