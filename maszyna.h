@@ -16,12 +16,12 @@ public:
     ~maszyna();
 
     static int method;
+    static const int X0 = 35;
 
 public slots:
     void update();
     void add(zadanie*);
     void up2();
-
 
 private:
     void start(zadanie*);

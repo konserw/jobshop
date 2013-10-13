@@ -360,12 +360,11 @@ void wykres::setupScene()
     QGraphicsSimpleTextItem* text;
     QFont font("Arial", 12);
     qreal x;
-    qreal x0 = X0;
-    qreal ym = (maszyn*2*dy)+dy;
+    qreal ym = (maszyn*2*grafZadanie::dy)+grafZadanie::dy;
 
     for(int i=0; i<c; i+=5)
     {
-        x = x0 + dx*i;
+        x = maszyna::X0 + grafZadanie::dx*i;
         scene->addLine(x, 0, x, ym);
         text = scene->addSimpleText(QString::number(i), font);
         text->setX(x+3);

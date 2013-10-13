@@ -16,7 +16,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     s += QString::number(id);
 
     scene = sc;
-    y = (id-1)*(2*dy); //40
+    y = (id - 1) * (2 * grafZadanie::dy); //40
     x = 0;
     font = new QFont("Arial", 10, QFont::Normal, false);
     pen = new QPen();
@@ -29,8 +29,8 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     text->setY(y);
 
     x += X0;
-    scene->addLine(x, y, x, y+2*dy, *pen);
-    y += dy;
+    scene->addLine(x, y, x, y+2*grafZadanie::dy, *pen);
+    y += grafZadanie::dy;
 
     DEBUG << "utworzono maszyne nr " << id;
 }
@@ -73,15 +73,15 @@ void maszyna::up2()
     if(cur)return;              //not null -> still procesing
     if(kolejka.isEmpty())       //nothing to do -> leave space
     {
-        scene->addLine(x, y, x+dx, y, *pen);
-        x += dx;
+        scene->addLine(x, y, x+grafZadanie::dx, y, *pen);
+        x += grafZadanie::dx;
         return;
     }
 
     int size = kolejka.size();
     if(size > 1)        //konflikt -> krecha i numery konfliktowych zadan
     {
-        scene->addLine(x, y-1.5*dy, x, y+0.5*dy, *penKonflikt);
+        scene->addLine(x, y-1.5*grafZadanie::dy, x, y+0.5*grafZadanie::dy, *penKonflikt);
         QString s("(");
         for(int i=0; i<size-1; ++i)
             s += QString::number(kolejka[i]->number()) + ", ";

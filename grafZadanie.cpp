@@ -1,6 +1,5 @@
 #include "grafZadanie.h"
 #include <QPainter>
-#include <QtGui>
 #include "common.h"
 
 grafZadanie::grafZadanie(int id, int time, QColor& color)

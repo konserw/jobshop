@@ -13,6 +13,10 @@ public:
                QWidget *widget);
 
     ~grafZadanie();
+
+    static const int dx = 9;
+    static const int dy = 20;
+
 protected:
     QString j;
     qreal w, h;
