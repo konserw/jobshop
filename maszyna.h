@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QList>
-#include <QtGui>
 
+class QGraphicsScene;
 class zadanie;
 
 class maszyna : public QObject

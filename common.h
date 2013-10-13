@@ -8,9 +8,9 @@ extern bool cli;
 extern int fmt;
 extern double rot;
 
-#define dx 9
-#define dy 20
-#define X0 35
+const int dx = 9;
+const int dy = 20;
+const int X0 = 35;
 
 #define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
