@@ -1,8 +1,8 @@
 #include "zadanie.h"
 #include "marszruta.h"
-#include <qdebug.h>
 #include "common.h"
 #include "result.h"
+#include <QtDebug>
 
 zadanie::zadanie(int number, int start_time, int due_date)
 {
@@ -15,7 +15,7 @@ zadanie::zadanie(int number, int start_time, int due_date)
 
     col =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
-    DEBUG << "utworzono zadanie nr " << j << " rj: " << rj << " dj: " << dj;
+    qDebug() << "utworzono zadanie nr " << j << " rj: " << rj << " dj: " << dj;
 }
 
 zadanie::~zadanie()
@@ -30,7 +30,7 @@ void zadanie::add_rout(marszruta *m)
     rout.append(m);
     grafZadanie* g = new grafZadanie(j, t, *col);
     grafiki.append(g);
-    DEBUG << "dodalem punkt marszruty do zadania " << j;
+    qDebug() << "dodalem punkt marszruty do zadania " << j;
 }
 
 QString zadanie::print() const

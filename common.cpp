@@ -3,13 +3,14 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QTextCodec>
+#include <QtDebug>
 
 int run(const QString &program, const QStringList &args)
 {
     int rc;
-    DEBUG << "running command: " << program << " args: " << args;
+    qDebug() << "running command: " << program << " args: " << args;
     rc = QProcess::execute(program, args);
-    DEBUG << program << " returned code: " << rc;
+    qDebug() << program << " returned code: " << rc;
     return rc;
 }
 

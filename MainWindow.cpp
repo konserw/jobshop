@@ -5,7 +5,7 @@
 #include "zadanie.h"
 #include "common.h"
 #include "result.h"
-
+#include <QtDebug>
 #include <QMessageBox>
 #include <QFile>
 #include <QDataStream>
@@ -247,7 +247,7 @@ void MainWindow::next(qint32 m, zadanie* z)
 
 void MainWindow::finished(Result* x)
 {
-    DEBUG << "zadanie " << x->j() << "zakonczone";
+    qDebug() << "zadanie " << x->j() << "zakonczone";
     skonczone++;
 }
 
@@ -257,18 +257,18 @@ void MainWindow::import(const QString &s)
     if (!file.open(QIODevice::ReadOnly))
     {
         QMessageBox::critical(this, tr("Error"), tr("Nie udało się otworzyć pliku z danymi marszrut"));
-        if(!file.exists())DEBUG <<  "plik marszrut nie iesnieje";
-        else DEBUG <<  "plik marszrut nie jest dostępny";
+        if(!file.exists()) qWarning() <<  "plik marszrut nie iesnieje";
+        else qWarning() <<  "plik marszrut nie jest dostępny";
         return;
     }
 
-    DEBUG <<  "wczytuje marszruty...";
+    qDebug() <<  "wczytuje marszruty...";
 
     QDataStream in(&file);
 
     in >> *this;
 
-    DEBUG <<  "koniec wczytywania";
+    qDebug() <<  "koniec wczytywania";
 }
 
 void MainWindow::imp()
@@ -290,18 +290,18 @@ void MainWindow::exp()
     if (!file.open(QIODevice::WriteOnly))
     {
         QMessageBox::critical(this, tr("Error"), tr("Nie udało się otworzyć pliku z danymi marszrut"));
-        if(!file.exists())DEBUG <<  "plik marszrut nie iesnieje";
-        else DEBUG <<  "plik marszrut nie jest dostępny";
+        if(!file.exists()) qWarning() <<  "plik marszrut nie iesnieje";
+        else qWarning() <<  "plik marszrut nie jest dostępny";
         return;
     }
 
-    DEBUG <<  "zapisuje marszruty...";
+    qDebug() <<  "zapisuje marszruty...";
 
     QDataStream out(&file);
 
     out << *this;
 
-    DEBUG <<  "koniec zapisu";
+    qDebug() <<  "koniec zapisu";
 }
 
 QDataStream &operator<<(QDataStream &out, const MainWindow &win)

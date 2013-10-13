@@ -24,6 +24,8 @@ TARGET = jobshop
 
 QT = core gui svg widgets
 
+CONFIG += c++11 console
+
 TEMPLATE = app
 #QMAKE_CXXFLAGS += -Wall -Werror -Wextra
 
@@ -41,7 +43,8 @@ SOURCES += \
     wykres.cpp \
     grafZadanie.cpp \
     common.cpp \
-    result.cpp
+    result.cpp \
+    logger.cpp
 HEADERS += \
     MainWindow.h \
     marszruta.h \
@@ -50,7 +53,8 @@ HEADERS += \
     common.h \
     wykres.h \
     grafZadanie.h \
-    result.h
+    result.h \
+    logger.h
 FORMS += \
     MainWindow.ui \
     marszruta.ui \

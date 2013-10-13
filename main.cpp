@@ -1,11 +1,16 @@
 #include "maszyna.h"
-#include <QApplication>
 #include "MainWindow.h"
-#include <QTextCodec>
+#include "logger.h"
 #include "common.h"
+
 #include <QFile>
 #include <QTextStream>
 #include <QStringList>
+#include <QTextCodec>
+#include <QtDebug>
+#include <QApplication>
+#include <iostream>
+using std::cout;
 
 //global extern variables
 bool cli;
@@ -17,6 +22,13 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+#ifndef QT_NO_DEBUG_OUTPUT
+    if(Logger::instance())
+        qInstallMessageHandler(Logger::logHandler);
+    else
+        qDebug() << "Unable to create Logger instance!";
+#endif
 
     const int maxMethod = 2;
     bool all = false;
@@ -46,24 +58,24 @@ int main(int argc, char *argv[])
     //display cli help text
     if(args->contains("--help", Qt::CaseInsensitive))
     {
-        qDebug() << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [-r] [--help]"; //[<file> ...] ";
-        qDebug() << "or kSzereg without arguments for GUI operation";
-        qDebug() << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis";
-        qDebug() << "for job shop problem.";
-        qDebug() << "";
-        qDebug() << "OPTIONS:";
-        qDebug() << "\t--help\t\t\tDisplay this help text and exit";
-        qDebug() << "\t-m, --maximize\t\tGUI operation with maximized window";
-        qDebug() << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default";
-        qDebug() << "\t-l, --list <list>\tImport list of .mar files to process from <list>";
+        cout << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [-r] [--help]\n"; //[<file> ...] ";
+        cout << "or kSzereg without arguments for GUI operation\n";
+        cout << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis\n";
+        cout << "for job shop problem.\n\n";
+
+        cout << "OPTIONS:\n";
+        cout << "\t--help\t\t\tDisplay this help text and exit\n";
+        cout << "\t-m, --maximize\t\tGUI operation with maximized window\n";
+        cout << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default\n";
+        cout << "\t-l, --list <list>\tImport list of .mar files to process from <list>\n";
       //  qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
-        qDebug() << "\t-p, --pdf\t\tCompile LaTeX output to .pdf format";
-        qDebug() << "\t-r, --rotate <deg>\tRotate Gantt chart by <deg> degrees clockwise, default 0";
-        qDebug() << "";
-        qDebug() << "Aviable heuristics:";
-        qDebug() << "\tFIFO\t\t\tFirst In First Out";
-        qDebug() << "\tLIFO\t\t\tLast In First Out";
-        qDebug() << "\tall\t\t\tApply all heuristics subsequently";
+        cout << "\t-p, --pdf\t\tCompile LaTeX output to .pdf format\n";
+        cout << "\t-r, --rotate <deg>\tRotate Gantt chart by <deg> degrees clockwise, default 0\n\n";
+
+        cout << "Aviable heuristics:\n";
+        cout << "\tFIFO\t\t\tFirst In First Out\n";
+        cout << "\tLIFO\t\t\tLast In First Out\n";
+        cout << "\tall\t\t\tApply all heuristics subsequently" << std::endl;
         delete args;
         return 0;
     }
@@ -87,16 +99,16 @@ int main(int argc, char *argv[])
             return 1;
         }
         QString fileName = args->at(where);
-        DEBUG << "wykryto -l, otwieranie pliku listy: " << fileName;
+        qDebug() << "wykryto -l, otwieranie pliku listy: " << fileName;
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly))
         {
             qDebug() << "Error occured while openning list file";
-            if(!file.exists())DEBUG << "File '" << fileName << "' does not exist.";
-            else DEBUG << "File '" << fileName << "' is not aviable.";
+            if(!file.exists())qDebug() << "File '" << fileName << "' does not exist.";
+            else qDebug() << "File '" << fileName << "' is not aviable.";
             return 1;
         }
-        DEBUG << "Otworzono plik listy";
+        qDebug() << "Otworzono plik listy";
 
         QTextStream in(&file);
         while(!in.atEnd())
@@ -105,8 +117,8 @@ int main(int argc, char *argv[])
             if(!s.isEmpty())
                 files->append(s);
         }
-        DEBUG << "wczytano liste plikow.";
-        DEBUG << *files;
+        qDebug() << "wczytano liste plikow.";
+        qDebug() << *files;
     }
 
     if(args->contains("-h") || args->contains("--heuristic"))
@@ -138,7 +150,7 @@ int main(int argc, char *argv[])
     else
         maszyna::method = 0; //defaults to FIFO
 
-    DEBUG << "wybrana heurystyka: " << maszyna::method;
+    qDebug() << "wybrana heurystyka: " << maszyna::method;
 
     if(args->contains("-r") || args->contains("--rotate"))
     {
@@ -149,8 +161,8 @@ int main(int argc, char *argv[])
 
         if(args->count() < where+1)
         {
-            qDebug() << "You have to specify <deg> after -r option (ater white char)";
-            qDebug() << "See 'kSzereg --help'' for more information.";
+            cout << "You have to specify <deg> after -r option (ater white char)";
+            cout << "See 'kSzereg --help'' for more information.";
             return 1;
         }
 

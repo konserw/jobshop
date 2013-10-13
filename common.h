@@ -1,14 +1,13 @@
 #ifndef common_h
 #define common_h
 
-#include <QDebug>
+class QString;
+class QStringList;
 
 extern int t;
 extern bool cli;
 extern int fmt;
 extern double rot;
-
-#define DEBUG qDebug() << __FILE__ << " (" << __LINE__ << "): "
 
 int run(const QString& program, const QStringList& args);
 void save(const QString& fileName, const QString& content);
@@ -18,8 +17,8 @@ struct PtrLess
 {
     bool operator()(const T* a, const T* b) const
     {
-        if(a == NULL) return false;
-        if(b == NULL) return true;
+        if(a == nullptr) return false;
+        if(b == nullptr) return true;
         return *a < *b;
     }
 };

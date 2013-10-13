@@ -32,7 +32,7 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     scene->addLine(x, y, x, y+2*grafZadanie::dy, *pen);
     y += grafZadanie::dy;
 
-    DEBUG << "utworzono maszyne nr " << id;
+    qDebug() << "utworzono maszyne nr " << id;
 }
 
 maszyna::~maszyna()

@@ -70,7 +70,7 @@ void wykres::setText(const QString &text)
 
 void wykres::finished(Result* x)
 {
-    DEBUG << "ukonczono zadanie: " << x->j();
+    qDebug() << "ukonczono zadanie: " << x->j();
 
     stats << x;
     zadan++;
@@ -88,7 +88,7 @@ void wykres::set(int _maszyn, double _alfa, double _beta)
 
 void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
 {
-    DEBUG << "bazinga gui mode";
+    qDebug() << "bazinga gui mode";
 
     zadania = zad;
 
@@ -148,7 +148,7 @@ void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //st
     QFileInfo fi(fileName);
     const QString name = tr("output/%1_%2.tex").arg(fi.baseName(), metoda(maszyna::method));
 
-    DEBUG << "bazinga pliku: " << fileName;
+    qDebug() << "bazinga pliku: " << fileName;
 
     if(fmt == 1)
         this->pdf(name);
