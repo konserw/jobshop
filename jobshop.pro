@@ -37,27 +37,30 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    marszruta.cpp \
     maszyna.cpp \
     zadanie.cpp \
     wykres.cpp \
     grafZadanie.cpp \
     common.cpp \
     result.cpp \
-    logger.cpp
+    logger.cpp \
+    Operation.cpp \
+    Job.cpp \
+    OperationWidget.cpp
 HEADERS += \
     MainWindow.h \
-    marszruta.h \
     maszyna.h \
     zadanie.h \
     common.h \
     wykres.h \
     grafZadanie.h \
     result.h \
-    logger.h
+    logger.h \
+    Operation.h \
+    Job.h \
+    OperationWidget.h
 FORMS += \
     MainWindow.ui \
-    marszruta.ui \
     wykres.ui
 OTHER_FILES += \
     license/LICENSE \

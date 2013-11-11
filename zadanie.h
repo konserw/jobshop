@@ -5,7 +5,7 @@
 #include <QList>
 #include "grafZadanie.h"
 
-class marszruta;
+class Operation;
 class Result;
 
 class zadanie : public QObject
@@ -17,7 +17,7 @@ public:
     ~zadanie();
 
     int time();
-    void add_rout(marszruta*);
+    void add_rout(Operation*);
 
     int number()const
     {
@@ -49,7 +49,7 @@ private:
     int rj;
     int dj;
     int cur;
-    QList<marszruta*> rout;
+    QList<Operation*> rout;
     bool blocked;
 
     QList<grafZadanie*> grafiki;

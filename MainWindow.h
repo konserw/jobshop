@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include "wykres.h"
 
-class marszruta;
+class Operation;
 class Result;
 class maszyna;
 class zadanie;
@@ -26,10 +26,10 @@ public:
     friend QDataStream &operator>>(QDataStream &in, MainWindow &win);
 
 public slots:
-    void more(const QString& nazwa, qint32 start, qint32 due, const QList<marszruta *> &marszruty);
+    void more(const QString& nazwa, qint32 start, qint32 due, const QList<Operation *> &marszruty);
     void more();
     void solve();
-    void solve(const QString& arg);
+    void solve(const QString& arg = QString());
     void rout(int);
 
     void next(qint32, zadanie*);

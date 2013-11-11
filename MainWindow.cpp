@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "marszruta.h"
+#include "Operation.h"
 #include "maszyna.h"
 #include "zadanie.h"
 #include "common.h"
@@ -183,9 +183,9 @@ void MainWindow::more()
         ui->exportButton->setEnabled(true);
         ui->importButton->setEnabled(false);
     }
-
+/*
     qint32 mac = ui->machines->value();
-    marszruta* mar;
+    Operation* mar;
     qint32 rows = ui->tableWidget->rowCount();
     qint32 cols = ui->tableWidget->columnCount();
 
@@ -197,9 +197,9 @@ void MainWindow::more()
     ui->tableWidget->setItem(rows, 1, item);
     item = new QTableWidgetItem("0");
     ui->tableWidget->setItem(rows, 2, item);
-    for(qint32 i=3; i<cols; i++)
+    for(qint32 i=startCol; i<cols; i++)
     {
-        mar = new marszruta;
+        mar = new Operation;
         mar->setMachines(mac);
         connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
         ui->tableWidget->setCellWidget(rows, i, mar);
@@ -207,17 +207,13 @@ void MainWindow::more()
 
     ui->tableWidget->resizeRowsToContents();
     ui->tableWidget->resizeColumnsToContents();
+*/
 }
 
-void MainWindow::solve()
-{
-    this->solve(NULL);
-}
-
-void MainWindow::more(const QString& nazwa, qint32 start, qint32 due, const QList<marszruta *> &marszruty)
+void MainWindow::more(const QString& nazwa, qint32 start, qint32 due, const QList<Operation *> &marszruty)
 {
     QTableWidgetItem* item;
-    marszruta* mar;
+    Operation* mar;
     qint32 rows = ui->tableWidget->rowCount();
     qint32 cols = ui->tableWidget->columnCount();
 

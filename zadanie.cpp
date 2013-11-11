@@ -23,7 +23,7 @@ zadanie::~zadanie()
     delete col;
 }
 
-void zadanie::add_rout(marszruta *m)
+void zadanie::add_rout(Operation *m)
 {
     int t = m->time();
     if(t == 0)return;
@@ -36,7 +36,7 @@ void zadanie::add_rout(marszruta *m)
 QString zadanie::print() const
 {
     QString s;
-    marszruta* m;
+    Operation* m;
     bool f = false;
     foreach(m, this->rout)
     {
