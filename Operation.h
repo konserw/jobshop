@@ -5,6 +5,10 @@
 #include <QString>
 class Job;
 
+/*!
+ * \brief The Operation class - represents single operation to be executed within a job.
+ * Contains information about machine on which it is to be processed and how much time is needed for it to complete.
+ */
 class Operation
 {
 public:

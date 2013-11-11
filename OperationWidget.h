@@ -11,6 +11,9 @@ class QComboBox;
 class QSpinBox;
 QT_END_NAMESPACE
 
+/*!
+ * \brief The OperationWidget class - it is used as delegate to edit operation's properties
+ */
 class OperationWidget : public QWidget
 {
     Q_OBJECT
