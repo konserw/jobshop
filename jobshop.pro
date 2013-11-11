@@ -22,7 +22,7 @@
 #----------------------------------------------------------------------------
 TARGET = jobshop
 
-QT = core gui svg widgets
+QT += widgets svg
 
 CONFIG += c++11 console
 

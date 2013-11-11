@@ -49,19 +49,6 @@ void wykres::changeEvent(QEvent *e)
     }
 }
 
-QString wykres::metoda(int n)
-{
-    switch(n)
-    {
-    case 0:
-        return QString("FIFO");
-    case 1:
-        return QString("LIFO");
-    default:
-        return QString();
-    }
-}
-
 void wykres::setText(const QString &text)
 {
     ui->label->setText(text);
@@ -146,7 +133,7 @@ void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //st
     zadania = zad;
 
     QFileInfo fi(fileName);
-    const QString name = tr("output/%1_%2.tex").arg(fi.baseName(), metoda(maszyna::method));
+    const QString name = tr("output/%1.tex").arg(fi.baseName());
 
     qDebug() << "bazinga pliku: " << fileName;
 

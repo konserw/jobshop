@@ -4,8 +4,13 @@
 #include <QObject>
 #include <QList>
 
-class QGraphicsScene;
 class zadanie;
+
+QT_BEGIN_NAMESPACE
+    class QGraphicsScene;
+    class QFont;
+    class QPen;
+QT_END_NAMESPACE
 
 class maszyna : public QObject
 {
@@ -15,7 +20,6 @@ public:
     maszyna(int id, QGraphicsScene* scene);
     ~maszyna();
 
-    static int method;
     static const int X0 = 35;
 
 public slots:

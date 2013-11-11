@@ -5,8 +5,6 @@
 #include <QGraphicsTextItem>
 #include "common.h"
 
-int maszyna::method = 0;
-
 maszyna::maszyna(int id, QGraphicsScene *sc)
 {
     _id = id;
@@ -92,7 +90,7 @@ void maszyna::up2()
         text->setX(x + 2);
         text->setY(y);
     }
-
+/*
     switch(method)
     {
     case 0://fifo
@@ -104,4 +102,5 @@ void maszyna::up2()
         kolejka.removeLast();
         break;
     }
+    */
 }

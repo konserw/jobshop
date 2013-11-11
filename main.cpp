@@ -30,9 +30,6 @@ int main(int argc, char *argv[])
         qDebug() << "Unable to create Logger instance!";
 #endif
 
-    const int maxMethod = 2;
-    bool all = false;
-
     QStringList* files;
     QStringList* args = new QStringList(app.arguments());
 
@@ -56,26 +53,21 @@ int main(int argc, char *argv[])
     }
 
     //display cli help text
-    if(args->contains("--help", Qt::CaseInsensitive))
+    if(args->contains("--help", Qt::CaseInsensitive) || args->contains("-h", Qt::CaseInsensitive))
     {
-        cout << "usage: kSzereg [-h <heuristics>] [-l <list>] [-p] [-m] [-r] [--help]\n"; //[<file> ...] ";
-        cout << "or kSzereg without arguments for GUI operation\n";
+        cout << "usage: jobshop [-l <list>] [-p] [-m] [-r] [--help]\n"; //[<file> ...] ";
+        cout << "or jobshop without arguments for GUI operation\n";
         cout << "Strategy Just in Time in manufacturing systems - FIFO and LIFO heuristics analysis\n";
         cout << "for job shop problem.\n\n";
 
         cout << "OPTIONS:\n";
         cout << "\t--help\t\t\tDisplay this help text and exit\n";
         cout << "\t-m, --maximize\t\tGUI operation with maximized window\n";
-        cout << "\t-h, --heuristic <type>\tSet heuristic used to resolve conflicts. FIFO is default\n";
         cout << "\t-l, --list <list>\tImport list of .mar files to process from <list>\n";
       //  qDebug() << "\t<file> [...]\t\tFiles to process. <file> have to be file exported from kSzereg in the .mar format";
         cout << "\t-p, --pdf\t\tCompile LaTeX output to .pdf format\n";
-        cout << "\t-r, --rotate <deg>\tRotate Gantt chart by <deg> degrees clockwise, default 0\n\n";
+        cout << "\t-r, --rotate <deg>\tRotate Gantt chart by <deg> degrees clockwise, default 0\n\n" << std::endl;
 
-        cout << "Aviable heuristics:\n";
-        cout << "\tFIFO\t\t\tFirst In First Out\n";
-        cout << "\tLIFO\t\t\tLast In First Out\n";
-        cout << "\tall\t\t\tApply all heuristics subsequently" << std::endl;
         delete args;
         return 0;
     }
@@ -121,37 +113,6 @@ int main(int argc, char *argv[])
         qDebug() << *files;
     }
 
-    if(args->contains("-h") || args->contains("--heuristic"))
-    {
-        int where = args->indexOf("-h");
-        if(where == -1)
-            where = args->indexOf("--heuristic");
-        ++where;
-
-        if(args->count() < where+1)
-        {
-            qDebug() << "You have to specify heuristic after -h option (ater white char)";
-            qDebug() << "See 'kSzereg --help'' for more information.";
-            return 1;
-        }
-        if(args->at(where) == "FIFO")
-            maszyna::method = 0;
-        else if(args->at(where) == "LIFO")
-            maszyna::method = 1;
-        else if(args->at(where) == "all")
-            all = true;
-        else
-        {
-            qDebug() << "Only FIFO and LIFO heuristics are aviable atm.";
-            qDebug() << "See 'kSzereg --help'' for more information.";
-            return 1;
-        }
-    }
-    else
-        maszyna::method = 0; //defaults to FIFO
-
-    qDebug() << "wybrana heurystyka: " << maszyna::method;
-
     if(args->contains("-r") || args->contains("--rotate"))
     {
         int where = args->indexOf("-r");
@@ -175,15 +136,6 @@ int main(int argc, char *argv[])
 
     for(int i=0; i<files->count(); ++i)
     {
-        if(all)                                //wszystkie metody
-        {
-            for(int j=0; j<maxMethod; ++j)
-            {
-                maszyna::method = j;
-                MainWindow w(files->at(i));
-            }
-        }
-        else                                    //tylko 1 metoda
             MainWindow w(files->at(i));
     }
 

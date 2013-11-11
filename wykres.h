@@ -47,9 +47,6 @@ private:
     const QList<zadanie*> *zadania;
     QGraphicsScene* scene;
 
-    static QString metoda(int n);
-
-
     //for result sorting:
     template <typename T>
     class PtrLess

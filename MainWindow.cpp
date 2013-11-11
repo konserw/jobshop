@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QStringList>
 
+const int startCol = 5;
+
 MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,7 +22,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     this->setWindowTitle(tr("kSzereg"));
 
     this->setWindowIcon(QIcon(":/kico"));
-
+/*
     ui->label_alfa->setText(tr("α"));
     ui->alfa->setMinimum(0);
     ui->alfa->setValue(0.5);
@@ -32,7 +34,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui->beta->setValue(0.5);
     ui->beta->setMaximum(1);
     ui->beta->setSingleStep(0.1);
-
+*/
     ui->importButton->setText(tr("Import"));
     ui->exportButton->setText(tr("Export"));
     ui->exportButton->setEnabled(false);
@@ -40,7 +42,6 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
 
     ui->solve->setText(tr("Rozwiąż"));
     ui->solve->setEnabled(false);
-    ui->label_method->setText(tr("Metoda:"));
     ui->more->setText(tr("Dodaj zlecenie"));
     ui->more->setEnabled(false);
 
@@ -54,13 +55,9 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
 
+    ui->tableWidget->setColumnCount(startCol);
     QStringList labels;
-    labels << "FIFO" << "LIFO";
-    ui->method->addItems(labels);
-
-    ui->tableWidget->setColumnCount(3);
-    labels.clear();
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zakończenia");
+    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zakończenia") << tr("α") << tr("β");
     ui->tableWidget->setHorizontalHeaderLabels(labels);
     ui->tableWidget->resizeColumnsToContents();
 
@@ -102,16 +99,19 @@ void MainWindow::rout(qint32 col)
     if(!ui->more->isEnabled())
             ui->more->setEnabled(true);
 
-    ui->tableWidget->setColumnCount(3 + col);
-
+    ui->tableWidget->setColumnCount(startCol + col);
+/*
     QStringList labels;
     labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zkończenia");
     for(qint32 i=1; i<=col; ++i)
         labels << QString::number(i);
     ui->tableWidget->setHorizontalHeaderLabels(labels);
+    */
 }
+
 void MainWindow::solve(const QString &arg)
 {
+    /*
     skonczone = 0;
     t = 0;
     maszyna* m;
@@ -120,8 +120,6 @@ void MainWindow::solve(const QString &arg)
     qint32 zadan, maszyn;
 
     ui->centralWidget->setEnabled(false);
-    if(!cli)
-        maszyna::method = ui->method->currentIndex();
 
     for(i=0; i<ui->machines->value(); i++)
     {
@@ -171,6 +169,7 @@ void MainWindow::solve(const QString &arg)
     scene->clear();
 
     ui->centralWidget->setEnabled(true);
+    */
 }
 
 void MainWindow::more()
@@ -306,10 +305,10 @@ void MainWindow::exp()
 
 QDataStream &operator<<(QDataStream &out, const MainWindow &win)
 {
+    /*
     qint32 tasks = qint32(win.ui->tableWidget->rowCount());
     qint32 routLength = qint32(win.ui->rout->value());
-    qreal alfa = qreal(win.ui->alfa->value());
-    qreal beta = qreal(win.ui->beta->value());
+
     out << qint32(win.ui->machines->value())                        //nbumber of machines
         << routLength                                               //number of operations for each task
         << tasks                                                    //number of tasks
@@ -325,7 +324,7 @@ QDataStream &operator<<(QDataStream &out, const MainWindow &win)
             out << *qobject_cast<marszruta*>(win.ui->tableWidget->cellWidget(i, j+3));
         }
     }
-
+*/
     return out;
 }
 
@@ -335,15 +334,13 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
     win.ui->solve->setEnabled(true);
     win.ui->exportButton->setEnabled(true);
     win.ui->importButton->setEnabled(false);
-
+/*
     qint32 machines, routLength, tasks;
     qreal alfa, beta;
 
-    in >> machines >> routLength >> tasks >> alfa >> beta;
+    in >> machines >> routLength >> tasks;
     win.ui->machines->setValue(machines);
     win.ui->rout->setValue(routLength);
-    win.ui->alfa->setValue(alfa);
-    win.ui->beta->setValue(beta);
 
     QList<marszruta*> marszruty;
     marszruta* mar;
@@ -361,6 +358,6 @@ QDataStream &operator>>(QDataStream &in, MainWindow &win)
         }
         win.more(nazwa, start, due, marszruty);
     }
-
+*/
     return in;
 }
