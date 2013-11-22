@@ -19,7 +19,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("kSzereg"));
+    this->setWindowTitle(tr("jobshop"));
 
     this->setWindowIcon(QIcon(":/kico"));
 /*

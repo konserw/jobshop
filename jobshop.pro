@@ -1,10 +1,6 @@
 #-----------------------------------------------------------------------------
 #
-#    kSzereg - program szeregujący zadania w systemie wytwarzania gniazdowego
-#    z wykorzystaniem heurystyk LIFO i FIFO, oraz wyznaczający parametry
-#    strategii Just in Time. Praca inżynierska na wydziale Automatyki,
-#    Elektroniki i Informatyki Politechniki Śląskiej w Gliwicach.
-#    Copyright (C) 2012  Kamil 'konserw' Strzempowicz, konserw@gmail.com
+#    jobshop
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
