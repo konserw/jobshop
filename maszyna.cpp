@@ -1,5 +1,5 @@
 #include "maszyna.h"
-#include "zadanie.h"
+#include "Job.h"
 #include <QtDebug>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
@@ -40,12 +40,12 @@ maszyna::~maszyna()
     delete font;
 }
 
-void maszyna::add(zadanie *z)
+void maszyna::add(Job *z)
 {
     kolejka.append(z);
 }
 
-void maszyna::start(zadanie* z)
+void maszyna::start(Job* z)
 {
     cur = z;
     stop = t + cur->time();

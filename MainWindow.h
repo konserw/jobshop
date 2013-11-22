@@ -9,7 +9,7 @@
 class Operation;
 class Result;
 class maszyna;
-class zadanie;
+class Job;
 
 namespace Ui {
     class MainWindow;
@@ -28,11 +28,10 @@ public:
 public slots:
     void more(const QString& nazwa, qint32 start, qint32 due, const QList<Operation *> &marszruty);
     void more();
-    void solve();
     void solve(const QString& arg = QString());
     void rout(int);
 
-    void next(qint32, zadanie*);
+    void next(qint32, Job*);
     void finished(Result*);
 
     void imp();
@@ -50,7 +49,7 @@ private:
     Ui::MainWindow *ui;
 
     QList<maszyna*> maszyny;
-    QList<zadanie*> zadania;
+    QList<Job*> zadania;
     int skonczone;
 
     QGraphicsScene* scene;

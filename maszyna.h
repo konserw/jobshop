@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 
-class zadanie;
+class Job;
 
 QT_BEGIN_NAMESPACE
     class QGraphicsScene;
@@ -24,15 +24,15 @@ public:
 
 public slots:
     void update();
-    void add(zadanie*);
+    void add(Job*);
     void up2();
 
 private:
-    void start(zadanie*);
+    void start(Job*);
 
     int stop;
-    zadanie* cur;
-    QList<zadanie*> kolejka;
+    Job* cur;
+    QList<Job*> kolejka;
     int _id;
 
     QGraphicsScene* scene;

@@ -38,27 +38,25 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     maszyna.cpp \
-    zadanie.cpp \
     wykres.cpp \
     grafZadanie.cpp \
     common.cpp \
     result.cpp \
     logger.cpp \
     Operation.cpp \
-    Job.cpp \
-    OperationWidget.cpp
+    OperationWidget.cpp \
+    Job.cpp
 HEADERS += \
     MainWindow.h \
     maszyna.h \
-    zadanie.h \
     common.h \
     wykres.h \
     grafZadanie.h \
     result.h \
     logger.h \
     Operation.h \
-    Job.h \
-    OperationWidget.h
+    OperationWidget.h \
+    Job.h
 FORMS += \
     MainWindow.ui \
     wykres.ui

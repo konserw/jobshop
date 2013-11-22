@@ -6,7 +6,7 @@
 class Result;
 class QGraphicsScene;
 class QDir;
-class zadanie;
+class Job;
 
 namespace Ui {
     class wykres;
@@ -22,8 +22,8 @@ public slots:
     void setText(const QString& text);
     void finished(Result* x);
     void set(int _maszyn, double _alfa, double _beta);
-    void bazinga(const QList<zadanie *>*);
-    void bazinga(const QString&, const QList<zadanie *>*);
+    void bazinga(const QList<Job *>*);
+    void bazinga(const QString&, const QList<Job *>*);
     void pdf();
     void pdf(const QString&fileName);
     void latex();
@@ -44,7 +44,7 @@ private:
     int c;
     double f, l, e, w1, w2, alfa, beta, Tmax, Tsr;
 
-    const QList<zadanie*> *zadania;
+    const QList<Job*> *zadania;
     QGraphicsScene* scene;
 
     //for result sorting:

@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 #include "Operation.h"
 #include "maszyna.h"
-#include "zadanie.h"
+#include "Job.h"
 #include "common.h"
 #include "result.h"
 #include <QtDebug>
@@ -227,15 +227,15 @@ void MainWindow::more(const QString& nazwa, qint32 start, qint32 due, const QLis
     for(qint32 i=3; i<cols; i++)
     {
         mar = marszruty[i-3];
-        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
-        ui->tableWidget->setCellWidget(rows, i, mar);
+//        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
+//        ui->tableWidget->setCellWidget(rows, i, mar);
     }
 
     ui->tableWidget->resizeRowsToContents();
     ui->tableWidget->resizeColumnsToContents();
 }
 
-void MainWindow::next(qint32 m, zadanie* z)
+void MainWindow::next(qint32 m, Job* z)
 {
     maszyny[m-1]->add(z);
 }

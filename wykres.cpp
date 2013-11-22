@@ -7,7 +7,7 @@
 #include <QtSvg/QSvgGenerator>
 #include <QtAlgorithms>
 #include <QList>
-#include "zadanie.h"
+#include "Job.h"
 #include "maszyna.h"
 #include "result.h"
 
@@ -73,7 +73,7 @@ void wykres::set(int _maszyn, double _alfa, double _beta)
     setupScene();
 }
 
-void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
+void wykres::bazinga(const QList<Job*> *zad)  //start gui mode
 {
     qDebug() << "bazinga gui mode";
 
@@ -128,7 +128,7 @@ void wykres::bazinga(const QList<zadanie*> *zad)  //start gui mode
     this->clean();
 }
 
-void wykres::bazinga(const QString &fileName, const QList<zadanie*> *zad)   //start cli mode
+void wykres::bazinga(const QString &fileName, const QList<Job*> *zad)   //start cli mode
 {
     zadania = zad;
 
@@ -232,7 +232,7 @@ void wykres::latex(const QString &texName)
             "\t\t\\begin{tabular}{ | r | c | c | l | }\n"
             "\t\t\\hline\n"
             "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
-    zadanie* z;
+    Job* z;
     foreach(z, *zadania)
     {
         s += "\t\t";
