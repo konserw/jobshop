@@ -183,7 +183,7 @@ void MainWindow::more()
         ui->exportButton->setEnabled(true);
         ui->importButton->setEnabled(false);
     }
-/*
+
     qint32 mac = ui->machines->value();
     Operation* mar;
     qint32 rows = ui->tableWidget->rowCount();
