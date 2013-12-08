@@ -189,7 +189,7 @@ void MainWindow::more()
     qint32 rows = ui->tableWidget->rowCount();
     qint32 cols = ui->tableWidget->columnCount();
 
-
+/*
     ui->tableWidget->insertRow(rows);
     item = new QTableWidgetItem("");
     ui->tableWidget->setItem(rows, 0, item);

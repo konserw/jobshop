@@ -13,24 +13,14 @@ Job::Job(int number, int start_time, int due_date)
     cur=0;
     blocked = false;
 
-    col =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+    m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
     qDebug() << "utworzono zadanie nr " << j << " rj: " << rj << " dj: " << dj;
 }
 
 Job::~Job()
 {
-    delete col;
-}
-
-void Job::add_rout(Operation *m)
-{
-    int t = m->time();
-    if(t == 0)return;
-    rout.append(m);
-    grafZadanie* g = new grafZadanie(j, t, *col);
-    grafiki.append(g);
-    qDebug() << "dodalem punkt marszruty do zadania " << j;
+    delete m_color;
 }
 
 QString Job::print() const
@@ -38,7 +28,7 @@ QString Job::print() const
     QString s;
     Operation* m;
     bool f = false;
-    foreach(m, this->rout)
+    foreach(m, m_operations)
     {
         if(m->time() > 0)
         {
@@ -52,11 +42,6 @@ QString Job::print() const
         }
     }
     return s;
-}
-
-int Job::time()
-{
-   return rout[cur]->time();
 }
 
 void Job::update()

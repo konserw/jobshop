@@ -20,9 +20,6 @@ public:
     Job(int number, int start_time, int due_date);
     ~Job();
 
-    int time();
-    void add_rout(Operation*);
-
     int number()const
     {
         return j;
@@ -44,20 +41,18 @@ public slots:
     void update();
     void done();
 
-    QGraphicsItem* gItem();
 signals:
     void next(qint32, Job*);
     void finished(Result*);
+
 private:
     int j;
     int rj;
     int dj;
-    int cur;
-    QList<Operation*> rout;
-    bool blocked;
 
-    QList<grafZadanie*> grafiki;
-    QColor* col;
+    QList<Operation*> m_operations;
+
+    QColor* m_color;
 };
 
 #endif // ZADANIE_H
