@@ -1,4 +1,4 @@
-#include "maszyna.h"
+//#include "maszyna.h"
 #include "MainWindow.h"
 #include "logger.h"
 #include "common.h"

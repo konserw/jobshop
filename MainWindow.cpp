@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Operation.h"
-#include "maszyna.h"
+//#include "maszyna.h"
 #include "Job.h"
 #include "common.h"
 #include "result.h"

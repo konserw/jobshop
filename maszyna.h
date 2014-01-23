@@ -1,3 +1,4 @@
+#define MASZYNA_H
 #ifndef MASZYNA_H
 #define MASZYNA_H
 

@@ -8,7 +8,7 @@
 #include <QtAlgorithms>
 #include <QList>
 #include "Job.h"
-#include "maszyna.h"
+//#include "maszyna.h"
 #include "result.h"
 
 wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
