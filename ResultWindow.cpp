@@ -8,13 +8,11 @@
 #include <QtAlgorithms>
 #include <QList>
 #include "Job.h"
-//#include "maszyna.h"
 #include "result.h"
 
-ResultWindow::ResultWindow(QWidget *parent, QGraphicsScene *_scene) :
+ResultWindow::ResultWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::wykres),
-    scene(_scene)
+    ui(new Ui::ResultWindow)
 {
     ui->setupUi(this);
 
@@ -125,23 +123,6 @@ void ResultWindow::bazinga(const QList<Job*> *zad)  //start gui mode
     this->exec();
 
     ui->tableWidget->clear();
-    this->clean();
-}
-
-void ResultWindow::bazinga(const QString &fileName, const QList<Job*> *zad)   //start cli mode
-{
-    zadania = zad;
-
-    QFileInfo fi(fileName);
-    const QString name = tr("output/%1.tex").arg(fi.baseName());
-
-    qDebug() << "bazinga pliku: " << fileName;
-
-    if(fmt == 1)
-        this->pdf(name);
-    else
-        this->latex(name);
-
     this->clean();
 }
 
@@ -343,7 +324,7 @@ void ResultWindow::evalStats()
 }
 
 void ResultWindow::setupScene()
-{
+{/*
     QGraphicsSimpleTextItem* text;
     QFont font("Arial", 12);
     qreal x;
@@ -357,7 +338,7 @@ void ResultWindow::setupScene()
         text->setX(x+3);
         text->setY(ym-18);
     }
-/*  ilnia z Cmax
+  ilnia z Cmax
     x = x0 + dx*c;
     scene->addLine(x, 0, x, ym);
     text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);

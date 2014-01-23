@@ -15,7 +15,7 @@ namespace Ui {
 class ResultWindow : public QDialog {
     Q_OBJECT
 public:
-    ResultWindow(QWidget *parent, QGraphicsScene* _scene);
+    ResultWindow(QWidget *parent);
     ~ResultWindow();
 
 public slots:
