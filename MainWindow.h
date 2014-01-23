@@ -38,10 +38,6 @@ public slots:
     void exp();
     void import(const QString &);
 
-signals:
-    void tick();
-    void tick2();
-
 protected:
     void changeEvent(QEvent *e);
 

@@ -13,10 +13,10 @@ class Operation
 {
 public:
     Operation(Job* job, qint32 machine = 1, qint32 time = 0);
+/* use compiler generated
     ~Operation();
-
     Operation& operator=(const Operation &in);
-
+*/
     qint32 machine()const;
     qint32 time()const;
 

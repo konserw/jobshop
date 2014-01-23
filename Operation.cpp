@@ -5,7 +5,7 @@ Operation::Operation(Job* job, qint32 machine, qint32 time):
     m_job(job), m_machine(machine), m_time(time)
 {
 }
-
+/*
 Operation::~Operation()
 {
 }
@@ -21,7 +21,7 @@ Operation &Operation::operator =(const Operation &in)
 
     return *this;
 }
-
+*/
 qint32 Operation::machine() const
 {
     return m_machine;

@@ -12,26 +12,6 @@ Logger* Logger::m_instance = NULL;
 
 void Logger::logOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    /*
-    Q_UNUSED(context);
-
-    char tag;
-    switch (type)
-    {
-    case QtDebugMsg:
-        tag = 'D';
-        break;
-    case QtWarningMsg:
-        tag = 'W';
-        break;
-    case QtCriticalMsg:
-        tag = 'C';
-        break;
-    case QtFatalMsg:
-        tag = 'F';
-        break;
-    }
-*/
     QString debugInfo;
     if(type == QtDebugMsg)
         debugInfo = QString("[%1]:\t").arg(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
@@ -44,8 +24,6 @@ void Logger::logOutput(QtMsgType type, const QMessageLogContext &context, const 
     else
         std::cerr << debugInfo.toStdString() << msg.toStdString() << std::endl;
 
-    //emit logMsg(msg);
-
 #ifdef CONSOLE_OUT
     std::cout << msg.toStdString() << std::endl;
 #endif
@@ -55,7 +33,6 @@ void Logger::logOutput(QtMsgType type, const QMessageLogContext &context, const 
         abort();
     }
 }
-
 
 Logger::Logger()
 {

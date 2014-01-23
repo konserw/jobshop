@@ -34,7 +34,7 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    maszyna.cpp \
+ #   maszyna.cpp \
     grafZadanie.cpp \
     common.cpp \
     result.cpp \
@@ -46,7 +46,7 @@ SOURCES += \
 
 HEADERS += \
     MainWindow.h \
-    maszyna.h \
+  #  maszyna.h \
     common.h \
     grafZadanie.h \
     result.h \
