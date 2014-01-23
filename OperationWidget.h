@@ -12,13 +12,14 @@ class QSpinBox;
 QT_END_NAMESPACE
 
 /*!
- * \brief The OperationWidget class - it is used as delegate to edit operation's properties
+ * \brief The OperationWidget class - it is used by @OperationDelegate to edit operation's properties
  */
 class OperationWidget : public QWidget
 {
     Q_OBJECT
+
 public:
-    explicit OperationWidget(qint32 machineCount = 1,QWidget *parent = 0);
+    explicit OperationWidget(qint32 machineCount = 1, QWidget *parent = 0);
     ~OperationWidget();
 
 public slots:
@@ -32,8 +33,6 @@ protected:
     QLabel *label_time;
     QComboBox *machine;
     QSpinBox *time;
-
-
 };
 
 #endif // OPERATIONWIDGET_H
