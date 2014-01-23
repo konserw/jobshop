@@ -1,17 +1,23 @@
 #include "Job.h"
 #include "Operation.h"
-#include "common.h"
-#include "result.h"
+
+#include <QColor>
 #include <QtDebug>
 
-Job::Job(int number, int start_time, int due_date)
+int Job::jobsCount = 0;
+
+Job::Job():
+    rj(0), dj(0)
 {
-    j = number;
+    j = ++jobsCount;
+    m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+}
+
+Job::Job(int start_time, int due_date)
+{
+    j = ++jobsCount;
     rj = start_time;
     dj = due_date;
-
-    cur=0;
-    blocked = false;
 
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
@@ -20,6 +26,7 @@ Job::Job(int number, int start_time, int due_date)
 
 Job::~Job()
 {
+    --jobsCount;
     delete m_color;
 }
 
@@ -44,29 +51,22 @@ QString Job::print() const
     return s;
 }
 
-void Job::update()
+QVariant Job::data(int col) const
 {
-    if(t < rj || blocked) return;
-    if(cur >= rout.size())
+    switch(col)
     {
-        blocked = true;
+    case 0:
+        return m_name;
+    case 1:
+        return rj;
+    case 2:
+        return dj;
+    case 3:
+        return m_alpha;
+    case 4:
+        return m_beta;
+    default:
+        return m_operations[col-4]->print();
 
-        Result* x = new Result(j, t, dj, rj);
-
-        emit finished(x);
-        return;
     }
-    emit next(rout[cur]->machine(), this);
-    blocked = true;
-}
-
-void Job::done()
-{
-    blocked = false;
-    cur++;
-}
-
-QGraphicsItem* Job::gItem()
-{
-    return grafiki[cur];
 }

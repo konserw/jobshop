@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QList>
-#include "grafZadanie.h"
 
 class Operation;
 class Result;
@@ -17,7 +16,8 @@ class Job : public QObject
     Q_OBJECT
 
 public:
-    Job(int number, int start_time, int due_date);
+    Job();
+    Job(int start_time, int due_date);
     ~Job();
 
     int number()const
@@ -35,24 +35,22 @@ public:
         return rj;
     }
 
-    QString print()const;
-
-public slots:
-    void update();
-    void done();
-
-signals:
-    void next(qint32, Job*);
-    void finished(Result*);
+    QString print() const;
+    QVariant data(int col) const;
 
 private:
     int j;
+    QString m_name;
     int rj;
     int dj;
+    double m_alpha;
+    double m_beta;
 
     QList<Operation*> m_operations;
 
     QColor* m_color;
+
+    static int jobsCount;
 };
 
 #endif // ZADANIE_H
