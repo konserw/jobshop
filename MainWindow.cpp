@@ -62,7 +62,7 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui->tableWidget->resizeColumnsToContents();
 
     scene = new QGraphicsScene(this);
-    gant = new wykres(this, scene);
+    gant = new ResultWindow(this, scene);
 
     connect(ui->more, SIGNAL(clicked()), this, SLOT(more()));
     connect(ui->solve, SIGNAL(clicked()), this, SLOT(solve()));

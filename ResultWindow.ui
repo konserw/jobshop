@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>wykres</class>
- <widget class="QDialog" name="wykres">
+ <class>ResultWindow</class>
+ <widget class="QDialog" name="ResultWindow">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>

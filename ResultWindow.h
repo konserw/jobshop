@@ -9,14 +9,14 @@ class QDir;
 class Job;
 
 namespace Ui {
-    class wykres;
+    class ResultWindow;
 }
 
-class wykres : public QDialog {
+class ResultWindow : public QDialog {
     Q_OBJECT
 public:
-    wykres(QWidget *parent, QGraphicsScene* _scene);
-    ~wykres();
+    ResultWindow(QWidget *parent, QGraphicsScene* _scene);
+    ~ResultWindow();
 
 public slots:
     void setText(const QString& text);
@@ -36,7 +36,7 @@ protected:
     void changeEvent(QEvent *e);
 
 private:
-    Ui::wykres *ui;
+    Ui::ResultWindow *ui;
 
     QList<Result*> stats;
     int zadan, maszyn;

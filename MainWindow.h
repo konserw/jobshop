@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QList>
 #include <QGraphicsScene>
-#include "wykres.h"
+#include "ResultWindow.h"
 
 class Operation;
 class Result;
@@ -53,7 +53,7 @@ private:
     int skonczone;
 
     QGraphicsScene* scene;
-    wykres* gant;
+    ResultWindow* gant;
 };
 
 /* serializacja - zapis do pliku danych wejściowych */

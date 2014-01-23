@@ -1,5 +1,5 @@
-#include "wykres.h"
-#include "ui_wykres.h"
+#include "ResultWindow.h"
+#include "ui_ResultWindow.h"
 #include <QDebug>
 #include <QtGui>
 #include "common.h"
@@ -11,7 +11,7 @@
 //#include "maszyna.h"
 #include "result.h"
 
-wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
+ResultWindow::ResultWindow(QWidget *parent, QGraphicsScene *_scene) :
     QDialog(parent),
     ui(new Ui::wykres),
     scene(_scene)
@@ -32,12 +32,12 @@ wykres::wykres(QWidget *parent, QGraphicsScene *_scene) :
     zadan = 0;
 }
 
-wykres::~wykres()
+ResultWindow::~ResultWindow()
 {
     delete ui;
 }
 
-void wykres::changeEvent(QEvent *e)
+void ResultWindow::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {
@@ -49,13 +49,13 @@ void wykres::changeEvent(QEvent *e)
     }
 }
 
-void wykres::setText(const QString &text)
+void ResultWindow::setText(const QString &text)
 {
     ui->label->setText(text);
 }
 
 
-void wykres::finished(Result* x)
+void ResultWindow::finished(Result* x)
 {
     qDebug() << "ukonczono zadanie: " << x->j();
 
@@ -63,7 +63,7 @@ void wykres::finished(Result* x)
     zadan++;
 }
 
-void wykres::set(int _maszyn, double _alfa, double _beta)
+void ResultWindow::set(int _maszyn, double _alfa, double _beta)
 {
     maszyn = _maszyn;
     alfa = _alfa;
@@ -73,7 +73,7 @@ void wykres::set(int _maszyn, double _alfa, double _beta)
     setupScene();
 }
 
-void wykres::bazinga(const QList<Job*> *zad)  //start gui mode
+void ResultWindow::bazinga(const QList<Job*> *zad)  //start gui mode
 {
     qDebug() << "bazinga gui mode";
 
@@ -128,7 +128,7 @@ void wykres::bazinga(const QList<Job*> *zad)  //start gui mode
     this->clean();
 }
 
-void wykres::bazinga(const QString &fileName, const QList<Job*> *zad)   //start cli mode
+void ResultWindow::bazinga(const QString &fileName, const QList<Job*> *zad)   //start cli mode
 {
     zadania = zad;
 
@@ -145,7 +145,7 @@ void wykres::bazinga(const QString &fileName, const QList<Job*> *zad)   //start 
     this->clean();
 }
 
-void wykres::pdf()
+void ResultWindow::pdf()
 {
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do pliku PDF"), "", tr("Plik PDF (*.pdf)"));
@@ -154,7 +154,7 @@ void wykres::pdf()
     this->pdf(fileName);
 }
 
-void wykres::pdf(const QString &fileName)
+void ResultWindow::pdf(const QString &fileName)
 {
     const QString texFile("output/wrapped.tex");
 
@@ -191,7 +191,7 @@ void wykres::pdf(const QString &fileName)
     QDir::current().rename("output/wrapped.pdf", fileName);
 }
 
-void wykres::latex()
+void ResultWindow::latex()
 {
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do LaTeXu"), "", tr("Plik tex (*.tex)"));
@@ -199,7 +199,7 @@ void wykres::latex()
     this->latex(fileName);
 }
 
-void wykres::latex(const QString &texName)
+void ResultWindow::latex(const QString &texName)
 {
     QString s;
     Result* st;
@@ -313,7 +313,7 @@ void wykres::latex(const QString &texName)
     save(texName, s);
 }
 
-void wykres::evalStats()
+void ResultWindow::evalStats()
 {
     Result* st;
     c = 0;
@@ -342,7 +342,7 @@ void wykres::evalStats()
 
 }
 
-void wykres::setupScene()
+void ResultWindow::setupScene()
 {
     QGraphicsSimpleTextItem* text;
     QFont font("Arial", 12);
@@ -366,7 +366,7 @@ void wykres::setupScene()
 */
 }
 
-void wykres::clean()
+void ResultWindow::clean()
 {
     Result* st;
     foreach(st, stats)

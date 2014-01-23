@@ -16,11 +16,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #----------------------------------------------------------------------------
+
 TARGET = jobshop
 
 QT += widgets svg
 
-CONFIG += c++11 console
+CONFIG += c++11 #console
 
 TEMPLATE = app
 #QMAKE_CXXFLAGS += -Wall -Werror -Wextra
@@ -34,28 +35,31 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     maszyna.cpp \
-    wykres.cpp \
     grafZadanie.cpp \
     common.cpp \
     result.cpp \
     logger.cpp \
     Operation.cpp \
     OperationWidget.cpp \
-    Job.cpp
+    Job.cpp \
+    ResultWindow.cpp
+
 HEADERS += \
     MainWindow.h \
     maszyna.h \
     common.h \
-    wykres.h \
     grafZadanie.h \
     result.h \
     logger.h \
     Operation.h \
     OperationWidget.h \
-    Job.h
+    Job.h \
+    ResultWindow.h
+
 FORMS += \
     MainWindow.ui \
-    wykres.ui
+    ResultWindow.ui
+
 OTHER_FILES += \
     license/LICENSE \
     license/gpl-3.0.txt \
