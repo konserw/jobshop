@@ -1,10 +1,12 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Operation.h"
-//#include "maszyna.h"
+#include "JobshopModel.h"
 #include "Job.h"
 #include "common.h"
 #include "result.h"
+#include "ResultWindow.h"
+
 #include <QtDebug>
 #include <QMessageBox>
 #include <QFile>
@@ -12,29 +14,15 @@
 #include <QFileDialog>
 #include <QStringList>
 
-const int startCol = 5;
-
-MainWindow::MainWindow(const QString& arg, QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("jobshop"));
+    this->setWindowTitle(tr("Jobshop scheduling problem resolver"));
 
     this->setWindowIcon(QIcon(":/kico"));
-/*
-    ui->label_alfa->setText(tr("α"));
-    ui->alfa->setMinimum(0);
-    ui->alfa->setValue(0.5);
-    ui->alfa->setMaximum(1);
-    ui->alfa->setSingleStep(0.1);
 
-    ui->label_beta->setText(tr("β"));
-    ui->beta->setMinimum(0);
-    ui->beta->setValue(0.5);
-    ui->beta->setMaximum(1);
-    ui->beta->setSingleStep(0.1);
-*/
     ui->importButton->setText(tr("Import"));
     ui->exportButton->setText(tr("Export"));
     ui->exportButton->setEnabled(false);
@@ -55,26 +43,12 @@ MainWindow::MainWindow(const QString& arg, QWidget *parent) :
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
 
-    ui->tableWidget->setColumnCount(startCol);
-    QStringList labels;
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zakończenia") << tr("α") << tr("β");
-    ui->tableWidget->setHorizontalHeaderLabels(labels);
-    ui->tableWidget->resizeColumnsToContents();
-
-    scene = new QGraphicsScene(this);
-    gant = new ResultWindow(this, scene);
-
-    connect(ui->more, SIGNAL(clicked()), this, SLOT(more()));
+    connect(ui->more, SIGNAL(clicked()), &m_model, SLOT(addJob()));
+    connect(ui->more, SIGNAL(clicked()), this, SLOT(setSolveEnabled()));
     connect(ui->solve, SIGNAL(clicked()), this, SLOT(solve()));
     connect(ui->rout, SIGNAL(valueChanged(int)), this, SLOT(rout(int)));
     connect(ui->exportButton, SIGNAL(clicked()), this, SLOT(exp()));
-    connect(ui->importButton, SIGNAL(clicked()), this, SLOT(imp()));
-
-    if(cli)
-    {
-        this->import(arg);
-        this->solve(arg);
-    }
+    connect(ui->importButton, SIGNAL(clicked()), this, SLOT(import()));
 }
 
 MainWindow::~MainWindow()
@@ -85,7 +59,8 @@ MainWindow::~MainWindow()
 void MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
@@ -94,22 +69,14 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-void MainWindow::rout(qint32 col)
+void MainWindow::rout(int col)
 {
-    if(!ui->more->isEnabled())
-            ui->more->setEnabled(true);
+    ui->more->setEnabled(col);
 
-    ui->tableWidget->setColumnCount(startCol + col);
-/*
-    QStringList labels;
-    labels << tr("Nazwa zlecenia") << tr("Czas rozpoczęcia") << tr("Czas zkończenia");
-    for(qint32 i=1; i<=col; ++i)
-        labels << QString::number(i);
-    ui->tableWidget->setHorizontalHeaderLabels(labels);
-    */
+    m_model.setOperationsCount(col);
 }
 
-void MainWindow::solve(const QString &arg)
+void MainWindow::solve()
 {
     /*
     skonczone = 0;
@@ -172,10 +139,8 @@ void MainWindow::solve(const QString &arg)
     */
 }
 
-void MainWindow::more()
+void MainWindow::setSolveEnabled()
 {
-    QTableWidgetItem* item;
-
     if(!ui->solve->isEnabled())
     {
         ui->rout->setEnabled(false);
@@ -183,71 +148,14 @@ void MainWindow::more()
         ui->exportButton->setEnabled(true);
         ui->importButton->setEnabled(false);
     }
-
-    qint32 mac = ui->machines->value();
-    Operation* mar;
-    qint32 rows = ui->tableWidget->rowCount();
-    qint32 cols = ui->tableWidget->columnCount();
-
-/*
-    ui->tableWidget->insertRow(rows);
-    item = new QTableWidgetItem("");
-    ui->tableWidget->setItem(rows, 0, item);
-    item = new QTableWidgetItem("0");
-    ui->tableWidget->setItem(rows, 1, item);
-    item = new QTableWidgetItem("0");
-    ui->tableWidget->setItem(rows, 2, item);
-    for(qint32 i=startCol; i<cols; i++)
-    {
-        mar = new Operation;
-        mar->setMachines(mac);
-        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
-        ui->tableWidget->setCellWidget(rows, i, mar);
-    }
-
-    ui->tableWidget->resizeRowsToContents();
-    ui->tableWidget->resizeColumnsToContents();
-*/
 }
 
-void MainWindow::more(const QString& nazwa, qint32 start, qint32 due, const QList<Operation *> &marszruty)
+void MainWindow::import()
 {
-    QTableWidgetItem* item;
-    Operation* mar;
-    qint32 rows = ui->tableWidget->rowCount();
-    qint32 cols = ui->tableWidget->columnCount();
+    QString s;
+    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
+    if(s.isEmpty())return;
 
-    ui->tableWidget->insertRow(rows);
-    item = new QTableWidgetItem(nazwa);
-    ui->tableWidget->setItem(rows, 0, item);
-    item = new QTableWidgetItem(QString::number(start));
-    ui->tableWidget->setItem(rows, 1, item);
-    item = new QTableWidgetItem(QString::number(due));
-    ui->tableWidget->setItem(rows, 2, item);
-    for(qint32 i=3; i<cols; i++)
-    {
-        mar = marszruty[i-3];
-//        connect(ui->machines, SIGNAL(valueChanged(int)), mar, SLOT(setMachines(int)));
-//        ui->tableWidget->setCellWidget(rows, i, mar);
-    }
-
-    ui->tableWidget->resizeRowsToContents();
-    ui->tableWidget->resizeColumnsToContents();
-}
-
-void MainWindow::next(qint32 m, Job* z)
-{
-    maszyny[m-1]->add(z);
-}
-
-void MainWindow::finished(Result* x)
-{
-    qDebug() << "zadanie " << x->j() << "zakonczone";
-    skonczone++;
-}
-
-void MainWindow::import(const QString &s)
-{
     QFile file(s);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -257,22 +165,18 @@ void MainWindow::import(const QString &s)
         return;
     }
 
-    qDebug() <<  "wczytuje marszruty...";
+    qDebug() <<  "wczytuje marszruty z pliku" << s;
 
     QDataStream in(&file);
 
-    in >> *this;
+    in >> m_model;
 
     qDebug() <<  "koniec wczytywania";
-}
 
-void MainWindow::imp()
-{
-    QString s;
-    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
-    if(s.isEmpty())return;
-
-    import(s);
+    ui->rout->setEnabled(false);
+    ui->solve->setEnabled(true);
+    ui->exportButton->setEnabled(true);
+    ui->importButton->setEnabled(false);
 }
 
 void MainWindow::exp()
@@ -294,66 +198,7 @@ void MainWindow::exp()
 
     QDataStream out(&file);
 
-    out << *this;
+    out << m_model;
 
     qDebug() <<  "koniec zapisu";
-}
-
-QDataStream &operator<<(QDataStream &out, const MainWindow &win)
-{
-    /*
-    qint32 tasks = qint32(win.ui->tableWidget->rowCount());
-    qint32 routLength = qint32(win.ui->rout->value());
-
-    out << qint32(win.ui->machines->value())                        //nbumber of machines
-        << routLength                                               //number of operations for each task
-        << tasks                                                    //number of tasks
-        << alfa
-        << beta;
-    for(qint32 i=0; i<tasks; ++i)
-    {
-        out << win.ui->tableWidget->item(i, 0)->text()              //nazwa
-            << win.ui->tableWidget->item(i, 1)->text().toInt()      //start time
-            << win.ui->tableWidget->item(i, 2)->text().toInt();     //due date
-        for(qint32 j=0; j<routLength; ++j)                          //operations
-        {
-            out << *qobject_cast<marszruta*>(win.ui->tableWidget->cellWidget(i, j+3));
-        }
-    }
-*/
-    return out;
-}
-
-QDataStream &operator>>(QDataStream &in, MainWindow &win)
-{
-    win.ui->rout->setEnabled(false);
-    win.ui->solve->setEnabled(true);
-    win.ui->exportButton->setEnabled(true);
-    win.ui->importButton->setEnabled(false);
-/*
-    qint32 machines, routLength, tasks;
-    qreal alfa, beta;
-
-    in >> machines >> routLength >> tasks;
-    win.ui->machines->setValue(machines);
-    win.ui->rout->setValue(routLength);
-
-    QList<marszruta*> marszruty;
-    marszruta* mar;
-    qint32 start, due;
-    QString nazwa;
-
-    for(qint32 i=0; i<tasks; ++i)
-    {
-        in >> nazwa >> start >> due;
-        marszruty.clear();
-        for(qint32 j=0; j<routLength; ++j)
-        {
-            in >> mar;
-            marszruty.append(mar);
-        }
-        win.more(nazwa, start, due, marszruty);
-    }
-*/
-    return in;
 }
