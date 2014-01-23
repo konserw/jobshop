@@ -70,3 +70,17 @@ QVariant Job::data(int col) const
 
     }
 }
+
+
+QDataStream &operator <<(QDataStream &out, const Job &job)
+{
+    //todo
+    return out;
+}
+
+
+QDataStream &operator >>(QDataStream &in, Job &job)
+{
+    //todo
+    return in;
+}

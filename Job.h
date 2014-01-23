@@ -51,6 +51,12 @@ private:
     QColor* m_color;
 
     static int jobsCount;
+
+    friend QDataStream &operator<<(QDataStream &out, const Job & job);
+    friend QDataStream &operator>>(QDataStream &in, Job & job);
 };
+
+QDataStream &operator<<(QDataStream &out, const Job & job);
+QDataStream &operator>>(QDataStream &in, Job & job);
 
 #endif // ZADANIE_H
