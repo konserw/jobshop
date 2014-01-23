@@ -23,7 +23,6 @@ public slots:
     void finished(Result* x);
     void set(int _maszyn, double _alfa, double _beta);
     void bazinga(const QList<Job *>*);
-    void bazinga(const QString&, const QList<Job *>*);
     void pdf();
     void pdf(const QString&fileName);
     void latex();

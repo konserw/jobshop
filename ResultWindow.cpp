@@ -198,7 +198,7 @@ void ResultWindow::latex(const QString &texName)
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter;
     painter.begin(&svgGen);
-    painter.rotate(rot);
+  //  painter.rotate(rot);
     scene->render(&painter);
     painter.end();
 
