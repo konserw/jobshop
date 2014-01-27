@@ -43,7 +43,8 @@ SOURCES += \
     OperationWidget.cpp \
     Job.cpp \
     ResultWindow.cpp \
-    JobshopModel.cpp
+    JobshopModel.cpp \
+    OperationDelegate.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -56,7 +57,8 @@ HEADERS += \
     OperationWidget.h \
     Job.h \
     ResultWindow.h \
-    JobshopModel.h
+    JobshopModel.h \
+    OperationDelegate.h
 
 FORMS += \
     MainWindow.ui \

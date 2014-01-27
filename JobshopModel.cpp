@@ -72,12 +72,6 @@ QVariant JobshopModel::data(const QModelIndex &index, int role) const
     return job->data(index.column());
 }
 
-
-void JobshopModel::setOperationsCount(int count)
-{
-    m_operationsCount = count;
-}
-
 void JobshopModel::addJob()
 {
     int row = m_jobs.count();
@@ -101,6 +95,31 @@ void JobshopModel::clear()
     m_jobs.clear();
     endRemoveRows();
 }
+qint32 JobshopModel::operationsCount() const
+{
+    return m_operationsCount;
+}
+
+void JobshopModel::setOperationsCount(const qint32 &operationsCount)
+{
+    m_operationsCount = operationsCount;
+}
+
+int JobshopModel::nonOperationColumns()
+{
+    return m_nonOperationColumns;
+}
+
+qint32 JobshopModel::machinesCount() const
+{
+    return m_machinesCount;
+}
+
+void JobshopModel::setMachinesCount(const qint32 &machinesCount)
+{
+    m_machinesCount = machinesCount;
+}
+
 
 int JobshopModel::columnCount(const QModelIndex & /*parent*/) const
 {

@@ -1,4 +1,6 @@
 #include "OperationWidget.h"
+#include "Operation.h"
+
 #include <QtWidgets>
 
 OperationWidget::OperationWidget(qint32 machineCount, QWidget *parent) :

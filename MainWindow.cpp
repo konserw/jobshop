@@ -6,6 +6,7 @@
 #include "common.h"
 #include "result.h"
 #include "ResultWindow.h"
+#include "OperationDelegate.h"
 
 #include <QtDebug>
 #include <QMessageBox>
@@ -13,6 +14,9 @@
 #include <QDataStream>
 #include <QFileDialog>
 #include <QStringList>
+
+//temporary solution
+JobshopModel* jobModel = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->rout->setMaximum(90);
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
+
+    jobModel = &m_model;
+    ui->tableView->setModel(&m_model);
 
     connect(ui->more, SIGNAL(clicked()), &m_model, SLOT(addJob()));
     connect(ui->more, SIGNAL(clicked()), this, SLOT(setSolveEnabled()));
