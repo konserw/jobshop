@@ -1,5 +1,6 @@
 #include "JobshopModel.h"
 #include "Job.h"
+#include "Operation.h"
 
 #include <QDataStream>
 #include <QtDebug>
@@ -7,9 +8,9 @@
 
 JobshopModel::JobshopModel(QObject *parent)
     : QAbstractTableModel(parent),
-      m_operationsCount(0)
+      m_operationsCount(0),
+      m_machinesCount(1)
 {
-
 }
 
 JobshopModel::~JobshopModel()
@@ -19,7 +20,32 @@ JobshopModel::~JobshopModel()
 
 bool JobshopModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    return true;
+    if(role != Qt::EditRole || index.row() >= m_jobs.count())
+        return false;
+
+    Job* job = m_jobs[index.row()];
+
+    switch(index.column())
+    {
+    case 0:
+        job->setName(value.toString());
+        return true;
+    case 1:
+        job->setArrival(value.toInt());
+        return true;
+    case 2:
+        job->setDueDate(value.toInt());
+        return true;
+    case 3:
+        job->setAlpha(value.toDouble());
+        return true;
+    case 4:
+        job->setBeta(value.toDouble());
+        return true;
+    default:
+        job->setOperation(index.column() - 5, qvariant_cast<Operation>(value));
+        return true;
+    }
 }
 
 Qt::ItemFlags JobshopModel::flags(const QModelIndex &/*index*/) const
@@ -48,16 +74,22 @@ QVariant JobshopModel::headerData(int section, Qt::Orientation orientation, int 
     case 4:
         return tr("β");
     default:
-        return section - 3;
+        return section - m_nonOperationColumns + 1;
     }
 }
 
-QModelIndex JobshopModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex JobshopModel::index(int row, int column, const QModelIndex &/*parent*/) const
 {
-    return QModelIndex();
+    if(column >= (m_nonOperationColumns + m_operationsCount) || row >= m_jobs.count())
+        return QModelIndex();
+
+    if(column < m_nonOperationColumns)
+        return createIndex(row, column);
+
+    return createIndex(row, column, m_jobs[row]->operation(column - m_nonOperationColumns));
 }
 
-int JobshopModel::rowCount(const QModelIndex &parent) const
+int JobshopModel::rowCount(const QModelIndex &/*parent*/) const
 {
     return m_jobs.count();
 }
@@ -69,14 +101,14 @@ QVariant JobshopModel::data(const QModelIndex &index, int role) const
 
     Job* job = m_jobs[index.row()];
 
-    return job->data(index.column());
+    return job->data(index, role);
 }
 
 void JobshopModel::addJob()
 {
     int row = m_jobs.count();
     beginInsertRows(QModelIndex(), row, row);
-    m_jobs.append(new Job());
+    m_jobs.append(new Job(m_operationsCount));
     endInsertRows();
 }
 
@@ -102,6 +134,20 @@ qint32 JobshopModel::operationsCount() const
 
 void JobshopModel::setOperationsCount(const qint32 &operationsCount)
 {
+    if(m_operationsCount > operationsCount)
+    {
+        beginRemoveColumns(QModelIndex(), operationsCount, m_operationsCount-1);
+        foreach(Job* job, m_jobs)
+            job->setOperationsCount(operationsCount);
+        endRemoveColumns();
+    }
+    else
+    {
+        beginInsertColumns(QModelIndex(), m_operationsCount+1, operationsCount);
+        foreach(Job* job, m_jobs)
+            job->setOperationsCount(operationsCount);
+        endInsertColumns();
+    }
     m_operationsCount = operationsCount;
 }
 
@@ -115,11 +161,10 @@ qint32 JobshopModel::machinesCount() const
     return m_machinesCount;
 }
 
-void JobshopModel::setMachinesCount(const qint32 &machinesCount)
+void JobshopModel::setMachinesCount(int machinesCount)
 {
     m_machinesCount = machinesCount;
 }
-
 
 int JobshopModel::columnCount(const QModelIndex & /*parent*/) const
 {

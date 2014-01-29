@@ -25,25 +25,24 @@ public:
     Qt::ItemFlags flags(const QModelIndex &) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex index(int row, int column, const QModelIndex &) const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex & = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
 
+public slots:
     void addJob();
     void addJob(Job *job);
 
     qint32 machinesCount() const;
-    void setMachinesCount(const qint32 &machinesCount);
+    void setMachinesCount(int machinesCount);
 
+    void clear();
     static int nonOperationColumns();
 
     qint32 operationsCount() const;
     void setOperationsCount(const qint32 &operationsCount);
-
-public slots:
-    void clear();
 
 protected:
     QList<Job*> m_jobs; //not Steve
