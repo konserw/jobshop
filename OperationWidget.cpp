@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 
-OperationWidget::OperationWidget(qint32 machineCount, QWidget *parent) :
+OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
     QWidget(parent)
 {
     m_machineCount = machineCount;
@@ -11,69 +11,81 @@ OperationWidget::OperationWidget(qint32 machineCount, QWidget *parent) :
     setObjectName(QStringLiteral("OperationWidget"));
     resize(171, 70);
 
-    formLayout = new QFormLayout(this);
-    formLayout->setObjectName(QStringLiteral("formLayout"));
-    formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+    ui_formLayout = new QFormLayout(this);
+    ui_formLayout->setObjectName(QStringLiteral("formLayout"));
+    ui_formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
 
-    label_machine = new QLabel(this);
-    label_machine->setObjectName(QStringLiteral("label_machine"));
-    label_machine->setText(tr("Maszyna"));
+    ui_label_machine = new QLabel(this);
+    ui_label_machine->setObjectName(QStringLiteral("label_machine"));
+    ui_label_machine->setText(tr("Maszyna"));
 
-    formLayout->setWidget(0, QFormLayout::LabelRole, label_machine);
+    ui_formLayout->setWidget(0, QFormLayout::LabelRole, ui_label_machine);
 
-    label_time = new QLabel(this);
-    label_time->setObjectName(QStringLiteral("label_time"));
-    label_time->setText(tr("Czas"));
+    ui_label_time = new QLabel(this);
+    ui_label_time->setObjectName(QStringLiteral("label_time"));
+    ui_label_time->setText(tr("Czas"));
 
-    formLayout->setWidget(0, QFormLayout::FieldRole, label_time);
+    ui_formLayout->setWidget(0, QFormLayout::FieldRole, ui_label_time);
 
-    machine = new QComboBox(this);
-    machine->setObjectName(QStringLiteral("machine"));
-    QString s;
-    for(qint32 i=0; i<m_machineCount; i++)
+    ui_machine = new QComboBox(this);
+    ui_machine->setObjectName(QStringLiteral("machine"));
+    for(int i=0; i<m_machineCount; i++)
     {
-        s = "m";
-        s += QString::number(i+1);
-        machine->insertItem(i, s);
+        ui_machine->addItem(QString("m%1").arg(i+1));
     }
-    machine->setCurrentIndex(0);
+    ui_machine->setCurrentIndex(0);
 
-    formLayout->setWidget(1, QFormLayout::LabelRole, machine);
+    ui_formLayout->setWidget(1, QFormLayout::LabelRole, ui_machine);
 
-    time = new QSpinBox(this);
-    time->setObjectName(QStringLiteral("time"));
-    time->setMinimum(0);
-    time->setValue(0);
-    time->setMaximum(999999);
+    ui_time = new QSpinBox(this);
+    ui_time->setObjectName(QStringLiteral("time"));
+    ui_time->setMinimum(0);
+    ui_time->setValue(0);
+    ui_time->setMaximum(999999);
 
-    formLayout->setWidget(1, QFormLayout::FieldRole, time);
-
+    ui_formLayout->setWidget(1, QFormLayout::FieldRole, ui_time);
 }
 
 OperationWidget::~OperationWidget()
-{/* qwidget zadba?
-    delete formLayout;
-    delete label_machine;
-    delete label_time;
-    delete machine;
-    delete time;
-*/
+{
 }
 
-void OperationWidget::setMachines(int nm)
+void OperationWidget::setWidgetData(int machine, int time)
 {
-    QString s;
+    ui_machine->setCurrentIndex(machine);
+    ui_time->setValue(time);
+}
 
+int OperationWidget::machine() const
+{
+    return ui_machine->currentIndex();
+}
+
+int OperationWidget::time() const
+{
+    return ui_time->value();
+}
+
+void OperationWidget::setMachinesCount(int nm)
+{
     for(qint32 i=m_machineCount; i>=nm; i--)
-        machine->removeItem(i);
+        ui_machine->removeItem(i);
 
 
-    for(qint32 i=m_machineCount; i<nm; i++)
+    for(int i=m_machineCount; i<nm; i++)
     {
-        s = "m";
-        s += QString::number(i+1);
-        machine->insertItem(i, s);
+        ui_machine->addItem(QString("m%1").arg(i+1));
     }
 
     m_machineCount = nm;
 }
+Operation OperationWidget::operation() const
+{
+    return m_operation;
+}
+
+void OperationWidget::setOperation(const Operation &operation)
+{
+    m_operation = operation;
+}
+
