@@ -7,6 +7,7 @@
 #include "result.h"
 #include "ResultWindow.h"
 #include "OperationDelegate.h"
+#include "Jobshop.h"
 
 #include <QtWidgets>
 #include <QtDebug>
@@ -15,9 +16,6 @@
 #include <QDataStream>
 #include <QFileDialog>
 #include <QStringList>
-
-//temporary solution
-JobshopModel* jobModel = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -47,19 +45,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
 
-    jobModel = &m_model;
-    ui->tableView->setModel(&m_model);
+    ui->tableView->setModel(Jobshop::instance()->model());
     ui->tableView->setItemDelegate(new OperationDelegate(this));
+
+    Jobshop* job = Jobshop::instance();
 /*
-    connect(ui->rout, &QSpinBox::valueChanged, &m_model, &JobshopModel::setOperationsCount);
-    connect(ui->machines, &QSpinBox::valueChanged, jobModel, &JobshopModel::setMachinesCount);
+    connect(ui->rout, &QSpinBox::valueChanged, job, &Jobshop::setOperationsCount);
+    connect(ui->machines, &QSpinBox::valueChanged, Jobshop::instance(), &Jobshop::setMachinesCount);
 */
-    connect(ui->machines, SIGNAL(valueChanged(int)), &m_model, SLOT(setMachinesCount(int)));
-    connect(ui->rout, SIGNAL(valueChanged(int)), &m_model, SLOT(setOperationsCount(int)));
+    connect(ui->machines, SIGNAL(valueChanged(int)), job, SLOT(setMachinesCount(int)));
+    connect(ui->rout, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setOperationsCount(int)));
 
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::import);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
-    connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
+    connect(ui->solve, &QPushButton::clicked, Jobshop::instance(), &Jobshop::solve);
     connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
 }
 
@@ -81,71 +80,6 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-
-
-void MainWindow::solve()
-{
-    /*
-    skonczone = 0;
-    t = 0;
-    maszyna* m;
-    zadanie* z;
-    qint32 i;
-    qint32 zadan, maszyn;
-
-    ui->centralWidget->setEnabled(false);
-
-    for(i=0; i<ui->machines->value(); i++)
-    {
-        m = new maszyna(i+1, scene);
-        connect(this, SIGNAL(tick()), m, SLOT(update()));
-        connect(this, SIGNAL(tick2()), m, SLOT(up2()));
-        maszyny.append(m);
-    }
-    maszyn = i;
-
-    for(i=0; i<ui->tableWidget->rowCount(); i++)
-    {
-        z = new zadanie(i+1, ui->tableWidget->item(i, 1)->text().toInt(), ui->tableWidget->item(i, 2)->text().toInt());
-        for(qint32 j=3; j<ui->tableWidget->columnCount(); j++)
-            z->add_rout(qobject_cast<marszruta*>(ui->tableWidget->cellWidget(i, j)));
-
-        connect(z, SIGNAL(next(qint32,zadanie*)), this, SLOT(next(qint32,zadanie*)));
-        connect(z, SIGNAL(finished(Result*)), this, SLOT(finished(Result*)));
-        connect(z, SIGNAL(finished(Result*)), gant, SLOT(finished(Result*)));
-        connect(this, SIGNAL(tick()), z, SLOT(update()));
-
-        zadania.append(z);
-    }
-    zadan = i;
-
-    do
-    {
-        emit tick();
-        emit tick2();
-        t++;
-    }while(zadan > skonczone);
-
-    gant->set(maszyn, ui->alfa->value(), ui->beta->value());
-    if(cli)
-        gant->bazinga(arg, &zadania);
-    else
-        gant->bazinga(&zadania);
-
-    foreach(z, zadania)
-        delete z;
-    foreach(m, maszyny)
-        delete m;
-
-    zadania.clear();
-    maszyny.clear();
-
-    scene->clear();
-
-    ui->centralWidget->setEnabled(true);
-    */
-}
-
 void MainWindow::addJob()
 {
     if(!ui->solve->isEnabled())
@@ -154,7 +88,7 @@ void MainWindow::addJob()
         ui->exportButton->setEnabled(true);
         ui->importButton->setEnabled(false);
     }
-    m_model.addJob();
+    Jobshop::instance()->addJob();
 }
 
 void MainWindow::import()
@@ -176,7 +110,7 @@ void MainWindow::import()
 
     QDataStream in(&file);
 
-    in >> m_model;
+    in >> *Jobshop::instance();
 
     qDebug() <<  "koniec wczytywania";
 
@@ -205,7 +139,7 @@ void MainWindow::exp()
 
     QDataStream out(&file);
 
-    out << m_model;
+    out << *Jobshop::instance();
 
     qDebug() <<  "koniec zapisu";
 }

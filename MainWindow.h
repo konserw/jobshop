@@ -24,7 +24,6 @@ public:
 
 public slots:
     void addJob();
-    void solve();
 
     void exp();
     void import();
@@ -39,8 +38,6 @@ private:
     int skonczone;
 
     ResultWindow* gant;
-
-    JobshopModel m_model;
 };
 
 #endif // MAINWINDOW_H

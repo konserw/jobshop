@@ -1,4 +1,5 @@
 #include "JobshopModel.h"
+#include "Jobshop.h"
 #include "Job.h"
 #include "Operation.h"
 
@@ -7,43 +8,41 @@
 #include <QVariant>
 
 JobshopModel::JobshopModel(QObject *parent)
-    : QAbstractTableModel(parent),
-      m_operationsCount(0),
-      m_machinesCount(1)
+    : QAbstractTableModel(parent)
 {
 }
 
 JobshopModel::~JobshopModel()
 {
-    qDeleteAll(m_jobs);
 }
 
-bool JobshopModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool JobshopModel::setData(const QModelIndex &index, const QVariant &value, int /*role*/)
 {
+    /*
     if(role != Qt::EditRole || index.row() >= m_jobs.count())
         return false;
-
-    Job* job = m_jobs[index.row()];
+*/
+    Job& job = Jobshop::instance()->m_jobs[index.row()];
 
     switch(index.column())
     {
     case 0:
-        job->setName(value.toString());
+        job.setName(value.toString());
         return true;
     case 1:
-        job->setArrival(value.toInt());
+        job.setArrival(value.toInt());
         return true;
     case 2:
-        job->setDueDate(value.toInt());
+        job.setDueDate(value.toInt());
         return true;
     case 3:
-        job->setAlpha(value.toDouble());
+        job.setAlpha(value.toDouble());
         return true;
     case 4:
-        job->setBeta(value.toDouble());
+        job.setBeta(value.toDouble());
         return true;
     default:
-        job->setOperation(index.column() - 5, qvariant_cast<Operation>(value));
+        job.setOperation(index.column() - m_nonOperationColumns, qvariant_cast<Operation>(value));
         return true;
     }
 }
@@ -78,7 +77,15 @@ QVariant JobshopModel::headerData(int section, Qt::Orientation orientation, int 
     }
 }
 
-QModelIndex JobshopModel::index(int row, int column, const QModelIndex &/*parent*/) const
+bool JobshopModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertRows(parent, row, row+count-1);
+    //naything here?
+    endInsertRows();
+    return true;
+}
+/*
+QModelIndex JobshopModel::index(int row, int column, const QModelIndex &parent) const
 {
     if(column >= (m_nonOperationColumns + m_operationsCount) || row >= m_jobs.count())
         return QModelIndex();
@@ -88,10 +95,10 @@ QModelIndex JobshopModel::index(int row, int column, const QModelIndex &/*parent
 
     return createIndex(row, column, m_jobs[row]->operation(column - m_nonOperationColumns));
 }
-
+*/
 int JobshopModel::rowCount(const QModelIndex &/*parent*/) const
 {
-    return m_jobs.count();
+    return Jobshop::instance()->m_jobs.count();
 }
 
 QVariant JobshopModel::data(const QModelIndex &index, int role) const
@@ -99,56 +106,12 @@ QVariant JobshopModel::data(const QModelIndex &index, int role) const
     if(!index.isValid() || !(role == Qt::DisplayRole || role  == Qt::EditRole))
         return QVariant();
 
-    Job* job = m_jobs[index.row()];
+    const Job& job = Jobshop::instance()->m_jobs[index.row()];
 
-    return job->data(index, role);
-}
+    if(index.column() >= m_nonOperationColumns && role == Qt::DisplayRole)
+        return job.operation(index.column() - m_nonOperationColumns)->print();
 
-void JobshopModel::addJob()
-{
-    int row = m_jobs.count();
-    beginInsertRows(QModelIndex(), row, row);
-    m_jobs.append(new Job(m_operationsCount));
-    endInsertRows();
-}
-
-void JobshopModel::addJob(Job* job)
-{
-    int row = m_jobs.count();
-    beginInsertRows(QModelIndex(), row, row);
-    m_jobs.append(job);
-    endInsertRows();
-}
-
-void JobshopModel::clear()
-{
-    beginRemoveRows(QModelIndex(), 0, m_jobs.count());
-    qDeleteAll(m_jobs);
-    m_jobs.clear();
-    endRemoveRows();
-}
-qint32 JobshopModel::operationsCount() const
-{
-    return m_operationsCount;
-}
-
-void JobshopModel::setOperationsCount(const qint32 &operationsCount)
-{
-    if(m_operationsCount > operationsCount)
-    {
-        beginRemoveColumns(QModelIndex(), operationsCount, m_operationsCount-1);
-        foreach(Job* job, m_jobs)
-            job->setOperationsCount(operationsCount);
-        endRemoveColumns();
-    }
-    else
-    {
-        beginInsertColumns(QModelIndex(), m_operationsCount+1, operationsCount);
-        foreach(Job* job, m_jobs)
-            job->setOperationsCount(operationsCount);
-        endInsertColumns();
-    }
-    m_operationsCount = operationsCount;
+    return job.data(index.column());
 }
 
 int JobshopModel::nonOperationColumns()
@@ -156,51 +119,31 @@ int JobshopModel::nonOperationColumns()
     return m_nonOperationColumns;
 }
 
-qint32 JobshopModel::machinesCount() const
-{
-    return m_machinesCount;
-}
-
-void JobshopModel::setMachinesCount(int machinesCount)
-{
-    m_machinesCount = machinesCount;
-}
-
 int JobshopModel::columnCount(const QModelIndex & /*parent*/) const
 {
-    return m_nonOperationColumns + m_operationsCount;
+    return m_nonOperationColumns + Jobshop::instance()->m_operationsCount;
 }
 
-QDataStream &operator <<(QDataStream &out, const JobshopModel &model)
+bool JobshopModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    qint32 jobs = qint32(model.m_jobs.count());
-
-    out << model.m_machinesCount                  //number of machines
-        << model.m_operationsCount                //number of operations for each task
-        << jobs;                                  //number of jobs
-
-    for(qint32 i=0; i<jobs; ++i)
-    {
-        out << model.m_jobs[i];
-    }
-    return out;
+    beginRemoveRows(parent, row, row+count-1);
+    //naything here?
+    endRemoveRows();
+    return true;
 }
 
-QDataStream &operator >>(QDataStream &in, JobshopModel &model)
+bool JobshopModel::insertColumns(int column, int count, const QModelIndex &parent)
 {
-    qint32 jobs;
+    beginInsertColumns(parent, column, column+count-1);
+    //naything here?
+    endInsertColumns();
+    return true;
+}
 
-    in  >> model.m_machinesCount
-        >> model.m_operationsCount
-        >> jobs;
-
-    Job* job;
-    for(qint32 i=0; i<jobs; ++i)
-    {
-        job = new Job();
-        in >> *job;
-        model.addJob(job);
-    }
-
-    return in;
+bool JobshopModel::removeColumns(int column, int count, const QModelIndex &parent)
+{
+    beginRemoveColumns(parent, column, column+count-1);
+    //naything here?
+    endRemoveColumns();
+    return true;
 }

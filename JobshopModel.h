@@ -4,8 +4,11 @@
 #include <QAbstractTableModel>
 #include <QList>
 
+//#include "Jobshop.h"
+class Jobshop;
 class Job;
 class QDataStream;
+
 
 /*!
  * \brief The JobshopModel class - representation of single jobshop scheduling problem as model for Qt's MVC.
@@ -19,44 +22,28 @@ public:
     explicit JobshopModel(QObject* parent = nullptr);
     ~JobshopModel();
 
-    QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role);
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int);
 
-    Qt::ItemFlags flags(const QModelIndex &) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    virtual Qt::ItemFlags flags(const QModelIndex &) const;
+    virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    QModelIndex index(int row, int column, const QModelIndex &) const;
+//    QModelIndex index(int row, int column, const QModelIndex &) const;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual bool insertRows(int column, int count, const QModelIndex & parent = QModelIndex());
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
 
+    virtual bool insertColumns(int row, int count, const QModelIndex & parent = QModelIndex());
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual bool removeColumns ( int column, int count, const QModelIndex & parent = QModelIndex());
 
-public slots:
-    void addJob();
-    void addJob(Job *job);
-
-    qint32 machinesCount() const;
-    void setMachinesCount(int machinesCount);
-
-    void clear();
     static int nonOperationColumns();
 
-    qint32 operationsCount() const;
-    void setOperationsCount(const qint32 &operationsCount);
-
 protected:
-    QList<Job*> m_jobs; //not Steve
-
-    qint32 m_machinesCount;
-    qint32 m_operationsCount;
     static const int m_nonOperationColumns = 5;
 
-    friend QDataStream &operator<<(QDataStream &out, const JobshopModel & model);
-    friend QDataStream &operator>>(QDataStream &in, JobshopModel & model);
+    friend class Jobshop;
 };
 
-QDataStream &operator<<(QDataStream &out, const JobshopModel & model);
-QDataStream &operator>>(QDataStream &in, JobshopModel & model);
-
-extern JobshopModel* jobModel;
 #endif // JOBSHOPMODEL_H
