@@ -6,27 +6,25 @@
 
 class Operation;
 class Result;
-class QModelIndex;
 
 /*!
  * \brief The Job class. Represents one job from jobshop problem
  */
-class Job : public QObject
+class Job /* : public QObject
 {
     Q_OBJECT
-
+*/
+{
 public:
     Job(int operationsCount = 0);
     Job(int start_time, int due_date);
     ~Job();
 
     int number()const
-    {
-        return j;
-    }
+    { return j; }
 
     QString print() const;
-    QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(int column) const;
 
     void setOperation(int number, const Operation& operation);
     Operation* operation(int number) const;

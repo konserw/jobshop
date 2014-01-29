@@ -1,7 +1,6 @@
 #include "Job.h"
 #include "Operation.h"
 
-#include <QModelIndex>
 #include <QColor>
 #include <QtDebug>
 
@@ -53,9 +52,8 @@ QString Job::print() const
     return s;
 }
 
-QVariant Job::data(const QModelIndex &index, int role) const
+QVariant Job::data(int column) const
 {
-    int column = index.column();
     switch(column)
     {
     case 0:
@@ -69,9 +67,7 @@ QVariant Job::data(const QModelIndex &index, int role) const
     case 4:
         return m_beta;
     default:
-        if(role == Qt::EditRole)
-            return QVariant::fromValue(*m_operations[column-5]);
-        return m_operations[column-5]->print();
+        return QVariant::fromValue(*m_operations[column-5]);
     }
 }
 
