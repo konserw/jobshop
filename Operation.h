@@ -3,6 +3,7 @@
 
 #include <QDataStream>
 #include <QString>
+#include <QVariant>
 class Job;
 
 /*!
@@ -12,24 +13,35 @@ class Job;
 class Operation
 {
 public:
-    Operation(Job* job, qint32 machine = 1, qint32 time = 0);
+    Operation(/*Job* job,*/ qint32 machine = 1, qint32 time = 0);
 /* use compiler generated
     ~Operation();
     Operation& operator=(const Operation &in);
 */
-    qint32 machine()const;
-    qint32 time()const;
-
     QString print()const;
 
+    QString id() const;
+//    void setId(const QString &id);
+
+    qint32 machine() const;
+    void setMachine(const qint32 &machine);
+
+    qint32 time() const;
+    void setTime(const qint32 &time);
+
 protected:
-    Job* m_job;
+    /*    Job* m_job;*/
     qint32 m_machine;
     qint32 m_time;
+    QString m_id;
+
+    static int m_operationsCount;
 
     friend QDataStream &operator<<(QDataStream &out, const Operation& op);
     friend QDataStream &operator>>(QDataStream &in, Operation& op);
 };
+
+Q_DECLARE_METATYPE(Operation)
 
 QDataStream &operator<<(QDataStream &out, const Operation& op);
 QDataStream &operator>>(QDataStream &in, Operation& op);

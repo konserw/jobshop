@@ -1,15 +1,20 @@
 #include "Operation.h"
 #include "Job.h"
 
-Operation::Operation(Job* job, qint32 machine, qint32 time):
-    m_job(job), m_machine(machine), m_time(time)
+int Operation::m_operationsCount = 0;
+
+Operation::Operation(/*Job* job,*/ qint32 machine, qint32 time):
+   /* m_job(job),*/ m_machine(machine), m_time(time)
 {
+    QChar first = 'A' + m_operationsCount/10;
+    m_id = QString("%1%2").arg(first).arg(m_operationsCount%10);
+    m_operationsCount++;
 }
+
 /*
 Operation::~Operation()
 {
 }
-
 Operation &Operation::operator =(const Operation &in)
 {
     if(this != &in)
@@ -22,9 +27,32 @@ Operation &Operation::operator =(const Operation &in)
     return *this;
 }
 */
+
+QString Operation::print() const
+{
+    return QString("Operation %1:\n%2h on machine %3").arg(m_id).arg(m_time).arg(m_machine+1);
+}
+
+QString Operation::id() const
+{
+    return m_id;
+}
+
+/*
+void Operation::setId(const QString &id)
+{
+    m_id = id;
+}
+*/
+
 qint32 Operation::machine() const
 {
     return m_machine;
+}
+
+void Operation::setMachine(const qint32 &machine)
+{
+    m_machine = machine;
 }
 
 qint32 Operation::time() const
@@ -32,9 +60,9 @@ qint32 Operation::time() const
     return m_time;
 }
 
-QString Operation::print() const
+void Operation::setTime(const qint32 &time)
 {
-    return QString("%1 (%2)").arg(m_machine).arg(m_time);
+    m_time = time;
 }
 
 QDataStream &operator<<(QDataStream &out, const Operation &op)
