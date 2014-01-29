@@ -219,9 +219,9 @@ void ResultWindow::latex(const QString &texName)
         s += "\t\t";
         s += QString::number(z->number());
         s += "\t& ";
-        s += QString::number(z->arrive());
+        s += QString::number(z->arrival());
         s += "\t& ";
-        s += QString::number(z->due());
+        s += QString::number(z->dueDate());
         s += "\t& ";
         s += z->print();
         s += "\t\\\\ \\hline\n";
