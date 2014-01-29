@@ -23,9 +23,8 @@ public:
     ~MainWindow();
 
 public slots:
-    void setSolveEnabled();
+    void addJob();
     void solve();
-    void rout(int);
 
     void exp();
     void import();

@@ -8,6 +8,7 @@
 #include "ResultWindow.h"
 #include "OperationDelegate.h"
 
+#include <QtWidgets>
 #include <QtDebug>
 #include <QMessageBox>
 #include <QFile>
@@ -35,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->solve->setText(tr("Rozwiąż"));
     ui->solve->setEnabled(false);
     ui->more->setText(tr("Dodaj zlecenie"));
-    ui->more->setEnabled(false);
 
     ui->label_machines->setText(tr("Ilość maszyn"));
     ui->machines->setMaximum(90);
@@ -49,13 +49,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     jobModel = &m_model;
     ui->tableView->setModel(&m_model);
+    ui->tableView->setItemDelegate(new OperationDelegate(this));
+/*
+    connect(ui->rout, &QSpinBox::valueChanged, &m_model, &JobshopModel::setOperationsCount);
+    connect(ui->machines, &QSpinBox::valueChanged, jobModel, &JobshopModel::setMachinesCount);
+*/
+    connect(ui->machines, SIGNAL(valueChanged(int)), &m_model, SLOT(setMachinesCount(int)));
+    connect(ui->rout, SIGNAL(valueChanged(int)), &m_model, SLOT(setOperationsCount(int)));
 
-    connect(ui->more, SIGNAL(clicked()), &m_model, SLOT(addJob()));
-    connect(ui->more, SIGNAL(clicked()), this, SLOT(setSolveEnabled()));
-    connect(ui->solve, SIGNAL(clicked()), this, SLOT(solve()));
-    connect(ui->rout, SIGNAL(valueChanged(int)), this, SLOT(rout(int)));
-    connect(ui->exportButton, SIGNAL(clicked()), this, SLOT(exp()));
-    connect(ui->importButton, SIGNAL(clicked()), this, SLOT(import()));
+    connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::import);
+    connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
+    connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
+    connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
 }
 
 MainWindow::~MainWindow()
@@ -76,12 +81,7 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-void MainWindow::rout(int col)
-{
-    ui->more->setEnabled(col);
 
-    m_model.setOperationsCount(col);
-}
 
 void MainWindow::solve()
 {
@@ -146,15 +146,15 @@ void MainWindow::solve()
     */
 }
 
-void MainWindow::setSolveEnabled()
+void MainWindow::addJob()
 {
     if(!ui->solve->isEnabled())
     {
-        ui->rout->setEnabled(false);
         ui->solve->setEnabled(true);
         ui->exportButton->setEnabled(true);
         ui->importButton->setEnabled(false);
     }
+    m_model.addJob();
 }
 
 void MainWindow::import()
