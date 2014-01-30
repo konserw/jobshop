@@ -13,28 +13,23 @@ class Job;
 class Operation
 {
 public:
-    Operation(const QString &id = QString(), qint32 machine = 1, qint32 time = 0);
-/* use compiler generated
-    ~Operation();
-    Operation& operator=(const Operation &in);
-*/
+    Operation(const QString &id = QString(), int machine = 1, int time = 0);
+
     bool operator==(const Operation& other);
- //   QSize sizeHint() const;
+
     QString print()const;
 
     QString id() const;
-//    void setId(const QString &id);
 
-    qint32 machine() const;
-    void setMachine(const qint32 &machine);
+    int machine() const;
+    void setMachine(int machine);
 
-    qint32 time() const;
-    void setTime(const qint32 &time);
+    int time() const;
+    void setTime(int time);
 
 protected:
-    /*    Job* m_job;*/
-    qint32 m_machine;
-    qint32 m_time;
+    int m_machine;
+    int m_time;
     QString m_id;
 
     friend QDataStream &operator<<(QDataStream &out, const Operation& op);

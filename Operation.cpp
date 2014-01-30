@@ -1,11 +1,7 @@
 #include "Operation.h"
 #include "Job.h"
 
-//#include <QSize>
-
-const int PaintingScaleFactor = 80;
-
-Operation::Operation(const QString& id, qint32 machine, qint32 time)
+Operation::Operation(const QString& id, int machine, int time)
     : m_id(id),
       m_machine(machine),
       m_time(time)
@@ -16,28 +12,6 @@ bool Operation::operator==(const Operation &other)
 {
     return other.m_id == m_id;
 }
-/*
-QSize Operation::sizeHint() const
-{
-    return PaintingScaleFactor * QSize(3, 2);
-}
-*/
-/*
-Operation::~Operation()
-{
-}
-Operation &Operation::operator =(const Operation &in)
-{
-    if(this != &in)
-    {
-        m_time = in.m_time;
-        m_job = in.m_job;
-        m_machine = in.m_machine;
-    }
-
-    return *this;
-}
-*/
 
 QString Operation::print() const
 {
@@ -49,29 +23,22 @@ QString Operation::id() const
     return m_id;
 }
 
-/*
-void Operation::setId(const QString &id)
-{
-    m_id = id;
-}
-*/
-
-qint32 Operation::machine() const
+int Operation::machine() const
 {
     return m_machine;
 }
 
-void Operation::setMachine(const qint32 &machine)
+void Operation::setMachine(int machine)
 {
     m_machine = machine;
 }
 
-qint32 Operation::time() const
+int Operation::time() const
 {
     return m_time;
 }
 
-void Operation::setTime(const qint32 &time)
+void Operation::setTime(int time)
 {
     m_time = time;
 }
