@@ -108,10 +108,23 @@ QVariant JobshopModel::data(const QModelIndex &index, int role) const
 
     const Job& job = Jobshop::instance()->m_jobs[index.row()];
 
-    if(index.column() >= m_nonOperationColumns && role == Qt::DisplayRole)
-        return job.operation(index.column() - m_nonOperationColumns)->print();
-
-    return job.data(index.column());
+    switch(index.column())
+    {
+    case 0:
+        return job.name();
+    case 1:
+        return job.arrival();
+    case 2:
+        return job.dueDate();
+    case 3:
+        return job.alpha();
+    case 4:
+        return job.beta();
+    default:
+        if(role == Qt::DisplayRole)
+            return job.operation(index.column() - m_nonOperationColumns)->print();
+        return QVariant::fromValue(job.operation(index.column() - m_nonOperationColumns));
+    }
 }
 
 int JobshopModel::nonOperationColumns()

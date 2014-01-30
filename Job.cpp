@@ -52,25 +52,6 @@ QString Job::print() const
     return s;
 }
 
-QVariant Job::data(int column) const
-{
-    switch(column)
-    {
-    case 0:
-        return m_name;
-    case 1:
-        return m_arrival;
-    case 2:
-        return m_dueDate;
-    case 3:
-        return m_alpha;
-    case 4:
-        return m_beta;
-    default:
-        return QVariant::fromValue(*m_operations[column-5]);
-    }
-}
-
 void Job::setOperation(int number, const Operation &operation)
 {
     //TODO zmiana z pointerow na normalne itemy

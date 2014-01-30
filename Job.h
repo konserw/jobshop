@@ -24,7 +24,6 @@ public:
     { return j; }
 
     QString print() const;
-    QVariant data(int column) const;
 
     void setOperation(int number, const Operation& operation);
     Operation* operation(int number) const;
