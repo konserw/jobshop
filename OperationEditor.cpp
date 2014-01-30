@@ -1,10 +1,10 @@
-#include "OperationWidget.h"
+#include "OperationEditor.h"
 #include "Operation.h"
 
 #include <QtWidgets>
 //#include <QSize>
 
-OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
+OperationEditor::OperationEditor(int machineCount, QWidget *parent) :
     QWidget(parent)
 {
     m_machineCount = machineCount;
@@ -47,7 +47,7 @@ OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
     ui_formLayout->setWidget(1, QFormLayout::FieldRole, ui_time);
 }
 
-OperationWidget::~OperationWidget()
+OperationEditor::~OperationEditor()
 {
 }
 /*
@@ -86,7 +86,7 @@ void OperationWidget::setMachinesCount(int nm)
 
     m_machineCount = nm;
 }*/
-const Operation& OperationWidget::operation()
+const Operation& OperationEditor::operation()
 {
     ui_time->interpretText();
     m_operation.setTime(ui_time->value());
@@ -94,7 +94,7 @@ const Operation& OperationWidget::operation()
     return m_operation;
 }
 
-void OperationWidget::setOperation(const Operation &operation)
+void OperationEditor::setOperation(const Operation &operation)
 {
     m_operation = operation;
     ui_time->setValue(m_operation.time());

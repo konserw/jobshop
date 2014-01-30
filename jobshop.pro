@@ -40,12 +40,12 @@ SOURCES += \
     result.cpp \
     logger.cpp \
     Operation.cpp \
-    OperationWidget.cpp \
     Job.cpp \
     ResultWindow.cpp \
     JobshopModel.cpp \
     OperationDelegate.cpp \
-    Jobshop.cpp
+    Jobshop.cpp \
+    OperationEditor.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -55,12 +55,12 @@ HEADERS += \
     result.h \
     logger.h \
     Operation.h \
-    OperationWidget.h \
     Job.h \
     ResultWindow.h \
     JobshopModel.h \
     OperationDelegate.h \
-    Jobshop.h
+    Jobshop.h \
+    OperationEditor.h
 
 FORMS += \
     MainWindow.ui \

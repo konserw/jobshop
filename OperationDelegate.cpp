@@ -1,11 +1,11 @@
 #include "OperationDelegate.h"
-#include "OperationWidget.h"
+#include "OperationEditor.h"
 #include "Operation.h"
 #include "JobshopModel.h"
 #include "Jobshop.h"
 
 #include <QtDebug>
-#include <QPainter>
+//#include <QPainter>
 
 OperationDelegate::OperationDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -32,7 +32,7 @@ void OperationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 QWidget *OperationDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem& option, const QModelIndex &index) const
 {
     if(index.data(Qt::EditRole).canConvert<Operation>())
-        return new OperationWidget(Jobshop::instance()->machinesCount(), parent);
+        return new OperationEditor(Jobshop::instance()->machinesCount(), parent);
     else
         return QStyledItemDelegate::createEditor(parent, option, index);
 }
@@ -43,7 +43,7 @@ void OperationDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
     if(var.canConvert<Operation>())
     {
         const Operation& operation = qvariant_cast<Operation>(var);
-        OperationWidget* widget = qobject_cast<OperationWidget*>(editor);
+        OperationEditor* widget = qobject_cast<OperationEditor*>(editor);
         widget->setOperation(operation);
     }
     else
@@ -54,7 +54,7 @@ void OperationDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 {
     if(index.data(Qt::EditRole).canConvert<Operation>())
     {
-        OperationWidget* widget = qobject_cast<OperationWidget*>(editor);
+        OperationEditor* widget = qobject_cast<OperationEditor*>(editor);
         model->setData(index, QVariant::fromValue(widget->operation()));
     }
     else

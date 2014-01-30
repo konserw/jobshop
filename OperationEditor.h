@@ -14,13 +14,13 @@ QT_END_NAMESPACE
 /*!
  * \brief The OperationWidget class - it is used by @OperationDelegate to edit operation's properties
  */
-class OperationWidget : public QWidget
+class OperationEditor : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit OperationWidget(int machineCount = 1, QWidget *parent = 0);
-    ~OperationWidget();
+    explicit OperationEditor(int machineCount = 1, QWidget *parent = 0);
+    ~OperationEditor();
 
 //    void setWidgetData(int machine, int time);
 //    int machine()const;
