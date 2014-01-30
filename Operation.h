@@ -13,11 +13,12 @@ class Job;
 class Operation
 {
 public:
-    Operation(/*Job* job,*/ qint32 machine = 1, qint32 time = 0);
+    Operation(const QString &id = QString(), qint32 machine = 1, qint32 time = 0);
 /* use compiler generated
     ~Operation();
     Operation& operator=(const Operation &in);
 */
+    bool operator==(const Operation& other);
  //   QSize sizeHint() const;
     QString print()const;
 
@@ -35,8 +36,6 @@ protected:
     qint32 m_machine;
     qint32 m_time;
     QString m_id;
-
-    static int m_operationsCount;
 
     friend QDataStream &operator<<(QDataStream &out, const Operation& op);
     friend QDataStream &operator>>(QDataStream &in, Operation& op);

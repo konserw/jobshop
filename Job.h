@@ -18,8 +18,6 @@ public:
     Job(int start_time, int due_date);
     ~Job();
 
-    int number() const;
-
     QString name() const;
     void setName(const QString &name);
 
@@ -37,19 +35,24 @@ public:
 
     void setOperation(int number, const Operation& operation);
     const Operation &operation(int number) const;
+    Operation &operation(int number);
 
     QString print() const;
     void setOperationsCount(int count);
 
+    QString id() const;
+
 private:
-    int m_number;
+    QString m_id;
     QString m_name;
     int m_arrival;
     int m_dueDate;
     double m_alpha;
     double m_beta;
 
-    QList<Operation> m_operations;
+//    QList<Operation> m_operations;
+    QList<QString> m_operationIds;
+    QString operationId(int number) const;
 
     QColor* m_color;
 

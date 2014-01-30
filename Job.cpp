@@ -1,5 +1,6 @@
 #include "Job.h"
 #include "Operation.h"
+#include "Jobshop.h"
 
 #include <QColor>
 #include <QtDebug>
@@ -9,39 +10,33 @@ int Job::m_jobsCount = 0;
 Job::Job(int operationsCount):
     m_arrival(0), m_dueDate(10), m_alpha(0.5), m_beta(0.5)
 {
-    m_number = ++m_jobsCount;
+    m_id = 'A' + m_jobsCount++;
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
     setOperationsCount(operationsCount);
 }
 
 Job::Job(int start_time, int due_date)
 {
-    m_number = ++m_jobsCount;
+    m_id = 'A' + m_jobsCount++;
     m_arrival = start_time;
     m_dueDate = due_date;
 
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
-
-    qDebug() << "utworzono zadanie nr " << m_number << " rj: " << m_arrival << " dj: " << m_dueDate;
 }
 
 Job::~Job()
 {
-    --m_jobsCount;
+    m_jobsCount;
     delete m_color;
-}
-
-int Job::number() const
-{
-    return m_number;
 }
 
 QString Job::print() const
 {
     QString s;
     bool f = false;
-    for(const Operation& operation : m_operations)
+    for(const QString& id : m_operationIds)
     {
+        const Operation& operation = Jobshop::instance()->operation(id);
         if(operation.time() > 0)
         {
             if(f)
@@ -58,28 +53,42 @@ QString Job::print() const
 
 void Job::setOperation(int number, const Operation &operation)
 {
-    //TODO zmiana z pointerow na normalne itemy
-    m_operations[number] = operation;
+    Jobshop::instance()->operation(operationId(number)) = operation;
+    //m_operations[number] = operation;
+}
+
+Operation& Job::operation(int number)
+{
+    return Jobshop::instance()->operation(operationId(number));
 }
 
 const Operation& Job::operation(int number) const
 {
-    if(number < m_operations.count())
-        return m_operations[number];
-    qWarning() << "requested invalid operation";
-    return Operation();
+    return Jobshop::instance()->operation(operationId(number));
 }
 
 void Job::setOperationsCount(int count)
 {
-    for(int i = m_operations.count()-1; i >= count; --i)
+    for(int i = m_operationIds.count()-1; i >= count; --i)
     {
-        m_operations.removeAt(i);
+        QString id = operationId(i);
+        m_operationIds.removeOne(id);
+        Jobshop::instance()->removeOperation(id);
     }
-    for(int i = m_operations.count(); i < count; ++i)
+    for(int i = m_operationIds.count(); i < count; ++i)
     {
-        m_operations.append(Operation());
+        m_operationIds.append(Jobshop::instance()->operation(operationId(i)).id());
     }
+}
+
+QString Job::id() const
+{
+    return m_id;
+}
+
+QString Job::operationId(int number) const
+{
+    return QString("%1%2").arg(m_id).arg(number);
 }
 
 QString Job::name() const

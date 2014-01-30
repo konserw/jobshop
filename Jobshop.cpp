@@ -31,6 +31,19 @@ JobshopModel *Jobshop::model()
     return m_model;
 }
 
+Operation& Jobshop::operation(const QString &id)
+{
+    if(!m_operations.contains(id))
+        m_operations.insert(id, Operation(id));
+
+    return m_operations[id];
+}
+
+void Jobshop::removeOperation(const QString &id)
+{
+    m_operations.remove(id);
+}
+
 void Jobshop::solve()
 {
     /*

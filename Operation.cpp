@@ -4,14 +4,17 @@
 //#include <QSize>
 
 const int PaintingScaleFactor = 80;
-int Operation::m_operationsCount = 0;
 
-Operation::Operation(/*Job* job,*/ qint32 machine, qint32 time):
-   /* m_job(job),*/ m_machine(machine), m_time(time)
+Operation::Operation(const QString& id, qint32 machine, qint32 time)
+    : m_id(id),
+      m_machine(machine),
+      m_time(time)
 {
-    QChar first = 'A' + m_operationsCount/10;
-    m_id = QString("%1%2").arg(first).arg(m_operationsCount%10);
-    m_operationsCount++;
+}
+
+bool Operation::operator==(const Operation &other)
+{
+    return other.m_id == m_id;
 }
 /*
 QSize Operation::sizeHint() const

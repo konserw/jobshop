@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QList>
+#include <QHash>
 
 #include "Job.h"
 
 class JobshopModel;
+class Operation;
 
 /*!
  * \brief The Jobshop class - holds information about problem to solve. Implemented as singleton
@@ -20,6 +22,9 @@ public:
     static Jobshop* instance();
 
     JobshopModel* model();
+
+    Operation &operation(const QString& id);
+    void removeOperation(const QString& id);
 
 public slots:
     void solve();
@@ -40,6 +45,8 @@ protected:
 
     JobshopModel* m_model;
     QList<Job> m_jobs;
+
+    QHash<QString, Operation> m_operations;
 
     int m_machinesCount;
     int m_operationsCount;
