@@ -2,6 +2,7 @@
 #include "Operation.h"
 
 #include <QtWidgets>
+//#include <QSize>
 
 OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
     QWidget(parent)
@@ -33,7 +34,7 @@ OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
     {
         ui_machine->addItem(QString("m%1").arg(i+1));
     }
-    ui_machine->setCurrentIndex(0);
+//    ui_machine->setCurrentIndex(0);
 
     ui_formLayout->setWidget(1, QFormLayout::LabelRole, ui_machine);
 
@@ -49,7 +50,13 @@ OperationWidget::OperationWidget(int machineCount, QWidget *parent) :
 OperationWidget::~OperationWidget()
 {
 }
-
+/*
+QSize OperationWidget::sizeHint() const
+{
+    return m_operation.sizeHint();
+}
+*/
+/*
 void OperationWidget::setWidgetData(int machine, int time)
 {
     ui_machine->setCurrentIndex(machine);
@@ -78,14 +85,19 @@ void OperationWidget::setMachinesCount(int nm)
     }
 
     m_machineCount = nm;
-}
-Operation OperationWidget::operation() const
+}*/
+const Operation& OperationWidget::operation()
 {
+    ui_time->interpretText();
+    m_operation.setTime(ui_time->value());
+    m_operation.setMachine(ui_machine->currentIndex());
     return m_operation;
 }
 
 void OperationWidget::setOperation(const Operation &operation)
 {
     m_operation = operation;
+    ui_time->setValue(m_operation.time());
+    ui_machine->setCurrentIndex(m_operation.machine());
 }
 

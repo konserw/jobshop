@@ -22,16 +22,18 @@ public:
     explicit OperationWidget(int machineCount = 1, QWidget *parent = 0);
     ~OperationWidget();
 
-    void setWidgetData(int machine, int time);
-    int machine()const;
-    int time()const;
+//    void setWidgetData(int machine, int time);
+//    int machine()const;
+//    int time()const;
 
-    Operation operation() const;
+//    QSize sizeHint() const;
+
+    const Operation &operation();
     void setOperation(const Operation &operation);
-
+/*
 public slots:
     void setMachinesCount(int);
-
+*/
 protected:
     Operation m_operation;
 

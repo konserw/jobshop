@@ -18,6 +18,7 @@ public:
     ~Operation();
     Operation& operator=(const Operation &in);
 */
+ //   QSize sizeHint() const;
     QString print()const;
 
     QString id() const;

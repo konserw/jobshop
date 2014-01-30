@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableView->setModel(Jobshop::instance()->model());
     ui->tableView->setItemDelegate(new OperationDelegate(this));
+    ui->tableView->verticalHeader()->setDefaultSectionSize(75);
 
     Jobshop* job = Jobshop::instance();
 /*
@@ -60,6 +61,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solve, &QPushButton::clicked, Jobshop::instance(), &Jobshop::solve);
     connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
+
+//demodata
+    ui->machines->setValue(5);
+    ui->rout->setValue(5);
+    ui->more->click();
+    ui->more->click();
+    ui->more->click();
 }
 
 MainWindow::~MainWindow()

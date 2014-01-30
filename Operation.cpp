@@ -1,6 +1,9 @@
 #include "Operation.h"
 #include "Job.h"
 
+//#include <QSize>
+
+const int PaintingScaleFactor = 80;
 int Operation::m_operationsCount = 0;
 
 Operation::Operation(/*Job* job,*/ qint32 machine, qint32 time):
@@ -10,7 +13,12 @@ Operation::Operation(/*Job* job,*/ qint32 machine, qint32 time):
     m_id = QString("%1%2").arg(first).arg(m_operationsCount%10);
     m_operationsCount++;
 }
-
+/*
+QSize Operation::sizeHint() const
+{
+    return PaintingScaleFactor * QSize(3, 2);
+}
+*/
 /*
 Operation::~Operation()
 {
