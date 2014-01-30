@@ -28,8 +28,6 @@ public:
     virtual Qt::ItemFlags flags(const QModelIndex &) const;
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-//    QModelIndex index(int row, int column, const QModelIndex &) const;
-
     virtual bool insertRows(int column, int count, const QModelIndex & parent = QModelIndex());
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
     virtual bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());

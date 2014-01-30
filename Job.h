@@ -14,8 +14,7 @@ class Job /* : public QObject
 */
 {
 public:
-    Job(int operationsCount = 0);
-    Job(int start_time, int due_date);
+    Job(int operationsCount = 0, int start_time = 0, int due_date = 10);
     ~Job();
 
     QString name() const;
@@ -50,7 +49,6 @@ private:
     double m_alpha;
     double m_beta;
 
-//    QList<Operation> m_operations;
     QList<QString> m_operationIds;
     QString operationId(int number) const;
 

@@ -13,7 +13,7 @@ class Job;
 class Operation
 {
 public:
-    Operation(const QString &id = QString(), int machine = 1, int time = 0);
+    Operation(const QString &id = QString(), int machine = 0, int time = 0);
 
     bool operator==(const Operation& other);
 

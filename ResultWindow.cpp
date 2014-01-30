@@ -217,7 +217,7 @@ void ResultWindow::latex(const QString &texName)
     foreach(z, *zadania)
     {
         s += "\t\t";
-        s += QString::number(z->number());
+        s += z->id();
         s += "\t& ";
         s += QString::number(z->arrival());
         s += "\t& ";

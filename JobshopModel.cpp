@@ -58,7 +58,7 @@ QVariant JobshopModel::headerData(int section, Qt::Orientation orientation, int 
         return QVariant();
 
     if(orientation == Qt::Vertical)
-        return section + 1;
+        return Jobshop::instance()->m_jobs[section].id();
 
     switch(section)
     {
@@ -84,18 +84,7 @@ bool JobshopModel::insertRows(int row, int count, const QModelIndex &parent)
     endInsertRows();
     return true;
 }
-/*
-QModelIndex JobshopModel::index(int row, int column, const QModelIndex &parent) const
-{
-    if(column >= (m_nonOperationColumns + m_operationsCount) || row >= m_jobs.count())
-        return QModelIndex();
 
-    if(column < m_nonOperationColumns)
-        return createIndex(row, column);
-
-    return createIndex(row, column, m_jobs[row]->operation(column - m_nonOperationColumns));
-}
-*/
 int JobshopModel::rowCount(const QModelIndex &/*parent*/) const
 {
     return Jobshop::instance()->m_jobs.count();

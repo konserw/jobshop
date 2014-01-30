@@ -7,26 +7,20 @@
 
 int Job::m_jobsCount = 0;
 
-Job::Job(int operationsCount):
-    m_arrival(0), m_dueDate(10), m_alpha(0.5), m_beta(0.5)
+Job::Job(int operationsCount, int start_time, int due_date)
+    : m_arrival(start_time),
+      m_dueDate(due_date),
+      m_alpha(0.5), m_beta(0.5)
 {
     m_id = 'A' + m_jobsCount++;
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
-    setOperationsCount(operationsCount);
-}
 
-Job::Job(int start_time, int due_date)
-{
-    m_id = 'A' + m_jobsCount++;
-    m_arrival = start_time;
-    m_dueDate = due_date;
-
-    m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+    if(operationsCount)
+       setOperationsCount(operationsCount);
 }
 
 Job::~Job()
 {
-    m_jobsCount;
     delete m_color;
 }
 
@@ -54,7 +48,6 @@ QString Job::print() const
 void Job::setOperation(int number, const Operation &operation)
 {
     Jobshop::instance()->operation(operationId(number)) = operation;
-    //m_operations[number] = operation;
 }
 
 Operation& Job::operation(int number)
