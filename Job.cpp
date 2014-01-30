@@ -7,7 +7,7 @@
 int Job::m_jobsCount = 0;
 
 Job::Job(int operationsCount):
-    m_arrival(0), m_dueDate(0), m_alpha(0), m_beta(0)
+    m_arrival(0), m_dueDate(10), m_alpha(0.5), m_beta(0.5)
 {
     m_number = ++m_jobsCount;
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
