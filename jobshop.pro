@@ -45,7 +45,8 @@ SOURCES += \
     JobshopModel.cpp \
     OperationDelegate.cpp \
     Jobshop.cpp \
-    OperationEditor.cpp
+    OperationEditor.cpp \
+    Chromosome.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -60,7 +61,8 @@ HEADERS += \
     JobshopModel.h \
     OperationDelegate.h \
     Jobshop.h \
-    OperationEditor.h
+    OperationEditor.h \
+    Chromosome.h
 
 FORMS += \
     MainWindow.ui \
