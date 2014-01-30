@@ -122,7 +122,7 @@ QVariant JobshopModel::data(const QModelIndex &index, int role) const
         return job.beta();
     default:
         if(role == Qt::DisplayRole)
-            return job.operation(index.column() - m_nonOperationColumns)->print();
+            return job.operation(index.column() - m_nonOperationColumns).print();
         return QVariant::fromValue(job.operation(index.column() - m_nonOperationColumns));
     }
 }

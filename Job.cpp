@@ -39,16 +39,15 @@ int Job::number() const
 QString Job::print() const
 {
     QString s;
-    Operation* m;
     bool f = false;
-    foreach(m, m_operations)
+    for(const Operation& operation : m_operations)
     {
-        if(m->time() > 0)
+        if(operation.time() > 0)
         {
             if(f)
                 s += " - ";
 
-            s += m->print();
+            s += operation.print();
 
             if(!f)
                 f = true;
@@ -60,26 +59,26 @@ QString Job::print() const
 void Job::setOperation(int number, const Operation &operation)
 {
     //TODO zmiana z pointerow na normalne itemy
-    m_operations[number] = new Operation(operation);
+    m_operations[number] = operation;
 }
 
-Operation *Job::operation(int number) const
+const Operation& Job::operation(int number) const
 {
     if(number < m_operations.count())
         return m_operations[number];
-    return nullptr;
+    qWarning() << "requested invalid operation";
+    return Operation();
 }
 
 void Job::setOperationsCount(int count)
 {
     for(int i = m_operations.count()-1; i >= count; --i)
     {
-        delete m_operations[i];
         m_operations.removeAt(i);
     }
     for(int i = m_operations.count(); i < count; ++i)
     {
-        m_operations.append(new Operation());
+        m_operations.append(Operation());
     }
 }
 

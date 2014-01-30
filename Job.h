@@ -1,11 +1,9 @@
 #ifndef ZADANIE_H
 #define ZADANIE_H
 
-#include <QObject>
-#include <QList>
+#include "Operation.h"
 
-class Operation;
-class Result;
+#include <QList>
 
 /*!
  * \brief The Job class. Represents one job from jobshop problem
@@ -38,7 +36,7 @@ public:
     void setDueDate(int dueDate);
 
     void setOperation(int number, const Operation& operation);
-    Operation* operation(int number) const;
+    const Operation &operation(int number) const;
 
     QString print() const;
     void setOperationsCount(int count);
@@ -51,7 +49,7 @@ private:
     double m_alpha;
     double m_beta;
 
-    QList<Operation*> m_operations;
+    QList<Operation> m_operations;
 
     QColor* m_color;
 
