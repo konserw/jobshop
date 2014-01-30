@@ -4,31 +4,36 @@
 #include <QColor>
 #include <QtDebug>
 
-int Job::jobsCount = 0;
+int Job::m_jobsCount = 0;
 
 Job::Job(int operationsCount):
     m_arrival(0), m_dueDate(0), m_alpha(0), m_beta(0)
 {
-    j = ++jobsCount;
+    m_number = ++m_jobsCount;
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
     setOperationsCount(operationsCount);
 }
 
 Job::Job(int start_time, int due_date)
 {
-    j = ++jobsCount;
+    m_number = ++m_jobsCount;
     m_arrival = start_time;
     m_dueDate = due_date;
 
     m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
-    qDebug() << "utworzono zadanie nr " << j << " rj: " << m_arrival << " dj: " << m_dueDate;
+    qDebug() << "utworzono zadanie nr " << m_number << " rj: " << m_arrival << " dj: " << m_dueDate;
 }
 
 Job::~Job()
 {
-    --jobsCount;
+    --m_jobsCount;
     delete m_color;
+}
+
+int Job::number() const
+{
+    return m_number;
 }
 
 QString Job::print() const
