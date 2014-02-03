@@ -133,12 +133,43 @@ void Job::setDueDate(int dueDate)
 
 QDataStream &operator <<(QDataStream &out, const Job &job)
 {
-    //todo
+    qint64 count = job.m_operationIds.count();
+
+    out
+        << job.m_id
+        << job.m_name
+        << qint64(job.m_arrival)
+        << qint64(job.m_dueDate)
+        << qreal(job.m_alpha)
+        << qreal(job.m_beta)
+        << count;
+
+    for(int i=0; i < count; ++i)
+        out << job.m_operationIds[i];
+
     return out;
 }
 
 QDataStream &operator >>(QDataStream &in, Job &job)
 {
-    //todo
+    qint64 arr, dd, count;
+    qreal a, b;
+
+    in
+        >> job.m_id
+        >> job.m_name
+        >> arr
+        >> dd
+        >> a
+        >> b
+        >> count;
+
+    for(int i=0; i < count; ++i)
+    {
+        QString id;
+        in >> id;
+        job.m_operationIds.append(id);
+    }
+
     return in;
 }
