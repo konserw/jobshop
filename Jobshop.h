@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QList>
 #include <QHash>
-#include <QMap>
 #include <random>
 
 #include "Chromosome.h"
@@ -30,6 +29,8 @@ public:
     Operation &operation(const QString& id);
     void removeOperation(const QString& id);
 
+    std::mt19937 rng() const;
+
 public slots:
     void solve();
 
@@ -43,10 +44,10 @@ public slots:
     int operationsCount() const;
     void setOperationsCount(int operationsCount);
 
-    void generateInitialPopulation();
-
     void load(QDataStream &in);
     void save(QDataStream &out);
+
+    int allOperationsCount() const;
 
 protected:
     Jobshop();
@@ -60,12 +61,16 @@ protected:
     int m_machinesCount;
     int m_operationsCount;
 
-    QMap<double, Chromosome> m_genome;
+    QList<Chromosome> m_genome;
 
-    static const int m_iterationCount = 100;
-    static const int m_chromosomeCount = 20;
+    static const int m_reproductionCycles = 25;
+    static const int m_iterationCount = 10;
+    static const int m_chromosomeCount = 100;
 
     std::mt19937 m_rng;
+
+    void generateInitialPopulation();
+    QList<Chromosome> reproduce();
 
     friend class JobshopModel;
 };

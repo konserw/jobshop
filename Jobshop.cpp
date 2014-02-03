@@ -5,6 +5,7 @@
 #include <QtDebug>
 #include <cmath>
 #include <ctime>
+#include <QtAlgorithms>
 
 Jobshop* Jobshop::m_instance = nullptr;
 
@@ -14,6 +15,10 @@ Jobshop::Jobshop()
       m_model(nullptr)
 {
     m_rng.seed(time(NULL));
+}
+std::mt19937 Jobshop::rng() const
+{
+    return m_rng;
 }
 
 void Jobshop::load(QDataStream &in)
@@ -67,6 +72,11 @@ void Jobshop::save(QDataStream &out)
     }
 }
 
+int Jobshop::allOperationsCount() const
+{
+    return m_operations.count();
+}
+
 Jobshop::~Jobshop()
 { qDebug() << "destroy singleton"; }
 
@@ -99,11 +109,10 @@ void Jobshop::removeOperation(const QString &id)
 
 void Jobshop::generateInitialPopulation()
 {
+    qDebug() << "initializing population";
+
     int jobsCount = m_jobs.count();
     std::uniform_int_distribution<int> dist(0, jobsCount-1);
-
-    for(const Job& j : m_jobs)
-        qDebug() << j.print();
 
     for(int i=0; i < m_chromosomeCount; ++i)
     {
@@ -131,74 +140,47 @@ void Jobshop::generateInitialPopulation()
                 );
             }
         }while(anyLeft);
-        m_genome.insert(x.value(), x);
+        x.calculateValue();
+        m_genome.append(x);
         qDebug() << x.print();
     }
+}
+
+QList<Chromosome> Jobshop::reproduce()
+{
+    std::uniform_int_distribution<int> dist(0, m_genome.count()-1);
+    QList<Chromosome> offspring;
+    for(int i=0; i<m_reproductionCycles; ++i)
+    {
+        //todo losowanie parentow wg rankingu
+        offspring.append(MSX(m_genome[dist(m_rng)], m_genome[dist(m_rng)]));
+    }
+
+    //todo printowanie chromosomow (i innych)
+    qDebug() << "adding offspring to genome:";
+    for(const Chromosome& ch : offspring)
+        qDebug() << ch.print();
+
+    return offspring;
 }
 
 
 void Jobshop::solve()
 {
+    qDebug() << "Problem parameters:";
+    for(const Job& j : m_jobs)
+        qDebug() << j.print();
 
-    /*
-    skonczone = 0;
-    t = 0;
-    maszyna* m;
-    zadanie* z;
-    qint32 i;
-    qint32 zadan, maszyn;
-
-    ui->centralWidget->setEnabled(false);
-
-    for(i=0; i<ui->machines->value(); i++)
+    generateInitialPopulation();
+    for(int i=0; i<m_iterationCount; ++i)
     {
-        m = new maszyna(i+1, scene);
-        connect(this, SIGNAL(tick()), m, SLOT(update()));
-        connect(this, SIGNAL(tick2()), m, SLOT(up2()));
-        maszyny.append(m);
+        qDebug() << "Iteration:\t" << i;
+
+        m_genome.append(reproduce());
+        qSort(m_genome);
+        while(m_genome.count() > m_chromosomeCount)
+            m_genome.removeLast();
     }
-    maszyn = i;
-
-    for(i=0; i<ui->tableWidget->rowCount(); i++)
-    {
-        z = new zadanie(i+1, ui->tableWidget->item(i, 1)->text().toInt(), ui->tableWidget->item(i, 2)->text().toInt());
-        for(qint32 j=3; j<ui->tableWidget->columnCount(); j++)
-            z->add_rout(qobject_cast<marszruta*>(ui->tableWidget->cellWidget(i, j)));
-
-        connect(z, SIGNAL(next(qint32,zadanie*)), this, SLOT(next(qint32,zadanie*)));
-        connect(z, SIGNAL(finished(Result*)), this, SLOT(finished(Result*)));
-        connect(z, SIGNAL(finished(Result*)), gant, SLOT(finished(Result*)));
-        connect(this, SIGNAL(tick()), z, SLOT(update()));
-
-        zadania.append(z);
-    }
-    zadan = i;
-
-    do
-    {
-        emit tick();
-        emit tick2();
-        t++;
-    }while(zadan > skonczone);
-
-    gant->set(maszyn, ui->alfa->value(), ui->beta->value());
-    if(cli)
-        gant->bazinga(arg, &zadania);
-    else
-        gant->bazinga(&zadania);
-
-    foreach(z, zadania)
-        delete z;
-    foreach(m, maszyny)
-        delete m;
-
-    zadania.clear();
-    maszyny.clear();
-
-    scene->clear();
-
-    ui->centralWidget->setEnabled(true);
-    */
 }
 
 void Jobshop::addJob()

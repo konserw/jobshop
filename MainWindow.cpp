@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->more->click();
 */
     import("sample.mar");
-    Jobshop::instance()->generateInitialPopulation();
+    Jobshop::instance()->solve();
 }
 
 MainWindow::~MainWindow()
