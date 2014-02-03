@@ -36,7 +36,7 @@ QString Job::print() const
             if(f)
                 s += " - ";
 
-            s += operation.print();
+            s += operation.print().replace("\n", " ");
 
             if(!f)
                 f = true;

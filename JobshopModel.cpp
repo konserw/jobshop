@@ -73,7 +73,7 @@ QVariant JobshopModel::headerData(int section, Qt::Orientation orientation, int 
     case 4:
         return tr("β");
     default:
-        return section - m_nonOperationColumns + 1;
+        return section - m_nonOperationColumns /*+ 1*/;
     }
 }
 

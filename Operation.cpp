@@ -15,7 +15,9 @@ bool Operation::operator==(const Operation &other)
 
 QString Operation::print() const
 {
-    return QString("Operation %1:\n%2h on machine %3").arg(m_id).arg(m_time).arg(m_machine+1);
+    if(m_time)
+        return QString("Operation %1:\n%2h on machine %3").arg(m_id).arg(m_time).arg(m_machine+1);
+    return QString();
 }
 
 QString Operation::id() const
