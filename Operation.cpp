@@ -45,14 +45,20 @@ void Operation::setTime(int time)
 
 QDataStream &operator<<(QDataStream &out, const Operation &op)
 {
-    out << op.m_machine
+    out
+        << op.m_id
+        << op.m_machine
         << op.m_time;
+
     return out;
 }
 
 QDataStream &operator>>(QDataStream &in, Operation &op)
 {
-    in >> op.m_machine
-       >> op.m_time;
+    in
+        >> op.m_id
+        >> op.m_machine
+        >> op.m_time;
+
     return in;
 }
