@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QList>
 #include <QGraphicsScene>
-#include "JobshopModel.h"
 
+class JobshopModel;
 class ResultWindow;
 class Operation;
 class Result;
@@ -39,6 +39,8 @@ private:
 
     QList<Job*> zadania;
     int skonczone;
+
+    JobshopModel* m_model;
 
     ResultWindow* gant;
 };

@@ -39,6 +39,8 @@ public slots:
     int operationsCount() const;
     void setOperationsCount(int operationsCount);
 
+    void load(QDataStream &in);
+    void save(QDataStream &out);
 protected:
     Jobshop();
     static Jobshop* m_instance;
@@ -52,11 +54,7 @@ protected:
     int m_operationsCount;
 
     friend class JobshopModel;
-    friend QDataStream &operator<<(QDataStream &out, const Jobshop &);
-    friend QDataStream &operator>>(QDataStream &in, Jobshop &);
 };
 
-QDataStream &operator<<(QDataStream &out, const Jobshop &);
-QDataStream &operator>>(QDataStream &in, Jobshop &);
 
 #endif // JOBSHOP_H

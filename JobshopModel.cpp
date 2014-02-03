@@ -149,3 +149,11 @@ bool JobshopModel::removeColumns(int column, int count, const QModelIndex &paren
     endRemoveColumns();
     return true;
 }
+
+void JobshopModel::loadModel(QDataStream &in)
+{
+    beginResetModel();
+    Jobshop::instance()->load(in);
+    endResetModel();
+    endResetModel();
+}

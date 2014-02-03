@@ -164,6 +164,11 @@ QDataStream &operator >>(QDataStream &in, Job &job)
         >> b
         >> count;
 
+    job.m_arrival = arr;
+    job.m_dueDate = dd;
+    job.m_alpha = a;
+    job.m_beta = b;
+
     for(int i=0; i < count; ++i)
     {
         QString id;

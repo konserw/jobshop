@@ -14,6 +14,56 @@ Jobshop::Jobshop()
 {
 }
 
+void Jobshop::load(QDataStream &in)
+{
+    m_jobs.clear();
+
+    qint64 operations;
+    qint64 machines;
+    qint64 jobs;
+
+    in  >> operations
+        >> machines
+        >> jobs;
+
+    m_operationsCount = operations;
+    m_machinesCount = machines;
+
+    for(qint64 i=0; i<operations*jobs; ++i)
+    {
+        Operation op;
+        in >> op;
+        m_operations.insert(op.id(), op);
+    }
+
+    for(qint64 i=0; i<jobs; ++i)
+    {
+        Job job;
+        in >> job;
+        m_jobs.append(job);
+    }
+}
+
+void Jobshop::save(QDataStream &out)
+{
+    qint64 operations = qint64(m_operationsCount);
+    qint64 machines = qint64(m_machinesCount);
+    qint64 jobs = qint64(m_jobs.count());
+
+    out << operations
+        << machines
+        << jobs;
+
+    for(const Operation& op : m_operations)
+    {
+        out << op;
+    }
+
+    for(qint32 i=0; i<jobs; ++i)
+    {
+        out << m_jobs[i];
+    }
+}
 Jobshop::~Jobshop()
 { qDebug() << "destroy singleton"; }
 
@@ -145,51 +195,3 @@ void Jobshop::setMachinesCount(int machinesCount)
 {
     m_machinesCount = machinesCount;
 }
-
-QDataStream &operator <<(QDataStream &out, const Jobshop &jobshop)
-{
-    qint64 operations = qint64(jobshop.m_operationsCount);
-    qint64 machines = qint64(jobshop.m_machinesCount);
-    qint64 jobs = qint64(jobshop.m_jobs.count());
-
-    out << operations
-        << machines
-        << jobs;
-
-    for(qint32 i=0; i<jobs; ++i)
-    {
-        out << jobshop.m_jobs[i];
-    }
-
-    return out;
-}
-
-QDataStream &operator >>(QDataStream &in, Jobshop &jobshop)
-{
-    jobshop.m_model->removeRows(0, jobshop.m_jobs.count());
-   // jobshop.m_model->beginResetModel();
-    jobshop.m_jobs.clear();
-
-    qint64 operations;
-    qint64 machines;
-    qint64 jobs;
-
-    in  >> operations
-        >> machines
-        >> jobs;
-
-    jobshop.m_operationsCount = operations;
-    jobshop.m_machinesCount = machines;
-
-    for(qint64 i=0; i<jobs; ++i)
-    {
-        Job job;
-        in >> job;
-        jobshop.m_jobs.append(job);
-    }
-
-    return in;
-    jobshop.m_model->insertRows(0, jobshop.m_jobs.count());
-//    jobshop.m_model->modelReset();
-}
-

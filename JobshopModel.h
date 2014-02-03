@@ -36,7 +36,10 @@ public:
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual bool removeColumns ( int column, int count, const QModelIndex & parent = QModelIndex());
 
+    void loadModel(QDataStream &in);
+
     static int nonOperationColumns();
+
 
 protected:
     static const int m_nonOperationColumns = 5;

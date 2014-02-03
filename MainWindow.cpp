@@ -45,11 +45,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->rout->setMinimum(0);
     ui->rout->setValue(0);
 
-    ui->tableView->setModel(Jobshop::instance()->model());
+    Jobshop* job = Jobshop::instance();
+    m_model = job->model();
+
+    ui->tableView->setModel(m_model);
     ui->tableView->setItemDelegate(new OperationDelegate(this));
     ui->tableView->verticalHeader()->setDefaultSectionSize(75);
 
-    Jobshop* job = Jobshop::instance();
+
 /*
     connect(ui->rout, &QSpinBox::valueChanged, job, &Jobshop::setOperationsCount);
     connect(ui->machines, &QSpinBox::valueChanged, Jobshop::instance(), &Jobshop::setMachinesCount);
@@ -63,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
 
 //demodata
-    /*
+/*
     ui->machines->setValue(5);
     ui->rout->setValue(5);
     ui->more->click();
@@ -118,11 +121,13 @@ void MainWindow::import(const QString& s)
 
     QDataStream in(&file);
 
-    in >> *Jobshop::instance();
+    m_model->loadModel(in);
 
     qDebug() <<  "koniec wczytywania";
 
-    ui->rout->setEnabled(false);
+    ui->machines->setValue(Jobshop::instance()->machinesCount());
+    ui->rout->setValue(Jobshop::instance()->operationsCount());
+
     ui->solve->setEnabled(true);
     ui->exportButton->setEnabled(true);
     ui->importButton->setEnabled(false);
@@ -157,7 +162,7 @@ void MainWindow::exp()
 
     QDataStream out(&file);
 
-    out << *Jobshop::instance();
+    Jobshop::instance()->save(out);
 
     qDebug() <<  "koniec zapisu";
 }
