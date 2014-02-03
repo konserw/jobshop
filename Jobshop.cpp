@@ -4,6 +4,7 @@
 
 #include <QtDebug>
 #include <cmath>
+#include <ctime>
 
 Jobshop* Jobshop::m_instance = nullptr;
 
@@ -12,6 +13,7 @@ Jobshop::Jobshop()
       m_machinesCount(1),
       m_model(nullptr)
 {
+    m_rng.seed(time(NULL));
 }
 
 void Jobshop::load(QDataStream &in)
@@ -64,6 +66,7 @@ void Jobshop::save(QDataStream &out)
         out << m_jobs[i];
     }
 }
+
 Jobshop::~Jobshop()
 { qDebug() << "destroy singleton"; }
 
@@ -94,8 +97,49 @@ void Jobshop::removeOperation(const QString &id)
     m_operations.remove(id);
 }
 
+void Jobshop::generateInitialPopulation()
+{
+    int jobsCount = m_jobs.count();
+    std::uniform_int_distribution<int> dist(0, jobsCount-1);
+
+    for(const Job& j : m_jobs)
+        qDebug() << j.print();
+
+    for(int i=0; i < m_chromosomeCount; ++i)
+    {
+        Chromosome x;
+        QVector<int> operationsFrom(jobsCount, 0);
+        bool anyLeft = true;
+        do
+        {
+            int jobNumber = dist(m_rng);
+            if(operationsFrom[jobNumber] < m_operationsCount)
+            {
+                x.addGene(QString("%1%2")
+                          .arg(QString('A' + jobNumber))
+                          .arg(operationsFrom[jobNumber])
+                          );
+                operationsFrom[jobNumber] = operationsFrom[jobNumber] + 1;
+            }
+            else
+            {
+                anyLeft = false;
+                std::for_each(
+                        operationsFrom.begin(),
+                        operationsFrom.end(),
+                        [&](int n){ anyLeft = anyLeft || n < m_operationsCount; }
+                );
+            }
+        }while(anyLeft);
+        m_genome.insert(x.value(), x);
+        qDebug() << x.print();
+    }
+}
+
+
 void Jobshop::solve()
 {
+
     /*
     skonczone = 0;
     t = 0;

@@ -2,6 +2,7 @@
 #define CHROMOSOME_H
 
 #include <QList>
+#include <QString>
 
 class Operation;
 
@@ -13,11 +14,16 @@ class Chromosome
 public:
     Chromosome();
 
-    bool hasOperation(const Operation& Operation);
-    double value();
+    bool hasGene(const QString& gene);
+    ///value of survival funciton
+    double value() const;
+
+    void addGene(const QString& gene);
+
+    QString print() const;
 
 protected:
-    QList<Operation> m_operations;
+    QList<QString> m_genes;
 
 };
 

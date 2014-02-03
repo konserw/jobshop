@@ -4,8 +4,12 @@
 #include <QObject>
 #include <QList>
 #include <QHash>
+#include <QMap>
+#include <random>
 
+#include "Chromosome.h"
 #include "Job.h"
+
 
 class JobshopModel;
 class Operation;
@@ -39,8 +43,11 @@ public slots:
     int operationsCount() const;
     void setOperationsCount(int operationsCount);
 
+    void generateInitialPopulation();
+
     void load(QDataStream &in);
     void save(QDataStream &out);
+
 protected:
     Jobshop();
     static Jobshop* m_instance;
@@ -52,6 +59,13 @@ protected:
 
     int m_machinesCount;
     int m_operationsCount;
+
+    QMap<double, Chromosome> m_genome;
+
+    static const int m_iterationCount = 100;
+    static const int m_chromosomeCount = 20;
+
+    std::mt19937 m_rng;
 
     friend class JobshopModel;
 };
