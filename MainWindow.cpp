@@ -57,17 +57,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->machines, SIGNAL(valueChanged(int)), job, SLOT(setMachinesCount(int)));
     connect(ui->rout, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setOperationsCount(int)));
 
-    connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::import);
+    connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solve, &QPushButton::clicked, Jobshop::instance(), &Jobshop::solve);
     connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
 
 //demodata
+    /*
     ui->machines->setValue(5);
     ui->rout->setValue(5);
     ui->more->click();
     ui->more->click();
     ui->more->click();
+*/
+    import("sample.mar");
+    Jobshop::instance()->generateInitialPopulation();
 }
 
 MainWindow::~MainWindow()
@@ -99,12 +103,8 @@ void MainWindow::addJob()
     Jobshop::instance()->addJob();
 }
 
-void MainWindow::import()
+void MainWindow::import(const QString& s)
 {
-    QString s;
-    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
-    if(s.isEmpty())return;
-
     QFile file(s);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -126,6 +126,16 @@ void MainWindow::import()
     ui->solve->setEnabled(true);
     ui->exportButton->setEnabled(true);
     ui->importButton->setEnabled(false);
+}
+
+
+void MainWindow::imp()
+{
+    QString s;
+    s = QFileDialog::getOpenFileName(this, tr("Otwórz plik marszrut"), "", tr("Plik mar (*.mar)"));
+    if(s.isEmpty())return;
+
+    import(s);
 }
 
 void MainWindow::exp()

@@ -26,10 +26,13 @@ public slots:
     void addJob();
 
     void exp();
-    void import();
+    void imp();
+
 
 protected:
     void changeEvent(QEvent *e);
+
+    void import(const QString& s);
 
 private:
     Ui::MainWindow *ui;
