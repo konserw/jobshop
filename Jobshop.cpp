@@ -175,12 +175,14 @@ void Jobshop::solve()
     generateInitialPopulation();
     for(int i=0; i<m_iterationCount; ++i)
     {
-        qDebug() << "Iteration:\t" << i;
-
         m_genome.append(reproduce());
         qSort(m_genome);
         while(m_genome.count() > m_chromosomeCount)
             m_genome.removeLast();
+
+        qDebug() << "Iteration:\t" << i;
+        qDebug() << "best value:" << m_genome[0].value();
+        qDebug() << "worst value:" << m_genome.last().value();
     }
 }
 
