@@ -115,8 +115,6 @@ void Jobshop::removeOperation(const QString &id)
 
 void Jobshop::generateInitialPopulation()
 {
-    qDebug() << "initializing population";
-
     int jobsCount = m_jobs.count();
     std::uniform_int_distribution<int> dist(0, jobsCount-1);
 
@@ -172,7 +170,12 @@ void Jobshop::solve()
     for(const Job& j : m_jobs)
         qDebug() << j.print();
 
+    qDebug() << "Initial population";
     generateInitialPopulation();
+    qSort(m_genome);
+    qDebug() << "best value:" << m_genome[0].value();
+    qDebug() << "worst value:" << m_genome.last().value();
+
     for(int i=0; i<m_iterationCount; ++i)
     {
         m_genome.append(reproduce());
@@ -180,7 +183,7 @@ void Jobshop::solve()
         while(m_genome.count() > m_chromosomeCount)
             m_genome.removeLast();
 
-        qDebug() << "Iteration:\t" << i;
+        qDebug() << "Iteration:\t" << i+1;
         qDebug() << "best value:" << m_genome[0].value();
         qDebug() << "worst value:" << m_genome.last().value();
     }
