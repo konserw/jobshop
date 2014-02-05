@@ -91,6 +91,7 @@ QString Chromosome::print() const
         x += m_genes[i];
         x += " ";
     }
+    x.append(QString("value: %1").arg(m_value));
     return x;
 }
 
