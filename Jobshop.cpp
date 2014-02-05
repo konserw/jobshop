@@ -162,11 +162,6 @@ QList<Chromosome> Jobshop::reproduce()
         offspring.append(MSX(m_genome[dist(m_rng)], m_genome[dist(m_rng)]));
     }
 
-    //todo printowanie chromosomow (i innych)
-    qDebug() << "adding offspring to genome:";
-    for(const Chromosome& ch : offspring)
-        qDebug() << ch.print();
-
     return offspring;
 }
 
