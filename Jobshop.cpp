@@ -173,8 +173,8 @@ void Jobshop::solve()
     qDebug() << "Initial population";
     generateInitialPopulation();
     qSort(m_genome);
-    qDebug() << "best value:" << m_genome[0].value();
-    qDebug() << "worst value:" << m_genome.last().value();
+    qDebug() << "best value:\t" << m_genome[0].value();
+    qDebug() << "worst value:\t" << m_genome.last().value();
 
     for(int i=0; i<m_iterationCount; ++i)
     {
@@ -184,8 +184,8 @@ void Jobshop::solve()
             m_genome.removeLast();
 
         qDebug() << "Iteration:\t" << i+1;
-        qDebug() << "best value:" << m_genome[0].value();
-        qDebug() << "worst value:" << m_genome.last().value();
+        qDebug() << "best value:\t" << m_genome[0].value();
+        qDebug() << "worst value:\t" << m_genome.last().value();
     }
 }
 
