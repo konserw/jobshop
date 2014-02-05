@@ -9,7 +9,6 @@
 #include "Chromosome.h"
 #include "Job.h"
 
-
 class JobshopModel;
 class Operation;
 
@@ -38,8 +37,6 @@ public slots:
 
     void addJob();
     int jobCount() const;
-    //    void addJob(Job *job);
-    //void clear();
 
     int machinesCount() const;
     void setMachinesCount(int machinesCount);
@@ -50,7 +47,6 @@ public slots:
 
     void load(QDataStream &in);
     void save(QDataStream &out);
-
 
 protected:
     Jobshop();
@@ -68,7 +64,7 @@ protected:
 
     static const int m_chromosomeCount = 12;
     static const int m_iterationCount = m_chromosomeCount;
-    static const int m_reproductionCycles = m_chromosomeCount/4;
+    static const int m_reproductionCycles = m_chromosomeCount/4; //number of offspring = cycles*2
 
     std::mt19937 m_rng;
 
