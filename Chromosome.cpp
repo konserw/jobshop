@@ -6,6 +6,7 @@
 #include <QVector>
 #include <random>
 #include <algorithm>
+#include <QtDebug>
 
 Chromosome::Chromosome()
     : m_value(-1)
@@ -97,26 +98,33 @@ QString Chromosome::print() const
 
 QList<Chromosome> MSX(const Chromosome &a, const Chromosome &b)
 {
-    static std::uniform_int_distribution<int> dist(0,1);
+    static std::default_random_engine generator;
+    static std::uniform_int_distribution<int> distribution(1,2);
 
-    int opc = Jobshop::instance()->allOperationsCount() * 2;
     QList<QString> merge;
-    QList<QString>::const_iterator p1 = a.m_genes.begin();
-    QList<QString>::const_iterator p2 = b.m_genes.begin();
 
-    for(int i = 0; i < opc; ++i)
+    auto p1 = a.m_genes.begin();
+    auto p2 = b.m_genes.begin();
+
+    auto end1 = a.m_genes.end();
+    auto end2 = b.m_genes.end();
+
+    while(p1 != end1 || p2!= end2)
     {
-        if(p1 != a.m_genes.end() &&
-           (dist(Jobshop::instance()->rng()) == 0 || p2 == b.m_genes.end())
-        ){
-            merge.append(*p1);
-            ++p1;
-        }
-        else
+        int roll = distribution(Jobshop::instance()->rng());
+
+        if(p2 != end2 && (p1 == end1 || roll == 2))
         {
             merge.append(*p2);
             ++p2;
         }
+        else if(p1 != end1 && (p2 == end2 || roll == 1))
+        {
+            merge.append(*p1);
+            ++p1;
+        }
+        else
+            qWarning() << "out of range?";
     }
 
     Chromosome c1;

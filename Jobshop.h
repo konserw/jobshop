@@ -29,7 +29,7 @@ public:
     Operation &operation(const QString& id);
     void removeOperation(const QString& id);
 
-    std::mt19937 rng() const;
+    std::mt19937& rng();
 
     QList<Job> jobs() const;
 

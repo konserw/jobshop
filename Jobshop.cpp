@@ -22,7 +22,7 @@ QList<Job> Jobshop::jobs() const
     return m_jobs;
 }
 
-std::mt19937 Jobshop::rng() const
+std::mt19937& Jobshop::rng()
 {
     return m_rng;
 }
