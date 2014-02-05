@@ -45,6 +45,11 @@ void Operation::setTime(int time)
     m_time = time;
 }
 
+int Operation::jobNumber() const
+{
+    return m_id[0].toLatin1() - 'A';
+}
+
 QDataStream &operator<<(QDataStream &out, const Operation &op)
 {
     out

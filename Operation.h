@@ -27,6 +27,8 @@ public:
     int time() const;
     void setTime(int time);
 
+    int jobNumber() const;
+
 protected:
     int m_machine;
     int m_time;

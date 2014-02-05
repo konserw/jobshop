@@ -31,10 +31,13 @@ public:
 
     std::mt19937 rng() const;
 
+    QList<Job> jobs() const;
+
 public slots:
     void solve();
 
     void addJob();
+    int jobCount() const;
     //    void addJob(Job *job);
     //void clear();
 
@@ -43,11 +46,11 @@ public slots:
 
     int operationsCount() const;
     void setOperationsCount(int operationsCount);
+    int allOperationsCount() const;
 
     void load(QDataStream &in);
     void save(QDataStream &out);
 
-    int allOperationsCount() const;
 
 protected:
     Jobshop();

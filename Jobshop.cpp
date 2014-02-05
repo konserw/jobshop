@@ -16,6 +16,12 @@ Jobshop::Jobshop()
 {
     m_rng.seed(time(NULL));
 }
+
+QList<Job> Jobshop::jobs() const
+{
+    return m_jobs;
+}
+
 std::mt19937 Jobshop::rng() const
 {
     return m_rng;
@@ -188,6 +194,11 @@ void Jobshop::addJob()
     int row = m_jobs.count();
     m_jobs.append(Job(m_operationsCount));
     m_model->insertRow(row);
+}
+
+int Jobshop::jobCount() const
+{
+    return m_jobs.count();
 }
 
 int Jobshop::operationsCount() const

@@ -1,7 +1,11 @@
 #include "Chromosome.h"
 #include "Jobshop.h"
+#include "Job.h"
+#include "Operation.h"
 
+#include <QVector>
 #include <random>
+#include <algorithm>
 
 Chromosome::Chromosome()
     : m_value(-1)
@@ -18,9 +22,50 @@ double Chromosome::value() const
     return m_value;
 }
 
+int Chromosome::completionTime() const
+{
+    auto r = std::max_element(m_results.begin(), m_results.end(), comparecompletionTime);
+    return r->cj();
+}
+
 void Chromosome::calculateValue()
 {
-    //todo
+    int jobsCount = Jobshop::instance()->jobCount();
+    const QList<Job>& jobs = Jobshop::instance()->jobs();
+
+    //kiedy konczy sie poprzednia operacjia zadania
+    QVector<int> jobTime;
+    //na poczatku czas przyjecia zadania
+    jobTime.clear();
+    jobTime.resize(jobsCount);
+    for(int i=0; i<jobsCount; ++i)
+        jobTime[i] = jobs[i].arrival();
+
+    //kiedy konczy sie poprzednia operacja maszyny
+    QVector<int> machineTime(Jobshop::instance()->machinesCount(), 0);
+
+    for(const QString& gene : m_genes)
+    {
+        const Operation& op = Jobshop::instance()->operation(gene);
+        int& jt = jobTime[op.jobNumber()];
+        int& mt = machineTime[op.machine()];
+        int start = std::max<int>(jt, mt);
+        int end = start + op.time();
+        jt = end;
+        mt = end;
+    }
+
+    double sum = 0;
+    for(int i=0; i<jobsCount; ++i)
+    {
+        const Job& job = jobs[i];
+        Result r (i, jobTime[i], job.dueDate(), job.arrival());
+        m_results.append(r);
+        sum += pow(r.lj(), 2);
+        sum += pow(r.ej(), 2);
+    }
+
+    m_value = std::sqrt(sum);
 }
 
 void Chromosome::addGene(const QString &gene)

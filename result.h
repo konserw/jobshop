@@ -19,4 +19,6 @@ private:
     int _j, _fj, _cj, _lj, _ej;
 };
 
+bool comparecompletionTime(const Result& a, const Result& b);
+
 #endif // RESULT_H

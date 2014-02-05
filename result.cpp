@@ -51,3 +51,8 @@ int Result::ej() const
 {
     return _ej;
 }
+
+bool comparecompletionTime(const Result& a, const Result& b)
+{
+    return a.cj() < b.cj();
+}

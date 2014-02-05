@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QString>
+#include "result.h"
 
 class Operation;
 
@@ -25,8 +26,16 @@ public:
 
     bool operator<(const Chromosome& other) const;
 
+    int completionTime() const;
+
 protected:
+    ///completion time of all operations - not used
+    double m_completionTime;
+    ///JiT value for survival
     double m_value;
+
+    ///statistics for each job
+    QList<Result> m_results;
     QList<QString> m_genes;
 
     friend QList<Chromosome> MSX(const Chromosome& a, const Chromosome& b);
