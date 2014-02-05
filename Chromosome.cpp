@@ -28,6 +28,16 @@ int Chromosome::completionTime() const
     return r->cj();
 }
 
+bool Chromosome::operator<(const Chromosome& other) const
+{
+    return m_value < other.m_value;
+}
+
+bool Chromosome::operator>(const Chromosome& other) const
+{
+    return m_value > other.m_value;
+}
+
 void Chromosome::calculateValue()
 {
     int jobsCount = Jobshop::instance()->jobCount();
@@ -82,11 +92,6 @@ QString Chromosome::print() const
         x += " ";
     }
     return x;
-}
-
-bool Chromosome::operator<(const Chromosome &other) const
-{
-    return m_value < other.m_value;
 }
 
 QList<Chromosome> MSX(const Chromosome &a, const Chromosome &b)

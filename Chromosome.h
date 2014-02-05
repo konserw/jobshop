@@ -24,9 +24,11 @@ public:
 
     QString print() const;
 
-    bool operator<(const Chromosome& other) const;
-
     int completionTime() const;
+
+    //for sorting
+    bool operator<(const Chromosome& other) const;
+    bool operator>(const Chromosome& other) const;
 
 protected:
     ///completion time of all operations - not used
