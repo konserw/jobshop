@@ -66,9 +66,9 @@ protected:
 
     QList<Chromosome> m_genome;
 
-    static const int m_reproductionCycles = 25;
-    static const int m_iterationCount = 10;
-    static const int m_chromosomeCount = 100;
+    static const int m_chromosomeCount = 12;
+    static const int m_iterationCount = m_chromosomeCount;
+    static const int m_reproductionCycles = m_chromosomeCount/4;
 
     std::mt19937 m_rng;
 
