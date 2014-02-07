@@ -31,6 +31,9 @@ TEMPLATE = app
 #MOC_DIR =       temp
 #RCC_DIR =       temp
 
+#QMAKE_CXXFLAGS += -Wno-reorder
+QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
+
 SOURCES += \
     main.cpp \
     MainWindow.cpp \

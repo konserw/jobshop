@@ -30,9 +30,10 @@ public:
     int jobNumber() const;
 
 protected:
+    QString m_id;
     int m_machine;
     int m_time;
-    QString m_id;
+
 
     friend QDataStream &operator<<(QDataStream &out, const Operation& op);
     friend QDataStream &operator>>(QDataStream &in, Operation& op);
