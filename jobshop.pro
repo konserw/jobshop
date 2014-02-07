@@ -87,7 +87,8 @@ FORMS += \
 OTHER_FILES += \
     license/LICENSE \
     license/gpl-3.0.txt \
-    license/gpl-3.0.html
+    license/gpl-3.0.html \
+    snippets.txt
 
 RESOURCES += \
     zasoby.qrc

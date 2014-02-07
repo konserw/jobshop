@@ -1,0 +1,72 @@
+double CalcMHWScore(vector<int> scores)
+{
+  double median;
+  size_t size = scores.size();
+
+  sort(scores.begin(), scores.end());
+
+  if (size  % 2 == 0)
+  {
+      median = (scores[size / 2 - 1] + scores[size / 2]) / 2;
+  }
+  else
+  {
+      median = scores[size / 2];
+  }
+
+  return median;
+}
+
+
+  demoName = "Statistical Demo";
+  // create empty statistical box plottables:
+  QCPStatisticalBox *sample1 = new QCPStatisticalBox(customPlot->xAxis, customPlot->yAxis);
+  QCPStatisticalBox *sample2 = new QCPStatisticalBox(customPlot->xAxis, customPlot->yAxis);
+  QCPStatisticalBox *sample3 = new QCPStatisticalBox(customPlot->xAxis, customPlot->yAxis);
+  customPlot->addPlottable(sample1);
+  customPlot->addPlottable(sample2);
+  customPlot->addPlottable(sample3);
+  QBrush boxBrush(QColor(60, 60, 255, 100));
+  boxBrush.setStyle(Qt::Dense6Pattern); // make it look oldschool
+  sample1->setBrush(boxBrush);
+  sample2->setBrush(boxBrush);
+  sample3->setBrush(boxBrush);
+
+  // set data:
+  sample1->setKey(1);
+  sample1->setMinimum(1.1);
+  sample1->setLowerQuartile(1.9);
+  sample1->setMedian(2.25);
+  sample1->setUpperQuartile(2.7);
+  sample1->setMaximum(4.2);
+
+  sample2->setKey(2);
+  sample2->setMinimum(0.8);
+  sample2->setLowerQuartile(1.6);
+  sample2->setMedian(2.2);
+  sample2->setUpperQuartile(3.2);
+  sample2->setMaximum(4.9);
+  sample2->setOutliers(QVector<double>() << 0.7 << 0.39 << 0.45 << 6.2 << 5.84);
+
+  sample3->setKey(3);
+  sample3->setMinimum(0.2);
+  sample3->setLowerQuartile(0.7);
+  sample3->setMedian(1.1);
+  sample3->setUpperQuartile(1.6);
+  sample3->setMaximum(2.9);
+
+  // prepare manual x axis labels:
+  customPlot->xAxis->setSubTickCount(0);
+  customPlot->xAxis->setTickLength(0, 4);
+  customPlot->xAxis->setTickLabelRotation(20);
+  customPlot->xAxis->setAutoTicks(false);
+  customPlot->xAxis->setAutoTickLabels(false);
+  customPlot->xAxis->setTickVector(QVector<double>() << 1 << 2 << 3);
+  customPlot->xAxis->setTickVectorLabels(QVector<QString>() << "Sample 1" << "Sample 2" << "Control Group");
+
+  // prepare axes:
+  customPlot->yAxis->setLabel(QString::fromUtf8("O₂ Absorption [mg]"));
+  customPlot->rescaleAxes();
+  customPlot->xAxis->scaleRange(1.7, customPlot->xAxis->range().center());
+  customPlot->yAxis->setRange(0, 7);
+  customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
