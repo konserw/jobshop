@@ -13,3 +13,6 @@ output/*
 *.user
 Makefile.*
 *.so*
+jobshop
+jobshop.exe
+*.log
