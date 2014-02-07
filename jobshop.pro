@@ -19,20 +19,31 @@
 
 TARGET = jobshop
 
-QT += widgets svg
+QT += widgets svg printsupport
 
 CONFIG += c++11 #console
 
 TEMPLATE = app
 #QMAKE_CXXFLAGS += -Wall -Werror -Wextra
 
-#OBJECTS_DIR =   temp
-#UI_DIR =        temp
-#MOC_DIR =       temp
-#RCC_DIR =       temp
+OBJECTS_DIR =   temp
+UI_DIR =        temp
+MOC_DIR =       temp
+RCC_DIR =       temp
 
 #QMAKE_CXXFLAGS += -Wno-reorder
 QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
+
+DEFINES += QCUSTOMPLOT_USE_LIBRARY
+CONFIG(debug, release|debug) {
+  win32:QCPLIB = qcustomplotd1
+  else: QCPLIB = qcustomplotd
+} else {
+  win32:QCPLIB = qcustomplot1
+  else: QCPLIB = qcustomplot
+}
+#LIBS += -L/home/konserw/studia/ZZSI/jobshop/qcustomplot/ -l$$QCPLIB
+LIBS += -L./qcustomplot/ -l$$QCPLIB
 
 SOURCES += \
     main.cpp \
@@ -49,7 +60,8 @@ SOURCES += \
     OperationDelegate.cpp \
     Jobshop.cpp \
     OperationEditor.cpp \
-    Chromosome.cpp
+    Chromosome.cpp \
+    EvolutionWindow.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -65,7 +77,8 @@ HEADERS += \
     OperationDelegate.h \
     Jobshop.h \
     OperationEditor.h \
-    Chromosome.h
+    Chromosome.h \
+    EvolutionWindow.h
 
 FORMS += \
     MainWindow.ui \
