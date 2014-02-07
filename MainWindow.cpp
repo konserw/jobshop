@@ -50,7 +50,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableView->setModel(m_model);
     ui->tableView->setItemDelegate(new OperationDelegate(this));
-    ui->tableView->verticalHeader()->setDefaultSectionSize(75);
+//    ui->tableView->verticalHeader()->sectionResizeMode(QHeaderView::ResizeToContents);
+    ui->tableView->verticalHeader()->setDefaultSectionSize(60);
+    ui->tableView->horizontalHeader()->setDefaultSectionSize(125);
 
 
 /*
