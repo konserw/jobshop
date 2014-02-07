@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+class QCustomPlot;
+class QVBoxLayout;
+
 /*!
  * \brief The EvolutionWindow class - dialog window showing evolution progress
  *
@@ -14,11 +17,16 @@ class EvolutionWindow : public QDialog
 
 public:
     explicit EvolutionWindow(QWidget *parent = 0);
-
-signals:
+    ~EvolutionWindow();
 
 public slots:
+    void plot(double low, double hi);
 
+protected:
+    QCustomPlot* m_plot;
+    QVBoxLayout* m_layout;
+
+    int m_iteration;
 };
 
 #endif // EVOLUTIONWINDOW_H

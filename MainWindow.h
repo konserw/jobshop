@@ -28,6 +28,8 @@ public slots:
     void exp();
     void imp();
 
+    void solve();
+
 
 protected:
     void changeEvent(QEvent *e);

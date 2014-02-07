@@ -48,6 +48,9 @@ public slots:
     void load(QDataStream &in);
     void save(QDataStream &out);
 
+signals:
+    void iteration(double low, double hi);
+
 protected:
     Jobshop();
     static Jobshop* m_instance;
@@ -62,8 +65,8 @@ protected:
 
     QList<Chromosome> m_genome;
 
-    static const int m_chromosomeCount = 12;
-    static const int m_iterationCount = m_chromosomeCount;
+    static const int m_chromosomeCount = 24;
+    static const int m_iterationCount = 100;//m_chromosomeCount;
     static const int m_reproductionCycles = m_chromosomeCount/4; //number of offspring = cycles*2
 
     std::mt19937 m_rng;

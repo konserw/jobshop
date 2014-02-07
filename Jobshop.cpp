@@ -166,6 +166,8 @@ QList<Chromosome> Jobshop::reproduce()
 
 void Jobshop::solve()
 {
+    m_genome.clear();
+
     qDebug() << "Problem parameters:";
     for(const Job& j : m_jobs)
         qDebug() << j.print();
@@ -186,6 +188,8 @@ void Jobshop::solve()
         qDebug() << "Iteration:\t" << i+1;
         qDebug() << "best value:\t" << m_genome[0].value();
         qDebug() << "worst value:\t" << m_genome.last().value();
+
+        emit iteration(m_genome.last().value(), m_genome[0].value());
     }
 }
 

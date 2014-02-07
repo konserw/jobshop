@@ -8,6 +8,7 @@
 #include "ResultWindow.h"
 #include "OperationDelegate.h"
 #include "Jobshop.h"
+#include "EvolutionWindow.h"
 
 #include <QtWidgets>
 #include <QtDebug>
@@ -64,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
-    connect(ui->solve, &QPushButton::clicked, Jobshop::instance(), &Jobshop::solve);
+    connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
     connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
 
 //demodata
@@ -76,7 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->more->click();
 */
     import("sample.mar");
-    Jobshop::instance()->solve();
+    //Jobshop::instance()->solve();
+    this->solve();
 }
 
 MainWindow::~MainWindow()
@@ -143,6 +145,14 @@ void MainWindow::imp()
     if(s.isEmpty())return;
 
     import(s);
+}
+
+void MainWindow::solve()
+{
+    EvolutionWindow* evo = new EvolutionWindow(this);
+    connect(Jobshop::instance(), &Jobshop::iteration, evo, &EvolutionWindow::plot);
+    evo->showMaximized();
+    Jobshop::instance()->solve();
 }
 
 void MainWindow::exp()
