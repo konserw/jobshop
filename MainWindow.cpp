@@ -27,26 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/kico"));
 
-    ui->spinBox_machines->setMaximum(99);
-    ui->spinBox_machines->setMinimum(1);
-    ui->spinBox_machines->setValue(1);
-
-    ui->spinBox_operations->setMaximum(99);
-    ui->spinBox_operations->setMinimum(0);
-    ui->spinBox_operations->setValue(0);
-
-    ui->spinBox_jobs->setMaximum(99);
-    ui->spinBox_jobs->setMinimum(0);
-    ui->spinBox_jobs->setValue(0);
-
-    ui->spinBox_population->setMaximum(9999);
-    ui->spinBox_population->setMinimum(2);
-    ui->spinBox_population->setValue(24);
-
-    ui->spinBox_crossovers->setMaximum(999);
-    ui->spinBox_crossovers->setMinimum(1);
-    ui->spinBox_crossovers->setValue(6);
-
     Jobshop* job = Jobshop::instance();
     m_model = job->model();
 
@@ -67,14 +47,34 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
 
+    ui->spinBox_machines->setMaximum(99);
+    ui->spinBox_machines->setMinimum(1);
+    ui->spinBox_machines->setValue(1);
+
+    ui->spinBox_operations->setMaximum(99);
+    ui->spinBox_operations->setMinimum(0);
+    ui->spinBox_operations->setValue(0);
+
+    ui->spinBox_jobs->setMaximum(99);
+    ui->spinBox_jobs->setMinimum(0);
+    ui->spinBox_jobs->setValue(0);
+
+    ui->spinBox_population->setMaximum(9999);
+    ui->spinBox_population->setMinimum(2);
+    ui->spinBox_population->setValue(24);
+
+    ui->spinBox_crossovers->setMaximum(999);
+    ui->spinBox_crossovers->setMinimum(1);
+    ui->spinBox_crossovers->setValue(6);
+
     //demodata
     ui->spinBox_machines->setValue(5);
     ui->spinBox_jobs->setValue(10);
     ui->spinBox_operations->setValue(10);
 
-    Jobshop::instance()->demodata();
+//    Jobshop::instance()->demodata();
 
-//    import("sample.mar");
+    import("sample.mar");
 //    this->solve();
 }
 
