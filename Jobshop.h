@@ -33,9 +33,14 @@ public:
     QList<Job> jobs() const;
 
 public slots:
-    void solve();
+    int crossovers() const;
+    void setCrossovers(int crossovers);
 
-    void addJob();
+    int population() const;
+    void setPopulation(int population);
+
+    void addJobs(int count);
+    void removeJobs(int count);
     int jobCount() const;
 
     int machinesCount() const;
@@ -47,6 +52,7 @@ public slots:
 
     void load(QDataStream &in);
     void save(QDataStream &out);
+    void solve();
 
 signals:
     void iteration(double low, double hi);
@@ -65,9 +71,9 @@ protected:
 
     QList<Chromosome> m_genome;
 
-    static const int m_chromosomeCount = 24;
-    static const int m_iterationCount = 100;//m_chromosomeCount;
-    static const int m_reproductionCycles = m_chromosomeCount/4; //number of offspring = cycles*2
+    int m_population;
+    static const int m_iterationCount = 50;//m_chromosomeCount;
+    int m_crossovers; //number of offspring = cycles*2
 
     std::mt19937 m_rng;
 

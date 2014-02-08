@@ -27,24 +27,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/kico"));
 
-    ui->importButton->setText(tr("Import"));
-    ui->exportButton->setText(tr("Export"));
-    ui->exportButton->setEnabled(false);
-    ui->labelDane->setText(tr("Dane:"));
+    ui->spinBox_machines->setMaximum(99);
+    ui->spinBox_machines->setMinimum(1);
+    ui->spinBox_machines->setValue(1);
 
-    ui->solve->setText(tr("Rozwiąż"));
-    ui->solve->setEnabled(false);
-    ui->more->setText(tr("Dodaj zlecenie"));
+    ui->spinBox_operations->setMaximum(99);
+    ui->spinBox_operations->setMinimum(0);
+    ui->spinBox_operations->setValue(0);
 
-    ui->label_machines->setText(tr("Ilość maszyn"));
-    ui->machines->setMaximum(90);
-    ui->machines->setMinimum(1);
-    ui->machines->setValue(1);
+    ui->spinBox_jobs->setMaximum(99);
+    ui->spinBox_jobs->setMinimum(0);
+    ui->spinBox_jobs->setValue(0);
 
-    ui->label_rout->setText(tr("Długość marszruty"));
-    ui->rout->setMaximum(90);
-    ui->rout->setMinimum(0);
-    ui->rout->setValue(0);
+    ui->spinBox_population->setMaximum(9999);
+    ui->spinBox_population->setMinimum(2);
+    ui->spinBox_population->setValue(24);
+
+    ui->spinBox_crossovers->setMaximum(999);
+    ui->spinBox_crossovers->setMinimum(1);
+    ui->spinBox_crossovers->setValue(6);
 
     Jobshop* job = Jobshop::instance();
     m_model = job->model();
@@ -55,20 +56,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableView->verticalHeader()->setDefaultSectionSize(60);
     ui->tableView->horizontalHeader()->setDefaultSectionSize(125);
 
+    connect(ui->spinBox_machines, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setMachinesCount(int)));
+    connect(ui->spinBox_population, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setPopulation(int)));
+    connect(ui->spinBox_crossovers, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setCrossovers(int)));
 
-/*
-    connect(ui->rout, &QSpinBox::valueChanged, job, &Jobshop::setOperationsCount);
-    connect(ui->machines, &QSpinBox::valueChanged, Jobshop::instance(), &Jobshop::setMachinesCount);
-*/
-    connect(ui->machines, SIGNAL(valueChanged(int)), job, SLOT(setMachinesCount(int)));
-    connect(ui->rout, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setOperationsCount(int)));
+    connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), m_model, SLOT(setOperationsCount(int)));
+    connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), m_model, SLOT(setJobsCount(int)));
 
     connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
-    connect(ui->solve, &QPushButton::clicked, this, &MainWindow::solve);
-    connect(ui->more, &QPushButton::clicked, this, &MainWindow::addJob);
+    connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
 
 //demodata
+    ui->spinBox_machines->setValue(5);
+    ui->spinBox_operations->setValue(2);
+    ui->spinBox_jobs->setValue(4);
+    ui->spinBox_jobs->setValue(3);
 /*
     ui->machines->setValue(5);
     ui->rout->setValue(5);
@@ -76,9 +79,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->more->click();
     ui->more->click();
 */
-    import("sample.mar");
+  //  import("sample.mar");
     //Jobshop::instance()->solve();
-    this->solve();
+//    this->solve();
 }
 
 MainWindow::~MainWindow()
@@ -97,17 +100,6 @@ void MainWindow::changeEvent(QEvent *e)
     default:
         break;
     }
-}
-
-void MainWindow::addJob()
-{
-    if(!ui->solve->isEnabled())
-    {
-        ui->solve->setEnabled(true);
-        ui->exportButton->setEnabled(true);
-        ui->importButton->setEnabled(false);
-    }
-    Jobshop::instance()->addJob();
 }
 
 void MainWindow::import(const QString& s)
@@ -129,12 +121,8 @@ void MainWindow::import(const QString& s)
 
     qDebug() <<  "koniec wczytywania";
 
-    ui->machines->setValue(Jobshop::instance()->machinesCount());
-    ui->rout->setValue(Jobshop::instance()->operationsCount());
-
-    ui->solve->setEnabled(true);
-    ui->exportButton->setEnabled(true);
-    ui->importButton->setEnabled(false);
+    ui->spinBox_machines->setValue(Jobshop::instance()->machinesCount());
+    ui->spinBox_operations->setValue(Jobshop::instance()->operationsCount());
 }
 
 
@@ -149,6 +137,13 @@ void MainWindow::imp()
 
 void MainWindow::solve()
 {
+    if(Jobshop::instance()->jobCount() == 0 || Jobshop::instance()->operationsCount() == 0)
+    {
+        //todo dokladniejsze sprawdzenie czy jest co liczyc
+        QMessageBox::warning(this, tr("Error"), tr("Please provide some jobs and operations."));
+        return;
+    }
+
     EvolutionWindow* evo = new EvolutionWindow(this);
     connect(Jobshop::instance(), &Jobshop::iteration, evo, &EvolutionWindow::plot);
     evo->showMaximized();

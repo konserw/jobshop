@@ -23,13 +23,10 @@ public:
     ~MainWindow();
 
 public slots:
-    void addJob();
-
     void exp();
     void imp();
 
     void solve();
-
 
 protected:
     void changeEvent(QEvent *e);

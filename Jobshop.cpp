@@ -17,6 +17,26 @@ Jobshop::Jobshop()
     m_rng.seed(time(NULL));
 }
 
+int Jobshop::population() const
+{
+    return m_population;
+}
+
+void Jobshop::setPopulation(int population)
+{
+    m_population = population;
+}
+
+int Jobshop::crossovers() const
+{
+    return m_crossovers;
+}
+
+void Jobshop::setCrossovers(int crossovers)
+{
+    m_crossovers = crossovers;
+}
+
 QList<Job> Jobshop::jobs() const
 {
     return m_jobs;
@@ -29,6 +49,7 @@ std::mt19937& Jobshop::rng()
 
 void Jobshop::load(QDataStream &in)
 {
+    m_operations.clear();
     m_jobs.clear();
 
     qint64 operations;
@@ -118,7 +139,7 @@ void Jobshop::generateInitialPopulation()
     int jobsCount = m_jobs.count();
     std::uniform_int_distribution<int> dist(0, jobsCount-1);
 
-    for(int i=0; i < m_chromosomeCount; ++i)
+    for(int i=0; i < m_population; ++i)
     {
         Chromosome x;
         QVector<int> operationsFrom(jobsCount, 0);
@@ -154,7 +175,7 @@ QList<Chromosome> Jobshop::reproduce()
 {
     std::uniform_int_distribution<int> dist(0, m_genome.count()-1);
     QList<Chromosome> offspring;
-    for(int i=0; i<m_reproductionCycles; ++i)
+    for(int i=0; i<m_crossovers; ++i)
     {
         //todo losowanie parentow wg rankingu
         offspring.append(MSX(m_genome[dist(m_rng)], m_genome[dist(m_rng)]));
@@ -182,7 +203,7 @@ void Jobshop::solve()
     {
         m_genome.append(reproduce());
         qSort(m_genome);
-        while(m_genome.count() > m_chromosomeCount)
+        while(m_genome.count() > m_population)
             m_genome.removeLast();
 
         qDebug() << "Iteration:\t" << i+1;
@@ -193,11 +214,19 @@ void Jobshop::solve()
     }
 }
 
-void Jobshop::addJob()
+void Jobshop::addJobs(int count)
 {
-    int row = m_jobs.count();
-    m_jobs.append(Job(m_operationsCount));
-    m_model->insertRow(row);
+    for(int i=0; i<count; ++i)
+    {
+       // m_jobs.append(Job(m_operationsCount));
+        m_jobs << Job(m_operationsCount);
+    }
+}
+
+void Jobshop::removeJobs(int count)
+{
+    for(int i=0; i<count; ++i)
+        m_jobs.removeLast();
 }
 
 int Jobshop::jobCount() const
@@ -212,17 +241,8 @@ int Jobshop::operationsCount() const
 
 void Jobshop::setOperationsCount(int operationsCount)
 {
-    int diff = operationsCount - m_operationsCount; //number of columns to be added
-    if(!diff) //no change
-        return;
-
     for(Job& job : m_jobs)
         job.setOperationsCount(operationsCount);
-
-    if(diff > 0)//adding rows
-        m_model->insertColumns(m_operationsCount, diff);
-    else
-        m_model->removeColumns(operationsCount, std::abs(diff));
 
     m_operationsCount = operationsCount;
 }

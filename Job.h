@@ -4,6 +4,7 @@
 #include "Operation.h"
 
 #include <QList>
+#include <QColor>
 
 /*!
  * \brief The Job class. Represents one job from jobshop problem
@@ -15,6 +16,7 @@ class Job /* : public QObject
 {
 public:
     Job(int operationsCount = 0, int start_time = 0, int due_date = 10);
+    Job(const Job& other);
     ~Job();
 
     QString name() const;
@@ -52,7 +54,7 @@ private:
     QList<QString> m_operationIds;
     QString operationId(int number) const;
 
-    QColor* m_color;
+    QColor m_color;
 
     static int m_jobsCount;
 

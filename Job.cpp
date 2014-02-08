@@ -2,26 +2,43 @@
 #include "Operation.h"
 #include "Jobshop.h"
 
-#include <QColor>
 #include <QtDebug>
 
 int Job::m_jobsCount = 0;
 
-Job::Job(int operationsCount, int start_time, int due_date)
-    : m_arrival(start_time),
-      m_dueDate(due_date),
-      m_alpha(0.5), m_beta(0.5)
+Job::Job(int operationsCount, int start_time, int due_date) :
+    m_arrival(start_time),
+    m_dueDate(due_date),
+    m_alpha(0.5),
+    m_beta(0.5),
+    m_color(QColor(qrand() % 256, qrand() % 256, qrand() % 256))
 {
     m_id = 'A' + m_jobsCount++;
-    m_color =  new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
     if(operationsCount)
-       setOperationsCount(operationsCount);
+        setOperationsCount(operationsCount);
 }
+
+Job::Job(const Job &other) :
+    m_arrival(other.m_arrival),
+    m_dueDate(other.m_dueDate),
+    m_alpha(other.m_alpha),
+    m_beta(other.m_beta),
+    m_color(other.m_color),
+    m_id(other.m_id),
+    m_operationIds(other.m_operationIds),
+    m_name(other.m_name)
+{
+    ++m_jobsCount;
+}
+
+
 
 Job::~Job()
 {
-    delete m_color;
+    for(const QString& id : m_operationIds)
+        Jobshop::instance()->removeOperation(id);
+    --m_jobsCount;
 }
 
 QString Job::print() const
