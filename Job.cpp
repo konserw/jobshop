@@ -186,7 +186,7 @@ QDataStream &operator >>(QDataStream &in, Job &job)
     job.m_alpha = a;
     job.m_beta = b;
 
-    for(int i=0; i < count; ++i)
+    for(qint64 i=0; i < count; ++i)
     {
         QString id;
         in >> id;

@@ -57,6 +57,8 @@ private:
 
     friend QDataStream &operator<<(QDataStream &out, const Job & job);
     friend QDataStream &operator>>(QDataStream &in, Job & job);
+
+    friend class Jobshop;
 };
 
 QDataStream &operator<<(QDataStream &out, const Job & job);

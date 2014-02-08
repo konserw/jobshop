@@ -52,20 +52,27 @@ int Operation::jobNumber() const
 
 QDataStream &operator<<(QDataStream &out, const Operation &op)
 {
-    out
-        << op.m_id
-        << op.m_machine
-        << op.m_time;
+    qint64 machine = qint64(op.m_machine);
+    qint64 time = qint64(op.m_time);
+
+    out << op.m_id
+        << machine
+        << time;
 
     return out;
 }
 
 QDataStream &operator>>(QDataStream &in, Operation &op)
 {
-    in
-        >> op.m_id
-        >> op.m_machine
-        >> op.m_time;
+    qint64 machine;
+    qint64 time;
+
+    in  >> op.m_id
+        >> machine
+        >> time;
+
+    op.m_machine = machine;
+    op.m_time = time;
 
     return in;
 }

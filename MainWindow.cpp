@@ -68,14 +68,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spinBox_crossovers->setMinimum(1);
     ui->spinBox_crossovers->setValue(6);
 
-    //demodata
+     //demodata
+/*
     ui->spinBox_machines->setValue(5);
     ui->spinBox_jobs->setValue(10);
     ui->spinBox_operations->setValue(10);
-
+*/
 //    Jobshop::instance()->demodata();
-
-    import("sample.mar");
+//    import("sample.mar");
 //    this->solve();
 }
 

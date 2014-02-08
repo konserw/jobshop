@@ -70,6 +70,16 @@ void Jobshop::load(QDataStream &in)
     m_crossovers = cross;
     m_population = population;
 
+    for(qint64 i=0; i<jobs; ++i)
+    {
+        Job job;
+        in >> job;
+        m_jobs.append(job);
+    }
+
+    for(Job& job : m_jobs)
+        qDebug() << "job" << job.id() << "ids:" << job.m_operationIds;
+
     for(qint64 i=0; i<operations*jobs; ++i)
     {
         Operation op;
@@ -77,12 +87,7 @@ void Jobshop::load(QDataStream &in)
         m_operations.insert(op.id(), op);
     }
 
-    for(qint64 i=0; i<jobs; ++i)
-    {
-        Job job;
-        in >> job;
-        m_jobs.append(job);
-    }
+    qDebug() << "operations" << m_operations.keys();
 }
 
 void Jobshop::save(QDataStream &out)
@@ -100,11 +105,11 @@ void Jobshop::save(QDataStream &out)
         << cross
         << populaiton;
 
-    for(const Operation& op : m_operations)
-        out << op;
-
     for(const Job& j : m_jobs)
         out << j;
+
+    for(const Operation& op : m_operations)
+        out << op;
 }
 
 int Jobshop::allOperationsCount() const
