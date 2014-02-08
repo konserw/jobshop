@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), m_model, SLOT(setOperationsCount(int)));
     connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), m_model, SLOT(setJobsCount(int)));
 
+    connect(ui->demodataButton, &QPushButton::clicked, m_model, &JobshopModel::demodata);
     connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);

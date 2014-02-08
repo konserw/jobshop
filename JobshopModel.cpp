@@ -161,3 +161,10 @@ void JobshopModel::loadModel(QDataStream &in)
     Jobshop::instance()->load(in);
     endResetModel();
 }
+
+void JobshopModel::demodata()
+{
+    beginResetModel();
+    Jobshop::instance()->demodata();
+    endResetModel();
+}

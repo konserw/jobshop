@@ -38,6 +38,7 @@ public slots:
 //    virtual bool removeColumns ( int column, int count, const QModelIndex & parent = QModelIndex());
 
     void loadModel(QDataStream &in);
+    void demodata();
 
     static int nonOperationColumns();
 

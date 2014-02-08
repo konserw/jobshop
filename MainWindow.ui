@@ -116,6 +116,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="demodataButton">
+         <property name="text">
+          <string>Demodadta</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="importButton">
          <property name="text">
           <string>Load</string>
