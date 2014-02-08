@@ -2,14 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QList>
-#include <QGraphicsScene>
-
-class JobshopModel;
-class ResultWindow;
-class Operation;
-class Result;
-class Job;
 
 namespace Ui {
     class MainWindow;
@@ -35,13 +27,6 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-
-    QList<Job*> zadania;
-    int skonczone;
-
-    JobshopModel* m_model;
-
-    ResultWindow* gant;
 };
 
 #endif // MAINWINDOW_H

@@ -27,10 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/kico"));
 
-    Jobshop* job = Jobshop::instance();
-    m_model = job->model();
+    JobshopModel* model = Jobshop::instance()->model();
 
-    ui->tableView->setModel(m_model);
+    ui->tableView->setModel(model);
     ui->tableView->setItemDelegate(new OperationDelegate(this));
 //    ui->tableView->verticalHeader()->sectionResizeMode(QHeaderView::ResizeToContents);
     ui->tableView->verticalHeader()->setDefaultSectionSize(60);
@@ -40,10 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBox_population, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setPopulation(int)));
     connect(ui->spinBox_crossovers, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setCrossovers(int)));
 
-    connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), m_model, SLOT(setOperationsCount(int)));
-    connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), m_model, SLOT(setJobsCount(int)));
+    connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), model, SLOT(setOperationsCount(int)));
+    connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), model, SLOT(setJobsCount(int)));
 
-    connect(ui->demodataButton, &QPushButton::clicked, m_model, &JobshopModel::demodata);
+    connect(ui->demodataButton, &QPushButton::clicked, model, &JobshopModel::demodata);
     connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
@@ -112,7 +111,7 @@ void MainWindow::import(const QString& s)
 
     QDataStream in(&file);
 
-    m_model->loadModel(in);
+    Jobshop::instance()->model()->loadModel(in);
 
     qDebug() <<  "koniec wczytywania";
 
