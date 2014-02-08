@@ -89,14 +89,10 @@ void Jobshop::save(QDataStream &out)
         << jobs;
 
     for(const Operation& op : m_operations)
-    {
         out << op;
-    }
 
-    for(qint32 i=0; i<jobs; ++i)
-    {
-        out << m_jobs[i];
-    }
+    for(const Job& j : m_jobs)
+        out << j;
 }
 
 int Jobshop::allOperationsCount() const
@@ -105,7 +101,9 @@ int Jobshop::allOperationsCount() const
 }
 
 Jobshop::~Jobshop()
-{ qDebug() << "destroy singleton"; }
+{
+
+}
 
 Jobshop *Jobshop::instance()
 {

@@ -13,11 +13,10 @@ Logger* Logger::m_instance = NULL;
 void Logger::logOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QString debugInfo;
-    /*
+
     if(type == QtDebugMsg)
         debugInfo = QString("[%1]:\t").arg(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss"));
     else
-    */
         debugInfo = QString("[%2:%3][%1]:\t").arg(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss")).arg(context.function).arg(context.line);
 
 

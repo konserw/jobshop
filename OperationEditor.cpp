@@ -34,7 +34,6 @@ OperationEditor::OperationEditor(int machineCount, QWidget *parent) :
     {
         ui_machine->addItem(QString("m%1").arg(i+1));
     }
-//    ui_machine->setCurrentIndex(0);
 
     ui_formLayout->setWidget(1, QFormLayout::LabelRole, ui_machine);
 
@@ -50,42 +49,7 @@ OperationEditor::OperationEditor(int machineCount, QWidget *parent) :
 OperationEditor::~OperationEditor()
 {
 }
-/*
-QSize OperationWidget::sizeHint() const
-{
-    return m_operation.sizeHint();
-}
-*/
-/*
-void OperationWidget::setWidgetData(int machine, int time)
-{
-    ui_machine->setCurrentIndex(machine);
-    ui_time->setValue(time);
-}
 
-int OperationWidget::machine() const
-{
-    return ui_machine->currentIndex();
-}
-
-int OperationWidget::time() const
-{
-    return ui_time->value();
-}
-
-void OperationWidget::setMachinesCount(int nm)
-{
-    for(qint32 i=m_machineCount; i>=nm; i--)
-        ui_machine->removeItem(i);
-
-
-    for(int i=m_machineCount; i<nm; i++)
-    {
-        ui_machine->addItem(QString("m%1").arg(i+1));
-    }
-
-    m_machineCount = nm;
-}*/
 const Operation& OperationEditor::operation()
 {
     ui_time->interpretText();

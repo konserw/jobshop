@@ -9,10 +9,7 @@
 /*!
  * \brief The Job class. Represents one job from jobshop problem
  */
-class Job /* : public QObject
-{
-    Q_OBJECT
-*/
+class Job
 {
 public:
     Job(int operationsCount = 0, int start_time = 0, int due_date = 10);

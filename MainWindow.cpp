@@ -68,19 +68,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
 
 //demodata
+/*
     ui->spinBox_machines->setValue(5);
     ui->spinBox_operations->setValue(2);
     ui->spinBox_jobs->setValue(4);
     ui->spinBox_jobs->setValue(3);
-/*
-    ui->machines->setValue(5);
-    ui->rout->setValue(5);
-    ui->more->click();
-    ui->more->click();
-    ui->more->click();
 */
-  //  import("sample.mar");
-    //Jobshop::instance()->solve();
+    import("sample.mar");
 //    this->solve();
 }
 
