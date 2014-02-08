@@ -55,13 +55,20 @@ void Jobshop::load(QDataStream &in)
     qint64 operations;
     qint64 machines;
     qint64 jobs;
+    qint64 cross;
+    qint64 population;
 
     in  >> operations
         >> machines
-        >> jobs;
+        >> jobs
+        >> cross
+        >> population;
 
     m_operationsCount = operations;
     m_machinesCount = machines;
+
+    m_crossovers = cross;
+    m_population = population;
 
     for(qint64 i=0; i<operations*jobs; ++i)
     {
@@ -84,9 +91,14 @@ void Jobshop::save(QDataStream &out)
     qint64 machines = qint64(m_machinesCount);
     qint64 jobs = qint64(m_jobs.count());
 
+    qint64 cross = qint64(m_crossovers);
+    qint64 populaiton = qint64(m_population);
+
     out << operations
         << machines
-        << jobs;
+        << jobs
+        << cross
+        << populaiton;
 
     for(const Operation& op : m_operations)
         out << op;
@@ -209,6 +221,15 @@ void Jobshop::solve()
         qDebug() << "worst value:\t" << m_genome.last().value();
 
         emit iteration(m_genome.last().value(), m_genome[0].value());
+    }
+}
+
+void Jobshop::demodata()
+{
+    for(Operation& op : m_operations)
+    {
+        op.setMachine(qrand() % m_machinesCount);
+        op.setTime(qrand() % 15 + 1);
     }
 }
 

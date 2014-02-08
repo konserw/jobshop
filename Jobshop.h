@@ -54,6 +54,8 @@ public slots:
     void save(QDataStream &out);
     void solve();
 
+    void demodata();
+
 signals:
     void iteration(double low, double hi);
 

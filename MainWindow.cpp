@@ -67,14 +67,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
 
-//demodata
-/*
+    //demodata
     ui->spinBox_machines->setValue(5);
-    ui->spinBox_operations->setValue(2);
-    ui->spinBox_jobs->setValue(4);
-    ui->spinBox_jobs->setValue(3);
-*/
-    import("sample.mar");
+    ui->spinBox_jobs->setValue(10);
+    ui->spinBox_operations->setValue(10);
+
+    Jobshop::instance()->demodata();
+
+//    import("sample.mar");
 //    this->solve();
 }
 
@@ -116,7 +116,11 @@ void MainWindow::import(const QString& s)
     qDebug() <<  "koniec wczytywania";
 
     ui->spinBox_machines->setValue(Jobshop::instance()->machinesCount());
+    ui->spinBox_jobs->setValue(Jobshop::instance()->jobCount());
     ui->spinBox_operations->setValue(Jobshop::instance()->operationsCount());
+
+    ui->spinBox_crossovers->setValue(Jobshop::instance()->crossovers());
+    ui->spinBox_population->setValue(Jobshop::instance()->population());
 }
 
 
