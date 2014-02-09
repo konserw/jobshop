@@ -72,7 +72,7 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_plot->addGraph(); // green line
     m_plot->graph(2)->setName(tr("best chromosome"));
     m_plot->graph(2)->setPen(QPen(Qt::green));
-    m_plot->graph(0)->setChannelFillGraph(m_plot->graph(1));
+    m_plot->graph(0)->setChannelFillGraph(m_plot->graph(2));
     m_plot->addGraph(); // green dot
     m_plot->graph(3)->setName(tr("best chromosome value"));
     m_plot->graph(3)->setPen(QPen(Qt::green));
