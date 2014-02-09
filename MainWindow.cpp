@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
 */
 //    Jobshop::instance()->demodata();
     import("sample.mar");
-    this->solve();
+//    this->solve();
 }
 
 MainWindow::~MainWindow()

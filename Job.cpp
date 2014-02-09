@@ -96,6 +96,14 @@ QString Job::id() const
     return m_id;
 }
 
+int Job::totalTime() const
+{
+    int t = m_arrival;
+    for(const QString& op : m_operationIds)
+        t += Jobshop::instance()->operation(op).time();
+    return t;
+}
+
 QString Job::operationId(int number) const
 {
     return QString("%1%2").arg(m_id).arg(number);

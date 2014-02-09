@@ -39,6 +39,7 @@ public:
     void setOperationsCount(int count);
 
     QString id() const;
+    int totalTime() const;
 
 private:
     QString m_id;

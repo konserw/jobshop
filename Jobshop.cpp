@@ -232,20 +232,31 @@ void Jobshop::iteration()
 
 void Jobshop::demodata()
 {
+    qsrand(time(0));
+
     for(Operation& op : m_operations)
     {
         op.setMachine(qrand() % m_machinesCount);
         op.setTime(qrand() % 15 + 1);
+    }
+    int i=0;
+    for(Job& job : m_jobs)
+    {
+        double r = qrand()%100;
+        r /= 100;
+        job.setAlpha(r);
+        job.setBeta(1-r);
+        job.setArrival(qrand()%50);
+        job.setDueDate(job.totalTime()*2.5);
+        job.setName(QString("%1. job").arg(++i));
     }
 }
 
 void Jobshop::addJobs(int count)
 {
     for(int i=0; i<count; ++i)
-    {
-       // m_jobs.append(Job(m_operationsCount));
-        m_jobs << Job(m_operationsCount);
-    }
+        m_jobs.append(Job(m_operationsCount));
+    
 }
 
 void Jobshop::removeJobs(int count)
