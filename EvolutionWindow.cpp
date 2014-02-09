@@ -63,16 +63,18 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_plot->graph(0)->setPen(QPen(Qt::red));
     m_plot->graph(0)->setBrush(QBrush(Qt::gray));
     m_plot->graph(0)->setAntialiasedFill(false);
-    m_plot->addGraph(); // green line
-    m_plot->graph(1)->setName(tr("best chromosome"));
-    m_plot->graph(1)->setPen(QPen(Qt::green));
-    m_plot->graph(0)->setChannelFillGraph(m_plot->graph(1));
-
     m_plot->addGraph(); // red dot
-    m_plot->graph(2)->setPen(QPen(Qt::red));
-    m_plot->graph(2)->setLineStyle(QCPGraph::lsNone);
-    m_plot->graph(2)->setScatterStyle(QCPScatterStyle::ssDisc);
+    m_plot->graph(1)->setName(tr("worst chromosome value"));
+    m_plot->graph(1)->setPen(QPen(Qt::red));
+    m_plot->graph(1)->setLineStyle(QCPGraph::lsNone);
+    m_plot->graph(1)->setScatterStyle(QCPScatterStyle::ssDisc);
+
+    m_plot->addGraph(); // green line
+    m_plot->graph(2)->setName(tr("best chromosome"));
+    m_plot->graph(2)->setPen(QPen(Qt::green));
+    m_plot->graph(0)->setChannelFillGraph(m_plot->graph(1));
     m_plot->addGraph(); // green dot
+    m_plot->graph(3)->setName(tr("best chromosome value"));
     m_plot->graph(3)->setPen(QPen(Qt::green));
     m_plot->graph(3)->setLineStyle(QCPGraph::lsNone);
     m_plot->graph(3)->setScatterStyle(QCPScatterStyle::ssDisc);
@@ -128,7 +130,7 @@ void EvolutionWindow::rescalePlot()
 {
     int first = std::max(0, m_iteration-m_plotRange);
     // rescale value (vertical) axis to fit the current data:
-    m_plot->yAxis->setRange(m_plot->graph(1)->data()->value(m_iteration-1).value *0.99, m_plot->graph(0)->data()->value(first).value * 1.01);
+    m_plot->yAxis->setRange(m_plot->graph(2)->data()->value(m_iteration-1).value *0.99, m_plot->graph(0)->data()->value(first).value * 1.01);
     // make key axis range scroll with the data
     m_plot->xAxis->setRange(m_iteration+1, m_plotRange, Qt::AlignRight);
     m_plot->replot();
@@ -142,19 +144,19 @@ void EvolutionWindow::refRange(int range)
 
 void EvolutionWindow::plot(double low, double hi)
 {      
-    m_plot->graph(2)->setName(QString::number(low));
+    m_plot->graph(1)->setName(QString::number(low));
     m_plot->graph(3)->setName(QString::number(hi));
     // add data to lines:
     m_plot->graph(0)->addData(m_iteration, low);
-    m_plot->graph(1)->addData(m_iteration, hi);
+    m_plot->graph(2)->addData(m_iteration, hi);
     // set data of dots:
-    m_plot->graph(2)->clearData();
-    m_plot->graph(2)->addData(m_iteration, low);
+    m_plot->graph(1)->clearData();
+    m_plot->graph(1)->addData(m_iteration, low);
     m_plot->graph(3)->clearData();
     m_plot->graph(3)->addData(m_iteration, hi);
     // remove data of lines that's outside maximum range:
     m_plot->graph(0)->removeDataBefore(m_iteration-m_maxRange);
-    m_plot->graph(1)->removeDataBefore(m_iteration-m_maxRange);
+    m_plot->graph(2)->removeDataBefore(m_iteration-m_maxRange);
 
     rescalePlot();
 
