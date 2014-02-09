@@ -1,4 +1,3 @@
-/*
 #include "maszyna.h"
 #include "Job.h"
 #include <QtDebug>
@@ -105,4 +104,4 @@ void maszyna::up2()
     }
 
 }
-*/
+
