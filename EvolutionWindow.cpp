@@ -49,15 +49,6 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
 
     m_plot = new QCustomPlot(this);
 
-    /*include this section to fully disable antialiasing for higher performance:
-    m_plot->setNotAntialiasedElements(QCP::aeAll);
-    QFont font;
-    font.setStyleStrategy(QFont::NoAntialias);
-    m_plot->xAxis->setTickLabelFont(font);
-    m_plot->yAxis->setTickLabelFont(font);
-    m_plot->legend->setFont(font);
-    */
-
     m_plot->addGraph(); // red line
     m_plot->graph(0)->setName(tr("worst chromosome"));
     m_plot->graph(0)->setPen(QPen(Qt::red));
