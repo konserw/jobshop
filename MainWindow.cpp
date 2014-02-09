@@ -74,8 +74,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spinBox_operations->setValue(10);
 */
 //    Jobshop::instance()->demodata();
-//    import("sample.mar");
-//    this->solve();
+    import("sample.mar");
+    this->solve();
 }
 
 MainWindow::~MainWindow()
@@ -142,10 +142,17 @@ void MainWindow::solve()
         return;
     }
 
-    EvolutionWindow* evo = new EvolutionWindow(this);
-    connect(Jobshop::instance(), &Jobshop::iteration, evo, &EvolutionWindow::plot);
-    evo->showMaximized();
-    Jobshop::instance()->solve();
+    Jobshop::instance()->generateInitialPopulation();
+
+    EvolutionWindow evo(this);// = new EvolutionWindow(this);
+    evo.showMaximized();
+    evo.exec();
+/*
+    QTimer* timer = new QTimer(this);
+    timer->setInterval(100);
+    connect(Jobshop::instance(), &Jobshop::iterationResult, evo, &EvolutionWindow::plot);
+    connect(timer, &QTimer::timeout, Jobshop::instance(), &Jobshop::iteration);
+    */
 }
 
 void MainWindow::exp()

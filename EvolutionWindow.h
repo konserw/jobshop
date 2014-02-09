@@ -2,9 +2,14 @@
 #define EVOLUTIONWINDOW_H
 
 #include <QDialog>
+#include <QTimer>
 
 class QCustomPlot;
 class QVBoxLayout;
+class QHBoxLayout;
+class QPushButton;
+class QSlider;
+//class QLabel;
 
 /*!
  * \brief The EvolutionWindow class - dialog window showing evolution progress
@@ -19,14 +24,34 @@ public:
     explicit EvolutionWindow(QWidget *parent = 0);
     ~EvolutionWindow();
 
+    void rescalePlot();
 public slots:
     void plot(double low, double hi);
+    void toggleRun();
+    void refRange(int range);
+    void refInterval(int inter);
 
 protected:
     QCustomPlot* m_plot;
     QVBoxLayout* m_layout;
+    QHBoxLayout* m_h1;
+    QHBoxLayout* m_h2;
+    QHBoxLayout* m_h3;
+    /*
+    QLabel* m_rangeLabel;
+    QLabel* m_intervalLabel;
+    */
+    QPushButton* m_stopButton;
+    QPushButton* m_pauseButton;
+    QSlider* m_range;
+    QSlider* m_interval;
 
     int m_iteration;
+    QTimer m_timer;
+    bool m_isRunning;
+
+    static const int m_maxRange = 1000;
+    int m_plotRange;
 };
 
 #endif // EVOLUTIONWINDOW_H

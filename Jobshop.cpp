@@ -17,6 +17,12 @@ Jobshop::Jobshop()
     m_rng.seed(time(NULL));
 }
 
+void Jobshop::printGenome() const
+{
+    for(const Chromosome& ch : m_genome)
+        qDebug() << ch;
+}
+
 int Jobshop::population() const
 {
     return m_population;
@@ -151,6 +157,13 @@ void Jobshop::removeOperation(const QString &id)
 
 void Jobshop::generateInitialPopulation()
 {
+    m_genome.clear();
+    m_iteration = 0;
+
+    qDebug() << "Problem parameters:";
+    for(const Job& j : m_jobs)
+        qDebug() << j.print();
+
     int jobsCount = m_jobs.count();
     std::uniform_int_distribution<int> dist(0, jobsCount-1);
 
@@ -182,11 +195,14 @@ void Jobshop::generateInitialPopulation()
         }while(anyLeft);
         x.calculateValue();
         m_genome.append(x);
-        qDebug() << x.print();
     }
+    qSort(m_genome);
+
+    qDebug() << "Initial population";
+    printGenome();
 }
 
-QList<Chromosome> Jobshop::reproduce()
+void Jobshop::reproduce()
 {
     std::uniform_int_distribution<int> dist(0, m_genome.count()-1);
     QList<Chromosome> offspring;
@@ -196,37 +212,22 @@ QList<Chromosome> Jobshop::reproduce()
         offspring.append(MSX(m_genome[dist(m_rng)], m_genome[dist(m_rng)]));
     }
 
-    return offspring;
+    m_genome.append(offspring);
 }
 
-
-void Jobshop::solve()
+void Jobshop::iteration()
 {
-    m_genome.clear();
+    reproduce();
 
-    qDebug() << "Problem parameters:";
-    for(const Job& j : m_jobs)
-        qDebug() << j.print();
-
-    qDebug() << "Initial population";
-    generateInitialPopulation();
     qSort(m_genome);
-    qDebug() << "best value:\t" << m_genome[0].value();
-    qDebug() << "worst value:\t" << m_genome.last().value();
 
-    for(int i=0; i<m_iterationCount; ++i)
-    {
-        m_genome.append(reproduce());
-        qSort(m_genome);
-        while(m_genome.count() > m_population)
-            m_genome.removeLast();
+    while(m_genome.count() > m_population)
+        m_genome.removeLast();
 
-        qDebug() << "Iteration:\t" << i+1;
-        qDebug() << "best value:\t" << m_genome[0].value();
-        qDebug() << "worst value:\t" << m_genome.last().value();
+    qDebug() << "Iteration:\t" << ++m_iteration;
+    printGenome();
 
-        emit iteration(m_genome.last().value(), m_genome[0].value());
-    }
+    emit iterationResult(m_genome.last().value(), m_genome[0].value());
 }
 
 void Jobshop::demodata()

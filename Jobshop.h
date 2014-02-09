@@ -52,35 +52,38 @@ public slots:
 
     void load(QDataStream &in);
     void save(QDataStream &out);
-    void solve();
 
     void demodata();
 
+    void generateInitialPopulation();
+    void iteration();
+
 signals:
-    void iteration(double low, double hi);
+    void iterationResult(double low, double hi);
 
 protected:
     Jobshop();
     static Jobshop* m_instance;
 
     JobshopModel* m_model;
-    QList<Job> m_jobs;
 
+    QList<Job> m_jobs;
     QHash<QString, Operation> m_operations;
 
     int m_machinesCount;
     int m_operationsCount;
 
     QList<Chromosome> m_genome;
+    void printGenome() const;
 
     int m_population;
-    static const int m_iterationCount = 50;//m_chromosomeCount;
     int m_crossovers; //number of offspring = cycles*2
 
     std::mt19937 m_rng;
 
-    void generateInitialPopulation();
-    QList<Chromosome> reproduce();
+    int m_iteration;
+
+    void reproduce();
 
     friend class JobshopModel;
 };
