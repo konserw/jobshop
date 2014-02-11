@@ -43,7 +43,7 @@ void Jobshop::setCrossovers(int crossovers)
     m_crossovers = crossovers;
 }
 
-QList<Job> Jobshop::jobs() const
+const QList<Job> &Jobshop::jobs() const
 {
     return m_jobs;
 }
@@ -125,7 +125,6 @@ int Jobshop::allOperationsCount() const
 
 Jobshop::~Jobshop()
 {
-
 }
 
 Jobshop *Jobshop::instance()
