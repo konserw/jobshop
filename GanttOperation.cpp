@@ -1,6 +1,5 @@
 #include "GanttOperation.h"
 #include <QPainter>
-#include "common.h"
 
 GanttOperation::GanttOperation(int id, int time, QColor& color)
 {

@@ -3,7 +3,6 @@
 #include <QtDebug>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
-#include "common.h"
 
 GanttMachine::GanttMachine(const QString &id, QGraphicsItem *parent) :
     QGraphicsItem(parent),

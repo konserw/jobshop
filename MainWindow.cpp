@@ -3,7 +3,6 @@
 #include "Operation.h"
 #include "JobshopModel.h"
 #include "Job.h"
-#include "common.h"
 #include "result.h"
 #include "ResultWindow.h"
 #include "OperationDelegate.h"

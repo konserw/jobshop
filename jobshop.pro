@@ -53,7 +53,6 @@ LIBS += -L./qcustomplot/ -l$$QCPLIB
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    common.cpp \
     logger.cpp \
     Operation.cpp \
     Job.cpp \
@@ -70,7 +69,6 @@ SOURCES += \
 
 HEADERS += \
     MainWindow.h \
-    common.h \
     logger.h \
     Operation.h \
     Job.h \
