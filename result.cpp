@@ -1,58 +1,58 @@
-#include "result.h"
+#include "Result.h"
 #include <cmath>
 
-Result::Result(int j, int cj, int dj, int rj)
+Result::Result(int number, int completionTime, int dueDate, int arrivalDate)
 {
-    _j = j;
-    _fj = cj - rj;
-    _cj = cj;
+    m_number = number;
+    m_flow = completionTime - arrivalDate;
+    m_completionTime = completionTime;
 
-    _lj = cj - dj;      //late - spóźnienie
-    _ej = 0;            //early - za wcześnie
+    m_lateness = completionTime - dueDate;
+    m_earliness = 0;
 
-    if(_lj < 0)
+    if(m_lateness < 0)
     {
-        _ej = std::abs(_lj);
-        _lj = 0;
+        m_earliness = std::abs(m_lateness);
+        m_lateness = 0;
     }
 }
 
 bool Result::operator<(const Result other) const
 {
-    return this->j() < other.j();
+    return this->number() < other.number();
 }
 
 bool Result::operator>(const Result other) const
 {
-    return this->j() > other.j();
+    return this->number() > other.number();
 }
 
-int Result::j() const
+int Result::number() const
 {
-    return _j;
+    return m_number;
 }
 
-int Result::fj() const
+int Result::flow() const
 {
-    return _fj;
+    return m_flow;
 }
 
-int Result::cj() const
+int Result::completionTime() const
 {
-    return _cj;
+    return m_completionTime;
 }
 
-int Result::lj() const
+int Result::lateness() const
 {
-    return _lj;
+    return m_lateness;
 }
 
-int Result::ej() const
+int Result::earliness() const
 {
-    return _ej;
+    return m_earliness;
 }
 
 bool comparecompletionTime(const Result& a, const Result& b)
 {
-    return a.cj() < b.cj();
+    return a.completionTime() < b.completionTime();
 }

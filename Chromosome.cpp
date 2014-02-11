@@ -26,7 +26,7 @@ double Chromosome::value() const
 int Chromosome::completionTime() const
 {
     auto r = std::max_element(m_results.begin(), m_results.end(), comparecompletionTime);
-    return r->cj();
+    return r->completionTime();
 }
 
 bool Chromosome::operator<(const Chromosome& other) const
@@ -72,8 +72,8 @@ void Chromosome::calculateValue()
         const Job& job = jobs[i];
         Result r (i, jobTime[i], job.dueDate(), job.arrival());
         m_results.append(r);
-        sum += pow(r.lj(), 2);
-        sum += pow(r.ej(), 2);
+        sum += pow(r.lateness(), 2);
+        sum += pow(r.earliness(), 2);
     }
 
     m_value = std::sqrt(sum);

@@ -3,7 +3,7 @@
 
 #include <QList>
 #include <QString>
-#include "result.h"
+#include "Result.h"
 
 class Operation;
 
