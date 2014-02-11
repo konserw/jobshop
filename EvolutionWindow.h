@@ -4,12 +4,14 @@
 #include <QDialog>
 #include <QTimer>
 
+QT_BEGIN_NAMESPACE
 class QCustomPlot;
 class QVBoxLayout;
 class QHBoxLayout;
 class QPushButton;
 class QSlider;
 //class QLabel;
+QT_END_NAMESPACE
 
 /*!
  * \brief The EvolutionWindow class - dialog window showing evolution progress
