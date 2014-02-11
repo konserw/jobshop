@@ -1,24 +1,27 @@
 #ifndef RESULT_H
 #define RESULT_H
 
+#include <QString>
+
 class Result
 {
 public:
-    Result(int number, int completionTime, int dueDate, int arrivalDate);
+    Result(const QString& jobID, int completionTime, int dueDate, int arrivalDate);
 
     //operators for sorting purposes
     bool operator<(const Result other) const;
     bool operator>(const Result other) const;
 
     //getters
-    int number() const;
+    QString jobID() const;
     int flow() const;
     int completionTime() const;
     int lateness() const;
     int earliness() const;
 
+
 private:
-    int m_number;
+    QString m_jobID;
     int m_flow;
     int m_completionTime;
     int m_lateness;

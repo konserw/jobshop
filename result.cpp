@@ -1,9 +1,9 @@
 #include "Result.h"
 #include <cmath>
 
-Result::Result(int number, int completionTime, int dueDate, int arrivalDate)
+Result::Result(const QString &jobID, int completionTime, int dueDate, int arrivalDate)
 {
-    m_number = number;
+    m_jobID = jobID;
     m_flow = completionTime - arrivalDate;
     m_completionTime = completionTime;
 
@@ -19,17 +19,12 @@ Result::Result(int number, int completionTime, int dueDate, int arrivalDate)
 
 bool Result::operator<(const Result other) const
 {
-    return this->number() < other.number();
+    return m_jobID < other.jobID();
 }
 
 bool Result::operator>(const Result other) const
 {
-    return this->number() > other.number();
-}
-
-int Result::number() const
-{
-    return m_number;
+    return m_jobID < other.jobID();
 }
 
 int Result::flow() const
@@ -50,6 +45,11 @@ int Result::lateness() const
 int Result::earliness() const
 {
     return m_earliness;
+}
+
+QString Result::jobID() const
+{
+    return m_jobID;
 }
 
 bool comparecompletionTime(const Result& a, const Result& b)
