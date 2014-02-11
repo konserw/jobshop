@@ -37,7 +37,7 @@ protected:
 private:
     int stop;
     QString m_id;
-    Chromosome m_chromosome;
+
     QPen m_pen;
     QFont m_font;
     QList<GanttOperation> m_opertionGraphics;

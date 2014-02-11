@@ -61,15 +61,7 @@ QRectF GanttMachine::boundingRect() const
 {
     return QRectF();
 }
-Chromosome GanttMachine::chromosome() const
-{
-    return m_chromosome;
-}
 
-void GanttMachine::setChromosome(const Chromosome &chromosome)
-{
-    m_chromosome = chromosome;
-}
 QPen GanttMachine::pen() const
 {
     return m_pen;
