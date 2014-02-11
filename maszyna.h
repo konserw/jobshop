@@ -1,45 +1,48 @@
 #ifndef MASZYNA_H
 #define MASZYNA_H
 
-#include <QObject>
+#include <QGraphicsItem>
+#include <QFont>
+#include <QPen>
 #include <QList>
 
-class Job;
+#include "Chromosome.h"
+#include "grafZadanie.h"
 
-QT_BEGIN_NAMESPACE
-    class QGraphicsScene;
-    class QFont;
-    class QPen;
-QT_END_NAMESPACE
-
-class maszyna : public QObject
+class maszyna : public QGraphicsItem
 {
-     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 
 public:
-    maszyna(int id, QGraphicsScene* scene);
+    maszyna(const QString& id, QGraphicsItem *parent = 0);
     ~maszyna();
 
-    static const int X0 = 35;
+    QString id() const;
+    void setId(const QString &id);
 
-public slots:
-    void update();
-    void add(Job*);
-    void up2();
+    ///Zwraca prostokąt wewnątrz którego odbywa się rysowanie.
+    virtual QRectF boundingRect() const;
+
+    Chromosome chromosome() const;
+    void setChromosome(const Chromosome &chromosome);
+
+    QPen pen() const;
+    void setPen(const QPen &pen);
+
+protected:
+    ///Metoda rysująca graficzą reprezentację obiektu.
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+
 
 private:
-    void start(Job*);
-
     int stop;
-    Job* cur;
-    QList<Job*> kolejka;
-    int _id;
+    QString m_id;
+    Chromosome m_chromosome;
+    QPen m_pen;
+    QFont m_font;
+    QList<grafZadanie> m_opertionGraphics;
 
-    QGraphicsScene* scene;
-    qreal x, y;
-    QFont* font;
-    QPen* pen;
-    QPen* penKonflikt;
+    static const int X0 = 35;
 };
 
 #endif // MASZYNA_H

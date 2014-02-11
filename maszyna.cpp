@@ -5,22 +5,16 @@
 #include <QGraphicsTextItem>
 #include "common.h"
 
-maszyna::maszyna(int id, QGraphicsScene *sc)
+maszyna::maszyna(const QString &id, QGraphicsItem *parent) :
+    QGraphicsItem(parent),
+    m_id(id),
+    m_font(QFont("Arial", 10, QFont::Normal, false))
 {
-    _id = id;
-    cur = NULL;
+    setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
-    QString s = tr("m");
-    s += QString::number(id);
-
-    scene = sc;
+/*
     y = (id - 1) * (2 * grafZadanie::dy);
     x = 0;
-    font = new QFont("Arial", 10, QFont::Normal, false);
-    pen = new QPen();
-    pen->setWidth(1);
-    penKonflikt = new QPen(QColor(255, 0, 0));
-    penKonflikt->setWidth(5);
 
     QGraphicsTextItem* text = scene->addText(s, *font);
     text->setX(x);
@@ -29,22 +23,17 @@ maszyna::maszyna(int id, QGraphicsScene *sc)
     x += X0;
     scene->addLine(x, y, x, y+2*grafZadanie::dy, *pen);
     y += grafZadanie::dy;
+*/
+    QGraphicsTextItem* text = new QGraphicsTextItem(m_id, this);
 
-    qDebug() << "utworzono maszyne nr " << id;
+    qDebug() << "utworzono maszyne" << m_id;
 }
 
 maszyna::~maszyna()
 {
-    delete penKonflikt;
-    delete pen;
-    delete font;
 }
 
-void maszyna::add(Job *z)
-{
-    kolejka.append(z);
-}
-
+/*
 void maszyna::start(Job* z)
 {
     cur = z;
@@ -57,15 +46,46 @@ void maszyna::start(Job* z)
 
     x += cur->gItem()->boundingRect().width();
 }
+*/
 
-void maszyna::update()
+QString maszyna::id() const
 {
-    if(t >= stop && cur != NULL)
-    {
-        cur->done();
-        cur = NULL;
-    }
+    return m_id;
 }
+
+void maszyna::setId(const QString &id)
+{
+    m_id = id;
+}
+
+QRectF maszyna::boundingRect() const
+{
+    return QRectF();
+}
+Chromosome maszyna::chromosome() const
+{
+    return m_chromosome;
+}
+
+void maszyna::setChromosome(const Chromosome &chromosome)
+{
+    m_chromosome = chromosome;
+}
+QPen maszyna::pen() const
+{
+    return m_pen;
+}
+
+void maszyna::setPen(const QPen &pen)
+{
+    m_pen = pen;
+}
+
+void maszyna::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
+}
+/*
 void maszyna::up2()
 {
     if(cur)return;              //not null -> still procesing
@@ -90,7 +110,7 @@ void maszyna::up2()
         text->setX(x + 2);
         text->setY(y);
     }
-/*
+
     switch(method)
     {
     case 0://fifo
@@ -102,6 +122,5 @@ void maszyna::up2()
         kolejka.removeLast();
         break;
     }
-
 }
-
+*/
