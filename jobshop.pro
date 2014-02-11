@@ -31,18 +31,23 @@ UI_DIR =        temp
 MOC_DIR =       temp
 RCC_DIR =       temp
 
-#QMAKE_CXXFLAGS += -Wno-reorder
-QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
+win32 {
+    CONFIG(debug, release|debug) {
+        QCPLIB = qcustomplotd1
+    } else {
+        QCPLIB = qcustomplot1
+    }
+} else {
+    QMAKE_CXXFLAGS_WARN_ON += -Wno-reorder
+
+    CONFIG(debug, release|debug) {
+        QCPLIB = qcustomplotd
+    } else {
+        QCPLIB = qcustomplot
+    }
+}
 
 DEFINES += QCUSTOMPLOT_USE_LIBRARY
-CONFIG(debug, release|debug) {
-  win32:QCPLIB = qcustomplotd1
-  else: QCPLIB = qcustomplotd
-} else {
-  win32:QCPLIB = qcustomplot1
-  else: QCPLIB = qcustomplot
-}
-#LIBS += -L/home/konserw/studia/ZZSI/jobshop/qcustomplot/ -l$$QCPLIB
 LIBS += -L./qcustomplot/ -l$$QCPLIB
 
 SOURCES += \
