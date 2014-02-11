@@ -54,7 +54,6 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     common.cpp \
-    result.cpp \
     logger.cpp \
     Operation.cpp \
     Job.cpp \
@@ -66,12 +65,12 @@ SOURCES += \
     Chromosome.cpp \
     EvolutionWindow.cpp \
     GanttMachine.cpp \
-    GanttOperation.cpp
+    GanttOperation.cpp \
+    Result.cpp
 
 HEADERS += \
     MainWindow.h \
     common.h \
-    result.h \
     logger.h \
     Operation.h \
     Job.h \
@@ -83,7 +82,8 @@ HEADERS += \
     Chromosome.h \
     EvolutionWindow.h \
     GanttMachine.h \
-    GanttOperation.h
+    GanttOperation.h \
+    Result.h
 
 FORMS += \
     MainWindow.ui \
