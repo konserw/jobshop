@@ -53,7 +53,6 @@ LIBS += -L./qcustomplot/ -l$$QCPLIB
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    maszyna.cpp \
     grafZadanie.cpp \
     common.cpp \
     result.cpp \
@@ -66,11 +65,11 @@ SOURCES += \
     Jobshop.cpp \
     OperationEditor.cpp \
     Chromosome.cpp \
-    EvolutionWindow.cpp
+    EvolutionWindow.cpp \
+    GanttMachine.cpp
 
 HEADERS += \
     MainWindow.h \
-    maszyna.h \
     common.h \
     grafZadanie.h \
     result.h \
@@ -83,7 +82,8 @@ HEADERS += \
     Jobshop.h \
     OperationEditor.h \
     Chromosome.h \
-    EvolutionWindow.h
+    EvolutionWindow.h \
+    GanttMachine.h
 
 FORMS += \
     MainWindow.ui \

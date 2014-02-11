@@ -1,11 +1,11 @@
-#include "maszyna.h"
+#include "GanttMachine.h"
 #include "Job.h"
 #include <QtDebug>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include "common.h"
 
-maszyna::maszyna(const QString &id, QGraphicsItem *parent) :
+GanttMachine::GanttMachine(const QString &id, QGraphicsItem *parent) :
     QGraphicsItem(parent),
     m_id(id),
     m_font(QFont("Arial", 10, QFont::Normal, false))
@@ -29,7 +29,7 @@ maszyna::maszyna(const QString &id, QGraphicsItem *parent) :
     qDebug() << "utworzono maszyne" << m_id;
 }
 
-maszyna::~maszyna()
+GanttMachine::~GanttMachine()
 {
 }
 
@@ -48,40 +48,40 @@ void maszyna::start(Job* z)
 }
 */
 
-QString maszyna::id() const
+QString GanttMachine::id() const
 {
     return m_id;
 }
 
-void maszyna::setId(const QString &id)
+void GanttMachine::setId(const QString &id)
 {
     m_id = id;
 }
 
-QRectF maszyna::boundingRect() const
+QRectF GanttMachine::boundingRect() const
 {
     return QRectF();
 }
-Chromosome maszyna::chromosome() const
+Chromosome GanttMachine::chromosome() const
 {
     return m_chromosome;
 }
 
-void maszyna::setChromosome(const Chromosome &chromosome)
+void GanttMachine::setChromosome(const Chromosome &chromosome)
 {
     m_chromosome = chromosome;
 }
-QPen maszyna::pen() const
+QPen GanttMachine::pen() const
 {
     return m_pen;
 }
 
-void maszyna::setPen(const QPen &pen)
+void GanttMachine::setPen(const QPen &pen)
 {
     m_pen = pen;
 }
 
-void maszyna::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void GanttMachine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 
 }

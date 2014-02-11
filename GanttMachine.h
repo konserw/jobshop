@@ -9,13 +9,13 @@
 #include "Chromosome.h"
 #include "grafZadanie.h"
 
-class maszyna : public QGraphicsItem
+class GanttMachine : public QGraphicsItem
 {
     Q_INTERFACES(QGraphicsItem)
 
 public:
-    maszyna(const QString& id, QGraphicsItem *parent = 0);
-    ~maszyna();
+    GanttMachine(const QString& id, QGraphicsItem *parent = 0);
+    ~GanttMachine();
 
     QString id() const;
     void setId(const QString &id);
