@@ -1,11 +1,11 @@
 #include "GanttOperation.h"
 #include <QPainter>
 
-GanttOperation::GanttOperation(int id, int time, QColor& color)
+GanttOperation::GanttOperation(const QString& id, int time, QColor& color)
 {
+    m_id = id;
     w = time*dx;
     h = dy;
-    j = QString::number(id);
     col = color;
 }
 
@@ -35,5 +35,5 @@ void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->drawRect(rect);
 
     painter->setFont(font);
-    painter->drawText(rect, Qt::AlignCenter, j);
+    painter->drawText(rect, Qt::AlignCenter, m_id);
 }

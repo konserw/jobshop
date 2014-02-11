@@ -2,23 +2,22 @@
 #define GRAFZADANIE_H
 
 #include <QGraphicsItem>
+#include <QString>
 
 class GanttOperation : public QGraphicsItem
 {
 public:
-    GanttOperation(int id, int time, QColor& color);
+    GanttOperation(const QString& id, int time, QColor& color);
+    ~GanttOperation();
 
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget);
-
-    ~GanttOperation();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     static const int dx = 9;
     static const int dy = 20;
 
 protected:
-    QString j;
+    QString m_id;
     qreal w, h;
     QColor col;
 };
