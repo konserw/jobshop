@@ -16,7 +16,7 @@ public:
     Chromosome();
 
     bool hasGene(const QString& gene);
-    ///value of survival funciton
+
     double value() const;
     void calculateValue();
 
@@ -24,20 +24,24 @@ public:
 
     QString print() const;
 
+    ///completion time of all operations
     int completionTime() const;
+    ///mean flow time
+    double meanFlow() const;
 
     //for sorting
     bool operator<(const Chromosome& other) const;
     bool operator>(const Chromosome& other) const;
 
+    const QList<Result>& results() const;
+
 protected:
-    ///completion time of all operations - not used
-    double m_completionTime;
-    ///JiT value for survival
+    ///value of fitness funciton
     double m_value;
 
-    ///statistics for each job
+    ///Basic statistics for each job
     QList<Result> m_results;
+    ///String representation of chromosome - sequence of operation IDs
     QList<QString> m_genes;
 
     friend QDebug operator<< (QDebug d, const Chromosome& chromosome);

@@ -29,6 +29,12 @@ int Chromosome::completionTime() const
     return r->completionTime();
 }
 
+double Chromosome::meanFlow() const
+{
+    //todo
+    return 0;
+}
+
 bool Chromosome::operator<(const Chromosome& other) const
 {
     return m_value < other.m_value;
@@ -39,6 +45,11 @@ bool Chromosome::operator>(const Chromosome& other) const
     return m_value > other.m_value;
 }
 
+const QList<Result> &Chromosome::results() const
+{
+    return m_results;
+}
+
 void Chromosome::calculateValue()
 {
     int jobsCount = Jobshop::instance()->jobCount();
@@ -47,7 +58,6 @@ void Chromosome::calculateValue()
     //kiedy konczy sie poprzednia operacjia zadania
     QVector<int> jobTime;
     //na poczatku czas przyjecia zadania
-    jobTime.clear();
     jobTime.resize(jobsCount);
     for(int i=0; i<jobsCount; ++i)
         jobTime[i] = jobs[i].arrival();
