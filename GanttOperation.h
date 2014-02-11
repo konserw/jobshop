@@ -3,16 +3,16 @@
 
 #include <QGraphicsItem>
 
-class grafZadanie : public QGraphicsItem
+class GanttOperation : public QGraphicsItem
 {
 public:
-    grafZadanie(int id, int time, QColor& color);
+    GanttOperation(int id, int time, QColor& color);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
-    ~grafZadanie();
+    ~GanttOperation();
 
     static const int dx = 9;
     static const int dy = 20;

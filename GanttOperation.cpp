@@ -1,8 +1,8 @@
-#include "grafZadanie.h"
+#include "GanttOperation.h"
 #include <QPainter>
 #include "common.h"
 
-grafZadanie::grafZadanie(int id, int time, QColor& color)
+GanttOperation::GanttOperation(int id, int time, QColor& color)
 {
     w = time*dx;
     h = dy;
@@ -10,17 +10,17 @@ grafZadanie::grafZadanie(int id, int time, QColor& color)
     col = color;
 }
 
-grafZadanie::~grafZadanie()
+GanttOperation::~GanttOperation()
 {
 
 }
 
-QRectF grafZadanie::boundingRect() const
+QRectF GanttOperation::boundingRect() const
 {
     return QRectF(0, 0, w, h);
 }
 
-void grafZadanie::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);

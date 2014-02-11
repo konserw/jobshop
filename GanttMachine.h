@@ -7,7 +7,7 @@
 #include <QList>
 
 #include "Chromosome.h"
-#include "grafZadanie.h"
+#include "GanttOperation.h"
 
 class GanttMachine : public QGraphicsItem
 {
@@ -40,7 +40,7 @@ private:
     Chromosome m_chromosome;
     QPen m_pen;
     QFont m_font;
-    QList<grafZadanie> m_opertionGraphics;
+    QList<GanttOperation> m_opertionGraphics;
 
     static const int X0 = 35;
 };
