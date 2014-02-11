@@ -1,6 +1,8 @@
 #ifndef WYKRES_H
 #define WYKRES_H
 
+#include "Chromosome.h"
+
 #include <QDialog>
 
 class Result;
@@ -23,8 +25,8 @@ public slots:
     void finished(Result* x);
     void set(int _maszyn, double _alfa, double _beta);
     void bazinga(const QList<Job *>*);
-    void pdf();
-    void pdf(const QString&fileName);
+//    void pdf();
+//    void pdf(const QString&fileName);
     void latex();
     void latex(const QString&);
     void evalStats();
@@ -37,27 +39,13 @@ protected:
 private:
     Ui::ResultWindow *ui;
 
-    QList<Result*> stats;
+    Chromosome m_chromosome;
     int zadan, maszyn;
 
     int c;
     double f, l, e, w1, w2, alfa, beta, Tmax, Tsr;
 
-    const QList<Job*> *zadania;
     QGraphicsScene* scene;
-
-    //for result sorting:
-    template <typename T>
-    class PtrLess
-    {
-    public:
-        bool operator()(const T* a, const T* b) const
-        {
-            if(a == nullptr) return false;
-            if(b == nullptr) return true;
-            return *a < *b;
-        }
-    };
 };
 
 #endif // WYKRES_H

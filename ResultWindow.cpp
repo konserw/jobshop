@@ -1,7 +1,10 @@
 #include "ResultWindow.h"
 #include "ui_ResultWindow.h"
+#include "Job.h"
+#include "Result.h"
+
 #include <QDebug>
-#include <QtGui>
+#include <QtWidgets>
 #include <QFileDialog>
 #include <QtSvg/QSvgGenerator>
 #include <QtAlgorithms>
@@ -30,8 +33,6 @@ void save(const QString &fileName, const QString &content)
     ts << content;
     file.close();
 }
-#include "Job.h"
-#include "result.h"
 
 ResultWindow::ResultWindow(QWidget *parent) :
     QDialog(parent),
@@ -39,18 +40,14 @@ ResultWindow::ResultWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setWindowTitle(tr("Podsumowanie obliczeń"));
-
-    ui->doPdf->setText(tr("eksport do pdf"));
-    ui->doLatexu->setText(tr("eksport do LaTeXu"));
+    //Podsumowanie obliczeń
+    //Eksport LaTeXu
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    connect(ui->doPdf, SIGNAL(clicked()), this, SLOT(pdf()));
-    connect(ui->doLatexu, SIGNAL(clicked()), this, SLOT(latex()));
+    connect(ui->pushButton_latex, &QPushButton::clicked, this, &ResultWindow::latex);
 
-    zadan = 0;
 }
 
 ResultWindow::~ResultWindow()
@@ -73,15 +70,6 @@ void ResultWindow::changeEvent(QEvent *e)
 void ResultWindow::setText(const QString &text)
 {
     ui->label->setText(text);
-}
-
-
-void ResultWindow::finished(Result* x)
-{
-    qDebug() << "ukonczono zadanie: " << x->j();
-
-    stats << x;
-    zadan++;
 }
 
 void ResultWindow::set(int _maszyn, double _alfa, double _beta)
@@ -148,7 +136,7 @@ void ResultWindow::bazinga(const QList<Job*> *zad)  //start gui mode
     ui->tableWidget->clear();
     this->clean();
 }
-
+/*
 void ResultWindow::pdf()
 {
     QString fileName;
@@ -194,7 +182,7 @@ void ResultWindow::pdf(const QString &fileName)
 
     QDir::current().rename("output/wrapped.pdf", fileName);
 }
-
+*/
 void ResultWindow::latex()
 {
     QString fileName;
@@ -260,7 +248,7 @@ void ResultWindow::latex(const QString &texName)
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
-    qSort(stats.begin(), stats.end(), PtrLess<Result>());
+    qSort(stats.begin(), stats.end());
 
     foreach(st, stats)
     {

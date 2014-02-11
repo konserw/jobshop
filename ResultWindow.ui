@@ -20,7 +20,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Results</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -37,16 +37,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QPushButton" name="doPdf">
+        <widget class="QPushButton" name="pushButton_save">
          <property name="text">
-          <string>PushButton</string>
+          <string>Save chart</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="doLatexu">
+        <widget class="QPushButton" name="pushButton_latex">
          <property name="text">
-          <string>PushButton</string>
+          <string>Export LaTeX</string>
          </property>
         </widget>
        </item>
