@@ -21,6 +21,12 @@ class Jobshop : public QObject
     Q_OBJECT
 
 public:
+    enum FitnessFunction
+    {
+        SquareMean,
+        AlphaBeta
+    };
+
     ///Destructor - empty, placeholder
     ~Jobshop();
     /*!
@@ -59,6 +65,9 @@ public:
     const QList<Job>& jobs() const;
 
 public slots:
+    FitnessFunction fitnessFunction() const;
+    void setFitnessFunction(FitnessFunction fitnessFunction);
+
     int crossovers() const;
     void setCrossovers(int crossovers);
 
@@ -137,6 +146,7 @@ protected:
     ///Random numbers generator for MSX and initial population generation
     std::mt19937 m_rng;
 
+    FitnessFunction m_fitnessFunction;
 
     friend class JobshopModel;
 };

@@ -70,13 +70,24 @@ void Chromosome::calculateValue()
     for(int i=0; i<jobsCount; ++i)
     {
         const Job& job = jobs[i];
-        Result r (i, jobTime[i], job.dueDate(), job.arrival());
-        m_results.append(r);
-        sum += pow(r.lateness(), 2);
-        sum += pow(r.earliness(), 2);
+        Result result(job.id(), jobTime[i], job.dueDate(), job.arrival());
+        m_results.append(result);
+        if(Jobshop::instance()->fitnessFunction() == Jobshop::SquareMean)
+        {
+            sum += pow(result.lateness(), 2);
+            sum += pow(result.earliness(), 2);
+        }
+        else //alphabeta
+        {
+            sum += result.earliness() * job.alpha();
+            sum += result.lateness() * job.beta();
+        }
     }
 
-    m_value = std::sqrt(sum);
+    if(Jobshop::instance()->fitnessFunction() == Jobshop::SquareMean)
+        m_value = std::sqrt(sum);
+    else //alphabeta
+        m_value = sum;
 }
 
 void Chromosome::addGene(const QString &gene)

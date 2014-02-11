@@ -12,7 +12,8 @@ Jobshop* Jobshop::m_instance = nullptr;
 Jobshop::Jobshop()
     : m_operationsCount(0),
       m_machinesCount(1),
-      m_model(nullptr)
+      m_model(nullptr),
+      m_fitnessFunction(Jobshop::SquareMean)
 {
     m_rng.seed(time(NULL));
 }
@@ -22,6 +23,17 @@ void Jobshop::printGenome() const
     for(const Chromosome& ch : m_genome)
         qDebug() << ch;
 }
+
+Jobshop::FitnessFunction Jobshop::fitnessFunction() const
+{
+    return m_fitnessFunction;
+}
+
+void Jobshop::setFitnessFunction(FitnessFunction fitnessFunction)
+{
+    m_fitnessFunction = fitnessFunction;
+}
+
 
 int Jobshop::population() const
 {

@@ -150,6 +150,26 @@ void JobshopModel::setJobsCount(int count)
     }
 }
 
+QStringList JobshopModel::fitnessFunctions() const
+{
+    return QStringList() << tr("Square Mean") << tr("Alpha - Beta");
+}
+
+void JobshopModel::setFitnessFunction(int index)
+{
+    switch(index)
+    {
+    case 0:
+        Jobshop::instance()->setFitnessFunction(Jobshop::SquareMean);
+        break;
+    case 1:
+        Jobshop::instance()->setFitnessFunction(Jobshop::AlphaBeta);
+        break;
+    default:
+        qWarning() << "wrong index";
+    }
+}
+
 int JobshopModel::columnCount(const QModelIndex & /*parent*/) const
 {
     return m_nonOperationColumns + Jobshop::instance()->m_operationsCount;

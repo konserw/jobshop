@@ -38,10 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBox_population, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setPopulation(int)));
     connect(ui->spinBox_crossovers, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setCrossovers(int)));
 
+//    connect(ui->comboBox_fitness, &QComboBox::currentIndexChanged, model, &JobshopModel::setFitnessFunction);
+    connect(ui->comboBox_fitness, SIGNAL(currentIndexChanged(int)), model, SLOT(setFitnessFunction(int)));
     connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), model, SLOT(setOperationsCount(int)));
     connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), model, SLOT(setJobsCount(int)));
-
     connect(ui->demodataButton, &QPushButton::clicked, model, &JobshopModel::demodata);
+
     connect(ui->importButton, &QPushButton::clicked, this, &MainWindow::imp);
     connect(ui->exportButton, &QPushButton::clicked, this, &MainWindow::exp);
     connect(ui->solveButton, &QPushButton::clicked, this, &MainWindow::solve);
@@ -65,6 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spinBox_crossovers->setMaximum(999);
     ui->spinBox_crossovers->setMinimum(1);
     ui->spinBox_crossovers->setValue(6);
+
+    ui->comboBox_fitness->addItems(model->fitnessFunctions());
 
      //demodata
 /*

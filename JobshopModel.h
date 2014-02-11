@@ -1,6 +1,7 @@
 #ifndef JOBSHOPMODEL_H
 #define JOBSHOPMODEL_H
 
+#include <QStringList>
 #include <QAbstractTableModel>
 #include <QList>
 
@@ -8,7 +9,6 @@
 class Jobshop;
 class Job;
 class QDataStream;
-
 
 /*!
  * \brief The JobshopModel class - representation of single jobshop scheduling problem as model for Qt's MVC.
@@ -44,6 +44,9 @@ public slots:
 
     void setOperationsCount(int count);
     void setJobsCount(int count);
+
+    QStringList fitnessFunctions() const;
+    void setFitnessFunction(int index);
 
 protected:
     static const int m_nonOperationColumns = 5;
