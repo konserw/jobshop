@@ -16,3 +16,8 @@ Makefile.*
 jobshop
 jobshop.exe
 *.log
+debug/
+release/
+*.dll
+*.pdb
+*.lib
