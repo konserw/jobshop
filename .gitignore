@@ -11,6 +11,7 @@ temp/*
 info_*
 output/*
 *.user
+*.user.*
 Makefile.*
 *.so*
 jobshop
