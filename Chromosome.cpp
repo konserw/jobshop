@@ -8,8 +8,9 @@
 #include <algorithm>
 #include <QtDebug>
 
-Chromosome::Chromosome()
-    : m_value(-1)
+Chromosome::Chromosome() :
+    m_valueMean(-1),
+    m_valueAlpha(-1)
 {
 }
 
@@ -24,7 +25,16 @@ double Chromosome::value() const
         return m_valueMean;
     else
         return m_valueAlpha;
+}
 
+double Chromosome::valueMean() const
+{
+    return m_valueMean;
+}
+
+double Chromosome::valueAlpha() const
+{
+    return m_valueAlpha;
 }
 
 int Chromosome::completionTime() const
@@ -33,7 +43,7 @@ int Chromosome::completionTime() const
                 m_results.begin(),
                 m_results.end(),
                 [] (const Result& a, const Result& b) -> bool { return a.completionTime() < b.completionTime(); }
-             )->completionTime();
+    )->completionTime();
 }
 
 double Chromosome::meanFlow() const
@@ -52,7 +62,7 @@ int Chromosome::maxTardy() const
                 m_results.begin(),
                 m_results.end(),
                 [] (const Result& a, const Result& b) -> bool { return a.lateness() < b.lateness(); }
-            )->lateness();
+    )->lateness();
 }
 
 bool Chromosome::operator<(const Chromosome& other) const

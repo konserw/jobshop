@@ -23,6 +23,11 @@ public:
      * \return Value of fitness function.
      */
     double value() const;
+    ///value of fitness funciton meanSquare
+    double valueMean() const;
+    ///value of fitness function alphaBeta
+    double valueAlpha() const;
+    ///Calculate all statistics
     void calculateValues();
 
     void addGene(const QString& gene);
@@ -47,7 +52,7 @@ public:
 protected:
     ///value of fitness funciton meanSquare
     double m_valueMean;
-    ///value of fitness function aphaBeta
+    ///value of fitness function alphaBeta
     double m_valueAlpha;
     ///Number of tardy (late) jobs
     int m_numberOfTardy;
