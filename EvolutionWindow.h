@@ -27,11 +27,13 @@ public:
     ~EvolutionWindow();
 
     void rescalePlot();
+
 public slots:
     void plot(double low, double hi);
     void toggleRun();
     void refRange(int range);
     void refInterval(int inter);
+    void showResult();
 
 protected:
     QCustomPlot* m_plot;

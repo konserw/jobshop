@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include "Jobshop.h"
+#include "ResultWindow.h"
 
 EvolutionWindow::EvolutionWindow(QWidget *parent) :
     QDialog(parent),
@@ -90,7 +91,7 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     connect(&m_timer, &QTimer::timeout, Jobshop::instance(), &Jobshop::iteration);
     connect(m_range, &QSlider::valueChanged, this, &EvolutionWindow::refRange);
     connect(m_interval, &QSlider::valueChanged, this, &EvolutionWindow::refInterval);
-
+    connect(m_stopButton, &QPushButton::clicked, this, &EvolutionWindow::showResult);
 }
 
 EvolutionWindow::~EvolutionWindow()
@@ -115,6 +116,17 @@ void EvolutionWindow::toggleRun()
 void EvolutionWindow::refInterval(int inter)
 {
     m_timer.setInterval(inter);
+}
+
+void EvolutionWindow::showResult()
+{
+    if(m_isRunning)
+        toggleRun();
+
+    ResultWindow* rw = new ResultWindow(Jobshop::instance()->winner(), this);
+    rw->showMaximized();
+    rw->exec();
+
 }
 
 void EvolutionWindow::rescalePlot()

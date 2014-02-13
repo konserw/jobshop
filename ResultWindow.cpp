@@ -2,7 +2,7 @@
 #include "ui_ResultWindow.h"
 #include "Job.h"
 #include "Result.h"
-
+#include "Jobshop.h"
 #include <QDebug>
 #include <QtWidgets>
 #include <QFileDialog>
@@ -14,6 +14,7 @@
 #include <QProcess>
 #include <QTextCodec>
 #include <QtDebug>
+#include "ResultsModel.h"
 
 int run(const QString &program, const QStringList &args)
 {
@@ -34,20 +35,64 @@ void save(const QString &fileName, const QString &content)
     file.close();
 }
 
-ResultWindow::ResultWindow(QWidget *parent) :
+ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ResultWindow)
+    ui(new Ui::ResultWindow),
+    m_chromosome(chromosome)
 {
     ui->setupUi(this);
+
+    setWindowModality(Qt::ApplicationModal);
 
     //Podsumowanie obliczeń
     //Eksport LaTeXu
 
+    //per job stats
+    ui->tableView->setModel(new ResultsModel(chromosome.results(), this));
+    //global stats
+    ui->label->setTextFormat(Qt::RichText);
+    ui->label->setStyleSheet("QLabel { background-color : white; color : black; }");
+    ui->label->setText(QString(
+                           "Completion Time = %1<br />\n"
+                           "Mean Flow Time = %2<br />\n"
+                           "Number of tardy jodbs = %3 <br />\n"
+                           "Maximum tardiness = %4<br />\n"
+                           "<img src=:/w1> = %5<br />\n"
+                           "<img src=:/w2> = %6<br />\n"
+                           )
+                       .arg(m_chromosome.completionTime())
+                       .arg(m_chromosome.meanFlow())
+                       .arg(m_chromosome.tardy())
+                       .arg(m_chromosome.maxTardy())
+                       .arg(m_chromosome.valueMean())
+                       .arg(m_chromosome.valueAlpha())
+                       );
+
+    /*
+        QGraphicsSimpleTextItem* text;
+        QFont font("Arial", 12);
+        qreal x;
+        qreal ym = (maszyn*2*grafZadanie::dy)+grafZadanie::dy;
+
+        for(int i=0; i<c; i+=5)
+        {
+            x = maszyna::X0 + grafZadanie::dx*i;
+            scene->addLine(x, 0, x, ym);
+            text = scene->addSimpleText(QString::number(i), font);
+            text->setX(x+3);
+            text->setY(ym-18);
+        }
+      ilnia z Cmax
+        x = x0 + dx*c;
+        scene->addLine(x, 0, x, ym);
+        text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
+        text->setX(x+3);
+        text->setY(ym-18);
+
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-
+*/
     connect(ui->pushButton_latex, &QPushButton::clicked, this, &ResultWindow::latex);
-
 }
 
 ResultWindow::~ResultWindow()
@@ -67,75 +112,6 @@ void ResultWindow::changeEvent(QEvent *e)
     }
 }
 
-void ResultWindow::setText(const QString &text)
-{
-    ui->label->setText(text);
-}
-
-void ResultWindow::set(int _maszyn, double _alfa, double _beta)
-{
-    maszyn = _maszyn;
-    alfa = _alfa;
-    beta = _beta;
-
-    evalStats();
-    setupScene();
-}
-
-void ResultWindow::bazinga(const QList<Job*> *zad)  //start gui mode
-{
-    qDebug() << "bazinga gui mode";
-
-    zadania = zad;
-
-    int j, cols;
-    QTableWidgetItem* it;
-    QStringList list;
-    Result* st;
-
-    list << tr("cj") << tr("fj") << tr("lj") << tr("ej");
-    cols = list.count();
-    ui->tableWidget->setColumnCount(cols);
-    ui->tableWidget->setHorizontalHeaderLabels(list);
-    ui->tableWidget->setRowCount(zadan);
-    for(int i=0; i<zadan; i++)
-    {
-        for(int j=0; j<cols; j++)
-        {
-            it = new QTableWidgetItem("x");
-            ui->tableWidget->setItem(i, j, it);
-        }
-    }
-
-    foreach(st, stats)
-    {
-        j = st->j() - 1;
-        ui->tableWidget->item(j, 0)->setText(QString::number(st->cj()));
-        ui->tableWidget->item(j, 1)->setText(QString::number(st->fj()));
-        ui->tableWidget->item(j, 2)->setText(QString::number(st->lj()));
-        ui->tableWidget->item(j, 3)->setText(QString::number(st->ej()));
-    }
-
-    QString str;
-    str = tr("<br>Cmax = ");
-    str += QString::number(c);
-    str += tr("<br>Fsr = ");
-    str += QString::number(f);
-    str += "<br><img src=:/w1> = ";
-    str += QString::number(w1);
-    str += "<br><img src=:/w2> = ";
-    str += QString::number(w2);
-    ui->label->setTextFormat(Qt::RichText);
-    ui->label->setStyleSheet("QLabel { background-color : white; color : black; }");
-    ui->label->setText(str);
-
-   // this->showMaximized();
-    this->show();
-    this->exec();
-
-    ui->tableWidget->clear();
-    this->clean();
-}
 /*
 void ResultWindow::pdf()
 {
@@ -188,11 +164,14 @@ void ResultWindow::latex()
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, tr("Export wyników do LaTeXu"), "", tr("Plik tex (*.tex)"));
     if(fileName.isEmpty())return;
-    this->latex(fileName);
+    this->latex2(fileName);
 }
 
-void ResultWindow::latex(const QString &texName)
+void ResultWindow::latex2(const QString &texName)
 {
+    /*===================
+     * TODO
+     *========================/
     QString s;
     Result* st;
 
@@ -303,68 +282,5 @@ void ResultWindow::latex(const QString &texName)
             "\t\\end{figure}\n"
             "\t\\FloatBarrier\n";
     save(texName, s);
-}
-
-void ResultWindow::evalStats()
-{
-    Result* st;
-    c = 0;
-    f = 0;
-    l = 0;
-    e = 0;
-    Tmax = 0;
-    double sum = 0;
-
-    foreach(st, stats)
-    {
-        sum += pow(st->lj(), 2) + pow(st->ej(), 2);
-        l += st->lj();                              //sum lates
-        e += st->ej();                              //sum earliness
-
-        if(st->cj() > c)c = st->cj();               //find Cmax
-        f += st->fj();                              //evaluate mean flow time
-
-        if(st->lj() > Tmax) Tmax = st->lj();
-    }
-    f /= zadan;
-    Tsr = l/zadan;
-
-    w1 = sqrt(sum);
-    w2 = (alfa*e) + (beta*l);
-
-}
-
-void ResultWindow::setupScene()
-{/*
-    QGraphicsSimpleTextItem* text;
-    QFont font("Arial", 12);
-    qreal x;
-    qreal ym = (maszyn*2*grafZadanie::dy)+grafZadanie::dy;
-
-    for(int i=0; i<c; i+=5)
-    {
-        x = maszyna::X0 + grafZadanie::dx*i;
-        scene->addLine(x, 0, x, ym);
-        text = scene->addSimpleText(QString::number(i), font);
-        text->setX(x+3);
-        text->setY(ym-18);
-    }
-  ilnia z Cmax
-    x = x0 + dx*c;
-    scene->addLine(x, 0, x, ym);
-    text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
-    text->setX(x+3);
-    text->setY(ym-18);
-*/
-}
-
-void ResultWindow::clean()
-{
-    Result* st;
-    foreach(st, stats)
-    {
-        delete st;
-    }
-    stats.clear();
-    zadan = 0;
+    */
 }
