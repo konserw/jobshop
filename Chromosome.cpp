@@ -20,7 +20,11 @@ bool Chromosome::hasGene(const QString &gene)
 
 double Chromosome::value() const
 {
-    return m_value;
+    if(Jobshop::instance()->fitnessFunction() == Jobshop::SquareMean)
+        return m_valueMean;
+    else
+        return m_valueAlpha;
+
 }
 
 int Chromosome::completionTime() const
@@ -31,8 +35,30 @@ int Chromosome::completionTime() const
 
 double Chromosome::meanFlow() const
 {
-    //todo
-    return 0;
+    double sum = 0;
+    for(const Result& res : m_results)
+    {
+        sum += res.flow();
+    }
+    return sum/m_results.size();
+}
+
+int Chromosome::tardy() const
+{
+    int number=0;
+    for(const Result& res : m_results)
+        if(res.lateness() > 0)
+            ++number;
+    return number;
+}
+
+int Chromosome::maxTardy() const
+{
+    return std::max_element(
+                m_results.begin(),
+                m_results.end(),
+                [] (Result res) -> int { return res.lateness(); }
+            )->lateness();
 }
 
 bool Chromosome::operator<(const Chromosome& other) const
@@ -50,7 +76,7 @@ const QList<Result> &Chromosome::results() const
     return m_results;
 }
 
-void Chromosome::calculateValue()
+void Chromosome::calculateValues()
 {
     int jobsCount = Jobshop::instance()->jobCount();
     const QList<Job>& jobs = Jobshop::instance()->jobs();
@@ -77,27 +103,20 @@ void Chromosome::calculateValue()
     }
 
     double sum = 0;
+    m_valueAlpha = 0;
     for(int i=0; i<jobsCount; ++i)
     {
         const Job& job = jobs[i];
         Result result(job.id(), jobTime[i], job.dueDate(), job.arrival());
         m_results.append(result);
-        if(Jobshop::instance()->fitnessFunction() == Jobshop::SquareMean)
-        {
-            sum += pow(result.lateness(), 2);
-            sum += pow(result.earliness(), 2);
-        }
-        else //alphabeta
-        {
-            sum += result.earliness() * job.alpha();
-            sum += result.lateness() * job.beta();
-        }
-    }
 
-    if(Jobshop::instance()->fitnessFunction() == Jobshop::SquareMean)
-        m_value = std::sqrt(sum);
-    else //alphabeta
-        m_value = sum;
+        sum += pow(result.lateness(), 2);
+        sum += pow(result.earliness(), 2);
+
+        m_valueAlpha += result.earliness() * job.alpha();
+        m_valueAlpha += result.lateness() * job.beta();
+    }
+    m_valueMean = std::sqrt(sum);
 }
 
 void Chromosome::addGene(const QString &gene)
@@ -113,7 +132,7 @@ QString Chromosome::print() const
         x += m_genes[i];
         x += " ";
     }
-    x.append(QString("value: %1").arg(m_value));
+    x.append(QString("valueMean: %1 valueAlpha: %2").arg(m_valueMean).arg(m_valueAlpha));
     return x;
 }
 
@@ -159,8 +178,8 @@ QList<Chromosome> MSX(const Chromosome &a, const Chromosome &b)
             c2.addGene(*it);
     }
 
-    c1.calculateValue();
-    c2.calculateValue();
+    c1.calculateValues();
+    c2.calculateValues();
 
     return QList<Chromosome>() << c1 << c2;
 }

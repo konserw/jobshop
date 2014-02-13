@@ -17,17 +17,26 @@ public:
 
     bool hasGene(const QString& gene);
 
+    /*!
+     * \brief Based on Jobshop::instance()->fitnessFunction() returns value of proper fitness function
+     * calculateValues() must be called before this method in order to evaluate all fitness functions values
+     * \return Value of fitness function.
+     */
     double value() const;
-    void calculateValue();
+    void calculateValues();
 
     void addGene(const QString& gene);
 
     QString print() const;
 
-    ///completion time of all operations
+    ///Completion time of all operations
     int completionTime() const;
-    ///mean flow time
+    ///Mean flow time
     double meanFlow() const;
+    ///Number of tardy(late) jobs
+    int tardy() const;
+    ///Maximum tardiness
+    int maxTardy() const;
 
     //for sorting
     bool operator<(const Chromosome& other) const;
@@ -36,8 +45,10 @@ public:
     const QList<Result>& results() const;
 
 protected:
-    ///value of fitness funciton
-    double m_value;
+    ///value of fitness funciton meanSquare
+    double m_valueMean;
+    ///value of fitness function aphaBeta
+    double m_valueAlpha;
 
     ///Basic statistics for each job
     QList<Result> m_results;
