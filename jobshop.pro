@@ -48,7 +48,7 @@ win32 {
 }
 
 DEFINES += QCUSTOMPLOT_USE_LIBRARY
-LIBS += -L./qcustomplot/ -l$$QCPLIB
+LIBS += -L./qcustomplot -l$$QCPLIB
 
 SOURCES += \
     main.cpp \
@@ -65,7 +65,8 @@ SOURCES += \
     EvolutionWindow.cpp \
     GanttMachine.cpp \
     GanttOperation.cpp \
-    Result.cpp
+    Result.cpp \
+    ResultsModel.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -81,7 +82,8 @@ HEADERS += \
     EvolutionWindow.h \
     GanttMachine.h \
     GanttOperation.h \
-    Result.h
+    Result.h \
+    ResultsModel.h
 
 FORMS += \
     MainWindow.ui \
