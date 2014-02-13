@@ -97,13 +97,16 @@ public slots:
      */
     void save(QDataStream &out);
 
-    ///Populate
+    ///Generate Jobshop sceduling problem randomly.
     void demodata();
 
     ///Initialize genome witch random, but valid (in sense of jobshop problem constraints) Chromosomes
     void generateInitialPopulation();
     ///Performs one full iteration - reproduction, reinsertion and succesion
     void iteration();
+
+    ///Returns current best chromosome
+    const Chromosome& winner() const;
 
 signals:
     /*!

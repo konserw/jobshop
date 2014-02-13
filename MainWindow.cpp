@@ -4,7 +4,6 @@
 #include "JobshopModel.h"
 #include "Job.h"
 #include "result.h"
-#include "ResultWindow.h"
 #include "OperationDelegate.h"
 #include "Jobshop.h"
 #include "EvolutionWindow.h"
@@ -150,12 +149,6 @@ void MainWindow::solve()
     EvolutionWindow evo(this);// = new EvolutionWindow(this);
     evo.showMaximized();
     evo.exec();
-/*
-    QTimer* timer = new QTimer(this);
-    timer->setInterval(100);
-    connect(Jobshop::instance(), &Jobshop::iterationResult, evo, &EvolutionWindow::plot);
-    connect(timer, &QTimer::timeout, Jobshop::instance(), &Jobshop::iteration);
-    */
 }
 
 void MainWindow::exp()

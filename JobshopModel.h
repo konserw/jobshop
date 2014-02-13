@@ -11,8 +11,7 @@ class Job;
 class QDataStream;
 
 /*!
- * \brief The JobshopModel class - representation of single jobshop scheduling problem as model for Qt's MVC.
- *  Inherits @QAbstractTableModel
+ * \brief The JobshopModel class - representation of single jobshop scheduling problem as model for Qt's Model View framework.
  */
 class JobshopModel : public QAbstractTableModel
 {

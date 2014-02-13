@@ -204,7 +204,7 @@ void Jobshop::generateInitialPopulation()
                 );
             }
         }while(anyLeft);
-        x.calculateValue();
+        x.calculateValues();
         m_genome.append(x);
     }
     qSort(m_genome);
@@ -239,6 +239,11 @@ void Jobshop::iteration()
     printGenome();
 
     emit iterationResult(m_genome.last().value(), m_genome[0].value());
+}
+
+const Chromosome &Jobshop::winner() const
+{
+    return m_genome.first();
 }
 
 void Jobshop::demodata()
