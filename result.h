@@ -28,6 +28,4 @@ private:
     int m_earliness;
 };
 
-bool comparecompletionTime(const Result& a, const Result& b);
-
 #endif // RESULT_H

@@ -51,8 +51,3 @@ QString Result::jobID() const
 {
     return m_jobID;
 }
-
-bool comparecompletionTime(const Result& a, const Result& b)
-{
-    return a.completionTime() < b.completionTime();
-}

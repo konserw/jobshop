@@ -29,8 +29,11 @@ double Chromosome::value() const
 
 int Chromosome::completionTime() const
 {
-    auto r = std::max_element(m_results.begin(), m_results.end(), comparecompletionTime);
-    return r->completionTime();
+    return std::max_element(
+                m_results.begin(),
+                m_results.end(),
+                [] (const Result& a, const Result& b) -> bool { return a.completionTime() < b.completionTime(); }
+             )->completionTime();
 }
 
 double Chromosome::meanFlow() const
@@ -48,7 +51,7 @@ int Chromosome::maxTardy() const
     return std::max_element(
                 m_results.begin(),
                 m_results.end(),
-                [] (Result res) -> int { return res.lateness(); }
+                [] (const Result& a, const Result& b) -> bool { return a.lateness() < b.lateness(); }
             )->lateness();
 }
 
