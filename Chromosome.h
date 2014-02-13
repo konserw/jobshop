@@ -49,6 +49,10 @@ protected:
     double m_valueMean;
     ///value of fitness function aphaBeta
     double m_valueAlpha;
+    ///Number of tardy (late) jobs
+    int m_numberOfTardy;
+    ///Mean flow time
+    double m_meanFlow;
 
     ///Basic statistics for each job
     QList<Result> m_results;

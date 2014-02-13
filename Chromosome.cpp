@@ -35,21 +35,12 @@ int Chromosome::completionTime() const
 
 double Chromosome::meanFlow() const
 {
-    double sum = 0;
-    for(const Result& res : m_results)
-    {
-        sum += res.flow();
-    }
-    return sum/m_results.size();
+    return m_meanFlow;
 }
 
 int Chromosome::tardy() const
 {
-    int number=0;
-    for(const Result& res : m_results)
-        if(res.lateness() > 0)
-            ++number;
-    return number;
+    return m_numberOfTardy;
 }
 
 int Chromosome::maxTardy() const
@@ -63,12 +54,12 @@ int Chromosome::maxTardy() const
 
 bool Chromosome::operator<(const Chromosome& other) const
 {
-    return m_value < other.m_value;
+    return value() < other.value();
 }
 
 bool Chromosome::operator>(const Chromosome& other) const
 {
-    return m_value > other.m_value;
+    return value() > other.value();
 }
 
 const QList<Result> &Chromosome::results() const
@@ -102,6 +93,8 @@ void Chromosome::calculateValues()
         mt = end;
     }
 
+    m_meanFlow = 0;
+    m_numberOfTardy = 0;
     double sum = 0;
     m_valueAlpha = 0;
     for(int i=0; i<jobsCount; ++i)
@@ -115,7 +108,14 @@ void Chromosome::calculateValues()
 
         m_valueAlpha += result.earliness() * job.alpha();
         m_valueAlpha += result.lateness() * job.beta();
+
+        m_meanFlow += result.flow();
+
+        if(result.lateness() > 0)
+            ++m_numberOfTardy;
     }
+
+    m_meanFlow /= jobsCount;
     m_valueMean = std::sqrt(sum);
 }
 
