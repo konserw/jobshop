@@ -1,0 +1,169 @@
+warning: source ./client is not a readable file or directory... skipping.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:13: warning: Compound GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:11: warning: Compound MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultWindow.h:17: warning: Compound ResultWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:7: warning: Compound Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:8: warning: Compound GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:18: warning: Member hasGene(const QString &gene) (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:33: warning: Member addGene(const QString &gene) (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:35: warning: Member print() const  (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:47: warning: Member operator<(const Chromosome &other) const  (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:48: warning: Member operator>(const Chromosome &other) const  (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:50: warning: Member results() const  (function) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:67: warning: Member operator<<(QDebug d, const Chromosome &chromosome) (friend) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/Chromosome.h:68: warning: Member MSX(const Chromosome &a, const Chromosome &b) (friend) of class Chromosome is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:32: warning: Member plot(double low, double hi) (slot) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:33: warning: Member toggleRun() (slot) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:34: warning: Member refRange(int range) (slot) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:35: warning: Member refInterval(int inter) (slot) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:36: warning: Member showResult() (slot) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:26: warning: Member EvolutionWindow(QWidget *parent=0) (function) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:29: warning: Member rescalePlot() (function) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:39: warning: Member m_plot (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:40: warning: Member m_layout (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:41: warning: Member m_h1 (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:42: warning: Member m_h2 (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:43: warning: Member m_h3 (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:48: warning: Member m_stopButton (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:49: warning: Member m_pauseButton (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:50: warning: Member m_range (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:51: warning: Member m_interval (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:53: warning: Member m_iteration (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:54: warning: Member m_timer (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:55: warning: Member m_isRunning (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:58: warning: Member m_plotRange (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/EvolutionWindow.h:57: warning: Member m_maxRange (variable) of class EvolutionWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:17: warning: Member GanttMachine(const QString &id, QGraphicsItem *parent=0) (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:20: warning: Member id() const  (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:21: warning: Member setId(const QString &id) (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:26: warning: Member chromosome() const  (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:27: warning: Member setChromosome(const Chromosome &chromosome) (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:29: warning: Member pen() const  (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttMachine.h:30: warning: Member setPen(const QPen &pen) (function) of class GanttMachine is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:10: warning: Member GanttOperation(const QString &id, int time, QColor &color) (function) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:13: warning: Member boundingRect() const  (function) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:14: warning: Member paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) (function) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:16: warning: Member dx (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:17: warning: Member dy (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:20: warning: Member m_id (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:21: warning: Member w (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:21: warning: Member h (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/GanttOperation.h:22: warning: Member col (variable) of class GanttOperation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:15: warning: Member Job(int operationsCount=0, int start_time=0, int due_date=10) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:16: warning: Member Job(const Job &other) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:19: warning: Member name() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:20: warning: Member setName(const QString &name) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:22: warning: Member alpha() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:23: warning: Member setAlpha(double alpha) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:25: warning: Member beta() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:26: warning: Member setBeta(double beta) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:28: warning: Member arrival() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:29: warning: Member setArrival(int arrival) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:31: warning: Member dueDate() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:32: warning: Member setDueDate(int dueDate) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:34: warning: Member setOperation(int number, const Operation &operation) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:35: warning: Member operation(int number) const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:36: warning: Member operation(int number) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:38: warning: Member print() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:39: warning: Member setOperationsCount(int count) (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:41: warning: Member id() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Job.h:42: warning: Member totalTime() const  (function) of class Job is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:25: warning: Member FitnessFunction (enumeration) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:68: warning: Member fitnessFunction() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:69: warning: Member setFitnessFunction(FitnessFunction fitnessFunction) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:71: warning: Member crossovers() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:72: warning: Member setCrossovers(int crossovers) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:74: warning: Member population() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:75: warning: Member setPopulation(int population) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:77: warning: Member addJobs(int count) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:78: warning: Member removeJobs(int count) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:79: warning: Member jobCount() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:81: warning: Member machinesCount() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:82: warning: Member setMachinesCount(int machinesCount) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:84: warning: Member operationsCount() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:85: warning: Member setOperationsCount(int operationsCount) (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:86: warning: Member allOperationsCount() const  (slot) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:140: warning: Member m_iteration (variable) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/Jobshop.h:152: warning: Member m_fitnessFunction (variable) of class Jobshop is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:25: warning: Member data(const QModelIndex &index, int role) const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:26: warning: Member setData(const QModelIndex &index, const QVariant &value, int) (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:28: warning: Member flags(const QModelIndex &) const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:29: warning: Member headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:32: warning: Member rowCount(const QModelIndex &parent=QModelIndex()) const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:36: warning: Member columnCount(const QModelIndex &parent=QModelIndex()) const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:39: warning: Member loadModel(QDataStream &in) (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:40: warning: Member demodata() (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:42: warning: Member nonOperationColumns() (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:44: warning: Member setOperationsCount(int count) (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:45: warning: Member setJobsCount(int count) (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:47: warning: Member fitnessFunctions() const  (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:48: warning: Member setFitnessFunction(int index) (slot) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:21: warning: Member JobshopModel(QObject *parent=nullptr) (function) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/JobshopModel.h:51: warning: Member m_nonOperationColumns (variable) of class JobshopModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:22: warning: Member setFilePath(const QString &path) (slot) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:19: warning: Member logOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) (function) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:17: warning: Member instance() (function) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:18: warning: Member logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) (function) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:29: warning: Member m_out (variable) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:30: warning: Member m_log (variable) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/logger.h:28: warning: Member m_instance (variable) of class Logger is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:18: warning: Member exp() (slot) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:19: warning: Member imp() (slot) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:21: warning: Member solve() (slot) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:14: warning: Member MainWindow(QWidget *parent=0) (function) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:24: warning: Member changeEvent(QEvent *e) (function) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/MainWindow.h:26: warning: Member import(const QString &s) (function) of class MainWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:16: warning: Member Operation(const QString &id=QString(), int machine=0, int time=0) (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:18: warning: Member operator==(const Operation &other) (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:20: warning: Member print() const  (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:22: warning: Member id() const  (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:24: warning: Member machine() const  (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:25: warning: Member setMachine(int machine) (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:27: warning: Member time() const  (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:28: warning: Member setTime(int time) (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:30: warning: Member jobNumber() const  (function) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:33: warning: Member m_id (variable) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:34: warning: Member m_machine (variable) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:35: warning: Member m_time (variable) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:38: warning: Member operator<<(QDataStream &out, const Operation &op) (friend) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/Operation.h:39: warning: Member operator>>(QDataStream &in, Operation &op) (friend) of class Operation is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationDelegate.h:14: warning: Member OperationDelegate(QObject *parent=0) (function) of class OperationDelegate is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationDelegate.h:17: warning: Member createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const  (function) of class OperationDelegate is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationDelegate.h:19: warning: Member setEditorData(QWidget *editor, const QModelIndex &index) const  (function) of class OperationDelegate is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationDelegate.h:20: warning: Member setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const  (function) of class OperationDelegate is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationDelegate.h:22: warning: Member updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const  (function) of class OperationDelegate is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:22: warning: Member OperationEditor(int machineCount=1, QWidget *parent=0) (function) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:31: warning: Member operation() (function) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:32: warning: Member setOperation(const Operation &operation) (function) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:38: warning: Member m_operation (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:40: warning: Member m_machineCount (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:42: warning: Member ui_formLayout (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:43: warning: Member ui_label_machine (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:44: warning: Member ui_label_time (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:45: warning: Member ui_machine (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:46: warning: Member ui_time (variable) of class OperationEditor is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
+/home/konserw/studia/ZZSI/jobshop/result.h:9: warning: Member Result(const QString &jobID, int completionTime, int dueDate, int arrivalDate) (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:12: warning: Member operator<(const Result other) const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:13: warning: Member operator>(const Result other) const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:16: warning: Member jobID() const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:17: warning: Member flow() const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:18: warning: Member completionTime() const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:19: warning: Member lateness() const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/result.h:20: warning: Member earliness() const  (function) of class Result is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:21: warning: Member data(const QModelIndex &index, int role) const  (slot) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:22: warning: Member flags(const QModelIndex &) const  (slot) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:23: warning: Member headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const  (slot) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:24: warning: Member columnCount(const QModelIndex &parent=QModelIndex()) const  (slot) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:25: warning: Member rowCount(const QModelIndex &parent=QModelIndex()) const  (slot) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:16: warning: Member ResultsModel(const QList< Result > &results, QObject *parent=0) (function) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultsModel.h:28: warning: Member m_results (variable) of class ResultsModel is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultWindow.h:27: warning: Member latex() (slot) of class ResultWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultWindow.h:28: warning: Member latex2(const QString &) (slot) of class ResultWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultWindow.h:21: warning: Member ResultWindow(const Chromosome &chromosome, QWidget *parent) (function) of class ResultWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/ResultWindow.h:31: warning: Member changeEvent(QEvent *e) (function) of class ResultWindow is not documented.
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
+/home/konserw/studia/ZZSI/jobshop/OperationEditor.h:14: warning: Found unknown command `\OperationDelegate'
