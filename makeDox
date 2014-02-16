@@ -1,0 +1,11 @@
+#!/bin/sh
+doxygen Doxyfile
+cd docs/latex/
+make
+evince refman.pdf
+#cd ../..
+#scp -r ./dokumentacja/html konserw@konserw.no-ip.pl:/var/www/pss
+#scp -P 1022 ./refman.pdf pi@konserw.no-ip.biz:/home/pi/www/pss
+#cd ..
+#rsync -avhe "ssh -p 1022" --delete ./html/ pi@konserw.no-ip.biz:/home/pi/www/pss/
+#evince ./latex/refman.pdf
