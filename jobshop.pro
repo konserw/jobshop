@@ -53,7 +53,6 @@ LIBS += -L./qcustomplot -l$$QCPLIB
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    logger.cpp \
     Operation.cpp \
     Job.cpp \
     ResultWindow.cpp \
@@ -66,11 +65,11 @@ SOURCES += \
     GanttMachine.cpp \
     GanttOperation.cpp \
     Result.cpp \
-    ResultsModel.cpp
+    ResultsModel.cpp \
+    Logger.cpp
 
 HEADERS += \
     MainWindow.h \
-    logger.h \
     Operation.h \
     Job.h \
     ResultWindow.h \
@@ -83,7 +82,8 @@ HEADERS += \
     GanttMachine.h \
     GanttOperation.h \
     Result.h \
-    ResultsModel.h
+    ResultsModel.h \
+    Logger.h
 
 FORMS += \
     MainWindow.ui \
