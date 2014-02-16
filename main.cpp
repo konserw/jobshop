@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "logger.h"
+#include "Logger.h"
 
 #include <QStringList>
 #include <QTextCodec>

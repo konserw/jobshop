@@ -2,7 +2,7 @@
 #define RESULTSEMODEL_H
 
 #include <QAbstractTableModel>
-#include <Qlist>
+#include <QList>
 #include "Result.h"
 
 /*!
