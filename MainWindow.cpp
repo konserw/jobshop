@@ -3,7 +3,7 @@
 #include "Operation.h"
 #include "JobshopModel.h"
 #include "Job.h"
-#include "result.h"
+#include "Result.h"
 #include "OperationDelegate.h"
 #include "Jobshop.h"
 #include "EvolutionWindow.h"
@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("Jobshop scheduling problem resolver"));
 
-    this->setWindowIcon(QIcon(":/kico"));
+    this->setWindowIcon(QIcon(":/logo"));
 
     JobshopModel* model = Jobshop::instance()->model();
 
