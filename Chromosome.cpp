@@ -18,7 +18,8 @@ int Chromosome::geneCount() const
 {
     return m_genes.count();
 }
-bool Chromosome::hasGene(const QString &gene)
+
+bool Chromosome::hasGene(const QString &gene) const
 {
     return m_genes.contains(gene);
 }
@@ -84,6 +85,11 @@ const QList<Result> &Chromosome::results() const
     return m_results;
 }
 
+int Chromosome::startTime(const QString &operation) const
+{
+    return m_operationsStartTime[operation];
+}
+
 void Chromosome::calculateValues()
 {
     int jobsCount = Jobshop::instance()->jobCount();
@@ -105,6 +111,7 @@ void Chromosome::calculateValues()
         int& jt = jobTime[op.jobNumber()];
         int& mt = machineTime[op.machine()];
         int start = std::max<int>(jt, mt);
+        m_operationsStartTime.insert(op.id(), start);
         int end = start + op.time();
         jt = end;
         mt = end;

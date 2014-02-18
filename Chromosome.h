@@ -1,6 +1,7 @@
 #ifndef CHROMOSOME_H
 #define CHROMOSOME_H
 
+#include <QHash>
 #include <QList>
 #include <QString>
 #include "Result.h"
@@ -16,7 +17,11 @@ public:
     Chromosome();
 
     int geneCount() const;
-    bool hasGene(const QString& gene);
+
+    bool hasGene(const QString& gene) const;
+    void addGene(const QString& gene);
+
+    QString print() const;
 
     /*!
      * \brief Based on Jobshop::instance()->fitnessFunction() returns value of proper fitness function
@@ -30,10 +35,6 @@ public:
     double valueAlpha() const;
     ///Calculate all statistics
     void calculateValues();
-
-    void addGene(const QString& gene);
-
-    QString print() const;
 
     ///Completion time of all operations
     int completionTime() const;
@@ -50,6 +51,9 @@ public:
 
     const QList<Result>& results() const;
 
+    ///Returns scheduled start time for operation in this chromosome (schedule)
+    int startTime(const QString& operation) const;
+
 protected:
     ///value of fitness funciton meanSquare
     double m_valueMean;
@@ -64,6 +68,9 @@ protected:
     QList<Result> m_results;
     ///String representation of chromosome - sequence of operation IDs
     QList<QString> m_genes;
+    ///Starting time for each operation
+    /// Externistic state in flyweight design pattern
+    QHash<QString, int> m_operationsStartTime;
 
     friend QDebug operator<< (QDebug d, const Chromosome& chromosome);
     friend QList<Chromosome> MSX(const Chromosome& a, const Chromosome& b);
