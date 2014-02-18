@@ -87,7 +87,7 @@ public slots:
 
     /*!
      * \brief load - deserialize instance from QDataStream.
-     * Warning! there is no check if datastream ontains proper instance of Jobshop
+     * Warning! there is no check if datastream contains proper instance of Jobshop
      * \param in datastream from where serialized instance is read
      */
     void load(QDataStream &in);
@@ -107,6 +107,10 @@ public slots:
 
     ///Returns current best chromosome
     const Chromosome& winner() const;
+    ///Returns chromosome constructed by FIFO cheuristic
+    Chromosome fifo() const;
+    ///Returns chromosome constructed by FIFO cheuristic
+    Chromosome lifo() const;
 
 signals:
     /*!
@@ -137,6 +141,7 @@ protected:
     int m_population;
     ///Number of crossover operations per iteration, offspring = crossovers*2
     int m_crossovers;
+    ///Current iteration number
     int m_iteration;
 
     ///List containing Job objects

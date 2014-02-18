@@ -15,6 +15,7 @@ class Chromosome
 public:
     Chromosome();
 
+    int geneCount() const;
     bool hasGene(const QString& gene);
 
     /*!

@@ -2,6 +2,8 @@
 #include "JobshopModel.h"
 #include "Operation.h"
 
+#include <QVector>
+#include <algorithm>
 #include <QtDebug>
 #include <cmath>
 #include <ctime>
@@ -244,6 +246,132 @@ void Jobshop::iteration()
 const Chromosome &Jobshop::winner() const
 {
     return m_genome.first();
+}
+
+Chromosome Jobshop::fifo() const
+{
+    //kiedy konczy sie poprzednia operacja maszyny
+    QVector<int> machineTime(m_machinesCount, 0);
+
+    int jobsCount = m_jobs.count();
+    //current operation of each job
+    QVector<int> currentOperationOfJob(jobsCount, 0);
+
+    //kiedy konczy sie poprzednia operacjia zadania
+    QVector<int> jobTime;
+    //na poczatku czas przyjecia zadania
+    jobTime.resize(jobsCount);
+    for(int i=0; i<jobsCount; ++i)
+        jobTime[i] = m_jobs[i].arrival();
+
+    Chromosome chromosome;
+    int t=0;
+
+    while(1)
+    {
+        bool endFlag = true;
+        for(int jobNumber=0; jobNumber<jobsCount; ++jobNumber)
+        {
+            int& opNum = currentOperationOfJob[jobNumber];
+            if(opNum > m_operationsCount)
+                continue;
+
+            endFlag = false;
+
+            int& jt = jobTime[jobNumber];
+            if(t >= jt)
+            {
+                const Operation& op = m_jobs[jobNumber].operation(opNum);
+
+                int& mt = machineTime[op.machine()];
+                int start = std::max<int>(jt, mt);
+                int end = start + op.time();
+                jt = end;
+                mt = end;
+
+                chromosome.addGene(op.id());
+                ++opNum;
+            }
+        }
+        if(endFlag)
+            break;
+        ++t;
+    }
+
+    chromosome.calculateValues();
+    qDebug() << "FIFO:" << chromosome;
+    return chromosome;
+}
+
+Chromosome Jobshop::lifo() const
+{
+    //kiedy konczy sie poprzednia operacja maszyny
+    QVector<int> machineTime(m_machinesCount, 0);
+
+    int jobsCount = m_jobs.count();
+    //current operation of each job
+    QVector<int> currentOperationOfJob(jobsCount, 0);
+    //is job active
+    QVector<bool> isJobActive(jobsCount, true);
+    //kiedy konczy sie poprzednia operacjia zadania
+    QVector<int> jobTime;
+    //na poczatku czas przyjecia zadania
+    jobTime.resize(jobsCount);
+    for(int i=0; i<jobsCount; ++i)
+        jobTime[i] = m_jobs[i].arrival();
+
+    QVector<QList<QString> > queues(m_machinesCount);
+
+    Chromosome chromosome;
+    int t=0;
+
+    while(1)
+    {
+        for(int jobNumber=0; jobNumber<jobsCount; ++jobNumber)
+        {
+            if(!isJobActive[jobNumber])
+                continue;
+
+            int& jt = jobTime[jobNumber];
+            if(t >= jt)
+            {
+                const Operation& op = m_jobs[jobNumber].operation(currentOperationOfJob[jobNumber]);
+                isJobActive[jobNumber] = false;
+                queues[op.machine()].append(op.id());
+            }
+        }
+
+        for(int machineNumber=0; machineNumber<m_machinesCount; ++machineNumber)
+        {
+            int& mt = machineTime[machineNumber];
+            QList<QString>& q = queues[machineNumber];
+            if(t >= mt && !q.isEmpty())
+            {
+                const Operation& op = m_operations[q.last()];
+                int jn = op.jobNumber();
+
+                int end = mt + op.time();
+                mt = end;
+                jobTime[jn] = end;
+
+                q.removeLast();
+                chromosome.addGene(op.id());
+
+                if(currentOperationOfJob[jn]++ < m_operationsCount)
+                    isJobActive[jn] = true;
+            }
+        }
+
+        if(chromosome.geneCount() == m_genome.count())
+            break;
+        ++t;
+
+  //      qDebug() << "t:" << t << "gene count:" << chromosome.geneCount() << "/" <<  m_genome.count();
+    }
+
+    chromosome.calculateValues();
+    qDebug() << "LIFO:" << chromosome;
+    return chromosome;
 }
 
 void Jobshop::demodata()

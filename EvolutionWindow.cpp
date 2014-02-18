@@ -11,13 +11,19 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_isRunning(false),
     m_plotRange(25)
 {
+    m_fifoChromosome = Jobshop::instance()->fifo();
+    m_fifoValue = m_fifoChromosome.value();
+
+    m_lifoChromosome = Jobshop::instance()->lifo();
+    m_lifoValue = m_lifoChromosome.value();
+
     setObjectName(QStringLiteral("EvolutionWindow"));
     setWindowModality(Qt::ApplicationModal);
     resize(500, 500);
 
     m_layout = new QVBoxLayout(this);
 
-    m_h1 = new QHBoxLayout(this);
+    m_h1 = new QHBoxLayout();
     m_pauseButton = new QPushButton(tr("pause/start"), this);
     m_h1->addWidget(m_pauseButton);
     m_stopButton = new QPushButton(tr("stop"), this);
@@ -26,7 +32,7 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
 
     m_layout->addLayout(m_h1);
 
-    m_h2 = new QHBoxLayout(this);
+    m_h2 = new QHBoxLayout();
     m_h2->addWidget(new QLabel(tr("Plot range:"), this));
     m_range = new QSlider(Qt::Horizontal, this);
     m_range->setMinimum(5);
@@ -37,7 +43,7 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
 
     m_layout->addLayout(m_h2);
 
-    m_h3 = new QHBoxLayout(this);
+    m_h3 = new QHBoxLayout();
     m_h3->addWidget(new QLabel(tr("Reproduction interval"), this));
     m_interval = new QSlider(Qt::Horizontal, this);
     m_interval->setMinimum(0);
@@ -71,6 +77,18 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_plot->graph(3)->setLineStyle(QCPGraph::lsNone);
     m_plot->graph(3)->setScatterStyle(QCPScatterStyle::ssDisc);
 
+    m_plot->addGraph(); // blue dot - fifo
+    m_plot->graph(4)->setName(tr("FIFO value = %1").arg(m_fifoValue));
+    m_plot->graph(4)->setPen(QPen(Qt::blue));
+    m_plot->graph(4)->setLineStyle(QCPGraph::lsNone);
+    m_plot->graph(4)->setScatterStyle(QCPScatterStyle::ssDisc);
+
+    m_plot->addGraph(); // black dot - lifo
+    m_plot->graph(5)->setName(tr("LIFO value = %1").arg(m_lifoValue));
+    m_plot->graph(5)->setPen(QPen(Qt::black));
+    m_plot->graph(5)->setLineStyle(QCPGraph::lsNone);
+    m_plot->graph(5)->setScatterStyle(QCPScatterStyle::ssDisc);
+
     m_plot->xAxis->setTickLabelType(QCPAxis::ltNumber);
     m_plot->xAxis->setAutoTickStep(false);
     m_plot->xAxis->setTickStep(5);
@@ -80,11 +98,11 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_plot->yAxis->setLabel("Fitness value");
     m_plot->legend->setVisible(true);
 
+    m_layout->addWidget(m_plot);
+
     // make left and bottom axes transfer their ranges to right and top axes:
     connect(m_plot->xAxis, SIGNAL(rangeChanged(QCPRange)), m_plot->xAxis2, SLOT(setRange(QCPRange)));
     connect(m_plot->yAxis, SIGNAL(rangeChanged(QCPRange)), m_plot->yAxis2, SLOT(setRange(QCPRange)));
-
-    m_layout->addWidget(m_plot);
 
     connect(m_pauseButton, &QPushButton::clicked, this, &EvolutionWindow::toggleRun);
     connect(Jobshop::instance(), &Jobshop::iterationResult, this, &EvolutionWindow::plot);
@@ -147,8 +165,8 @@ void EvolutionWindow::refRange(int range)
 
 void EvolutionWindow::plot(double low, double hi)
 {      
-    m_plot->graph(1)->setName(QString::number(low));
-    m_plot->graph(3)->setName(QString::number(hi));
+    m_plot->graph(1)->setName(tr("value = %1").arg(low));
+    m_plot->graph(3)->setName(tr("value = %1").arg(hi));
     // add data to lines:
     m_plot->graph(0)->addData(m_iteration, low);
     m_plot->graph(2)->addData(m_iteration, hi);
@@ -157,11 +175,14 @@ void EvolutionWindow::plot(double low, double hi)
     m_plot->graph(1)->addData(m_iteration, low);
     m_plot->graph(3)->clearData();
     m_plot->graph(3)->addData(m_iteration, hi);
+    m_plot->graph(4)->clearData();
+    m_plot->graph(4)->addData(m_iteration, m_fifoValue);
+    m_plot->graph(5)->clearData();
+    m_plot->graph(5)->addData(m_iteration, m_lifoValue);
     // remove data of lines that's outside maximum range:
     m_plot->graph(0)->removeDataBefore(m_iteration-m_maxRange);
     m_plot->graph(2)->removeDataBefore(m_iteration-m_maxRange);
 
     rescalePlot();
-
     m_iteration++;
 }

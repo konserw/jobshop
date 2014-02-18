@@ -14,6 +14,10 @@ Chromosome::Chromosome() :
 {
 }
 
+int Chromosome::geneCount() const
+{
+    return m_genes.count();
+}
 bool Chromosome::hasGene(const QString &gene)
 {
     return m_genes.contains(gene);
