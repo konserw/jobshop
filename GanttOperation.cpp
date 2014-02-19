@@ -1,12 +1,12 @@
 #include "GanttOperation.h"
 #include <QPainter>
 
-GanttOperation::GanttOperation(const QString& id, int time, QColor& color)
+GanttOperation::GanttOperation(const QString& id, int time, const QColor &color) :
+    col(color)
 {
     m_id = id;
     w = time*dx;
     h = dy;
-    col = color;
 }
 
 GanttOperation::~GanttOperation()

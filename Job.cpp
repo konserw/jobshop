@@ -69,7 +69,11 @@ void Job::setOperation(int number, const Operation &operation)
 
 Operation& Job::operation(int number)
 {
-    return Jobshop::instance()->operation(operationId(number));
+    if(number < m_operationIds.count())
+        return Jobshop::instance()->operation(operationId(number));
+
+    qWarning() << "requested non existan operation number" << number << "from job" << m_id;
+    return Operation();
 }
 
 const Operation& Job::operation(int number) const
@@ -87,7 +91,9 @@ void Job::setOperationsCount(int count)
     }
     for(int i = m_operationIds.count(); i < count; ++i)
     {
-        m_operationIds.append(Jobshop::instance()->operation(operationId(i)).id());
+        QString id = operationId(i);
+        m_operationIds.append(id);
+        Jobshop::instance()->insertOperation(m_color, id);
     }
 }
 

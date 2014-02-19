@@ -155,10 +155,18 @@ JobshopModel *Jobshop::model()
     return m_model;
 }
 
+void Jobshop::insertOperation(const QColor &color, const QString &id)
+{
+    m_operations.insert(id, Operation(color, id));
+}
+
 Operation& Jobshop::operation(const QString &id)
 {
     if(!m_operations.contains(id))
-        m_operations.insert(id, Operation(id));
+    {
+        qWarning() << "requested non-existant operation, id" << id;
+        return Operation();
+    }
 
     return m_operations[id];
 }
@@ -273,7 +281,7 @@ Chromosome Jobshop::fifo() const
         for(int jobNumber=0; jobNumber<jobsCount; ++jobNumber)
         {
             int& opNum = currentOperationOfJob[jobNumber];
-            if(opNum > m_operationsCount)
+            if(opNum >= m_operationsCount)
                 continue;
 
             endFlag = false;

@@ -1,11 +1,20 @@
 #include "Operation.h"
 #include "Job.h"
+#include "GanttOperation.h"
 
-Operation::Operation(const QString& id, int machine, int time)
-    : m_id(id),
-      m_machine(machine),
-      m_time(time)
+Operation::Operation()
 {
+    m_time = 0;
+    m_valid = false;
+}
+
+Operation::Operation(const QColor& color, const QString& id, int machine, int time) :
+    m_id(id),
+    m_machine(machine),
+    m_time(time),
+    m_valid(true)
+{
+    m_graphic = new GanttOperation(m_id, m_time, color);
 }
 
 bool Operation::operator==(const Operation &other)
@@ -48,6 +57,16 @@ void Operation::setTime(int time)
 int Operation::jobNumber() const
 {
     return m_id[0].toLatin1() - 'A';
+}
+
+GanttOperation *Operation::ganttGraphic() const
+{
+    return m_graphic;
+}
+
+bool Operation::isValid() const
+{
+    return m_valid;
 }
 
 QDataStream &operator<<(QDataStream &out, const Operation &op)

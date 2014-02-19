@@ -4,6 +4,8 @@
 #include <QDataStream>
 #include <QString>
 #include <QVariant>
+
+class GanttOperation;
 class Job;
 
 /*!
@@ -13,7 +15,8 @@ class Job;
 class Operation
 {
 public:
-    Operation(const QString &id = QString(), int machine = 0, int time = 0);
+    Operation();
+    Operation(const QColor &color, const QString &id, int machine = 0, int time = 0);
 
     bool operator==(const Operation& other);
 
@@ -29,11 +32,16 @@ public:
 
     int jobNumber() const;
 
+    GanttOperation* ganttGraphic() const;
+
+    bool isValid() const;
+
 protected:
     QString m_id;
     int m_machine;
     int m_time;
-
+    GanttOperation* m_graphic;
+    bool m_valid;
 
     friend QDataStream &operator<<(QDataStream &out, const Operation& op);
     friend QDataStream &operator>>(QDataStream &in, Operation& op);

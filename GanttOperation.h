@@ -7,7 +7,7 @@
 class GanttOperation : public QGraphicsItem
 {
 public:
-    GanttOperation(const QString& id, int time, QColor& color);
+    GanttOperation(const QString& id, int time, const QColor& color);
     ~GanttOperation();
 
     QRectF boundingRect() const;
@@ -19,7 +19,7 @@ public:
 protected:
     QString m_id;
     qreal w, h;
-    QColor col;
+    const QColor& col;
 };
 
 #endif // GRAFZADANIE_H
