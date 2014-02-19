@@ -13,13 +13,13 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    static const int dx = 9;
-    static const int dy = 20;
+    static const int m_widthUnit = 9;
+    static const int m_height = 20;
 
 protected:
     QString m_id;
-    qreal w, h;
-    const QColor& col;
+    qreal m_width;
+    const QColor& m_color;
 };
 
 #endif // GRAFZADANIE_H

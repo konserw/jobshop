@@ -2,21 +2,19 @@
 #include <QPainter>
 
 GanttOperation::GanttOperation(const QString& id, int time, const QColor &color) :
-    col(color)
+    m_color(color)
 {
     m_id = id;
-    w = time*dx;
-    h = dy;
+    m_width = time*m_widthUnit;
 }
 
 GanttOperation::~GanttOperation()
 {
-
 }
 
 QRectF GanttOperation::boundingRect() const
 {
-    return QRectF(0, 0, w, h);
+    return QRectF(0, 0, m_width, m_height);
 }
 
 void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -31,7 +29,7 @@ void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     QRectF rect(this->boundingRect());
 
     painter->setPen(pen);
-    painter->setBrush(col);
+    painter->setBrush(m_color);
     painter->drawRect(rect);
 
     painter->setFont(font);
