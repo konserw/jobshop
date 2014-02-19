@@ -144,7 +144,6 @@ void EvolutionWindow::showResult()
     ResultWindow* rw = new ResultWindow(Jobshop::instance()->winner(), this);
     rw->showMaximized();
     rw->exec();
-
 }
 
 void EvolutionWindow::rescalePlot()

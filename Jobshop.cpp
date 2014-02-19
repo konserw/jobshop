@@ -22,7 +22,7 @@ Jobshop::Jobshop()
 
 void Jobshop::printGenome() const
 {
-    for(const Chromosome& ch : m_genome)
+    for(const Chromosome& ch : m_chromosomes)
         qDebug() << ch;
 }
 
@@ -178,7 +178,7 @@ void Jobshop::removeOperation(const QString &id)
 
 void Jobshop::generateInitialPopulation()
 {
-    m_genome.clear();
+    m_chromosomes.clear();
     m_iteration = 0;
 
     qDebug() << "Problem parameters:";
@@ -215,9 +215,9 @@ void Jobshop::generateInitialPopulation()
             }
         }while(anyLeft);
         x.calculateValues();
-        m_genome.append(x);
+        m_chromosomes.append(x);
     }
-    qSort(m_genome);
+    qSort(m_chromosomes);
 
     qDebug() << "Initial population";
     printGenome();
@@ -225,35 +225,35 @@ void Jobshop::generateInitialPopulation()
 
 void Jobshop::reproduce()
 {
-    std::uniform_int_distribution<int> dist(0, m_genome.count()-1);
+    std::uniform_int_distribution<int> dist(0, m_chromosomes.count()-1);
     QList<Chromosome> offspring;
     for(int i=0; i<m_crossovers; ++i)
     {
         //todo losowanie parentow wg rankingu
-        offspring.append(MSX(m_genome[dist(m_rng)], m_genome[dist(m_rng)]));
+        offspring.append(MSX(m_chromosomes[dist(m_rng)], m_chromosomes[dist(m_rng)]));
     }
 
-    m_genome.append(offspring);
+    m_chromosomes.append(offspring);
 }
 
 void Jobshop::iteration()
 {
     reproduce();
 
-    qSort(m_genome);
+    qSort(m_chromosomes);
 
-    while(m_genome.count() > m_population)
-        m_genome.removeLast();
+    while(m_chromosomes.count() > m_population)
+        m_chromosomes.removeLast();
 
     qDebug() << "Iteration:\t" << ++m_iteration;
     printGenome();
 
-    emit iterationResult(m_genome.last().value(), m_genome[0].value());
+    emit iterationResult(m_chromosomes.last().value(), m_chromosomes[0].value());
 }
 
 const Chromosome &Jobshop::winner() const
 {
-    return m_genome.first();
+    return m_chromosomes.first();
 }
 
 Chromosome Jobshop::fifo() const
@@ -331,10 +331,15 @@ Chromosome Jobshop::lifo() const
     QVector<QList<QString> > queues(m_machinesCount);
 
     Chromosome chromosome;
-    int t=0;
+    int t=-1;
 
     while(1)
     {
+        ++t;
+        /*
+        qDebug() << "t:" << t << "gene count:" << chromosome.geneCount() << "/" <<  m_chromosomes.count();
+        qDebug() << chromosome;
+        */
         for(int jobNumber=0; jobNumber<jobsCount; ++jobNumber)
         {
             if(!isJobActive[jobNumber])
@@ -353,6 +358,7 @@ Chromosome Jobshop::lifo() const
         {
             int& mt = machineTime[machineNumber];
             QList<QString>& q = queues[machineNumber];
+    //        qDebug() << "machine number" << machineNumber << "queue" << q;
             if(t >= mt && !q.isEmpty())
             {
                 const Operation& op = m_operations[q.last()];
@@ -362,19 +368,16 @@ Chromosome Jobshop::lifo() const
                 mt = end;
                 jobTime[jn] = end;
 
-                q.removeLast();
                 chromosome.addGene(op.id());
+                q.removeLast();
 
-                if(currentOperationOfJob[jn]++ < m_operationsCount)
+                if(++currentOperationOfJob[jn] < m_operationsCount)
                     isJobActive[jn] = true;
             }
         }
 
-        if(chromosome.geneCount() == m_genome.count())
-            break;
-        ++t;
-
-  //      qDebug() << "t:" << t << "gene count:" << chromosome.geneCount() << "/" <<  m_genome.count();
+        if(chromosome.geneCount() == m_operations.count())
+            break;       
     }
 
     chromosome.calculateValues();

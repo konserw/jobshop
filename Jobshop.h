@@ -155,7 +155,7 @@ protected:
     ///Hash mapping operation id to Operation object
     QHash<QString, Operation> m_operations;
     ///List conaining current population of Chromosome objects
-    QList<Chromosome> m_genome;
+    QList<Chromosome> m_chromosomes;
 
     ///Random numbers generator for MSX and initial population generation
     std::mt19937 m_rng;
