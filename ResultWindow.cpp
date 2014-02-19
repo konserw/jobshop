@@ -51,14 +51,14 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
     ui->tableView->setModel(new ResultsModel(chromosome.results(), this));
     //global stats
     ui->label->setTextFormat(Qt::RichText);
-    ui->label->setStyleSheet("QLabel { background-color : white; color : black; }");
+    ui->label->setStyleSheet("QLabel { vertical-align: middle; font-size: 12pt; background-color: white; color: black; }");
     ui->label->setText(QString(
                            "Completion Time = %1<br />\n"
                            "Mean Flow Time = %2<br />\n"
                            "Number of tardy jodbs = %3 <br />\n"
                            "Maximum tardiness = %4<br />\n"
-                           "<img src=:/w1> = %5<br />\n"
-                           "<img src=:/w2> = %6<br />\n"
+                           "<img src=:/w1> %5<br />\n"
+                           "<img src=:/w2> %6<br />\n"
                            )
                        .arg(m_chromosome.completionTime())
                        .arg(m_chromosome.meanFlow())
@@ -92,6 +92,14 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 */
+    m_chart = Jobshop::instance()->ganttChart();
+
+    m_scene = new QGraphicsScene(this);
+    m_scene->addItem(m_chart);
+
+    ui->graphicsView->setScene(m_scene);
+    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
     connect(ui->pushButton_latex, &QPushButton::clicked, this, &ResultWindow::latex);
 }
 

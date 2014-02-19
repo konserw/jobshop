@@ -72,8 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->spinBox_machines->setValue(5);
     ui->spinBox_jobs->setValue(10);
     ui->spinBox_operations->setValue(10);
+    Jobshop::instance()->demodata();
 */
-//    Jobshop::instance()->demodata();
     import("sample.mar");
     this->solve();
 }

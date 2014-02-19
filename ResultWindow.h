@@ -2,7 +2,7 @@
 #define WYKRES_H
 
 #include "Chromosome.h"
-
+#include "GanttChart.h"
 #include <QDialog>
 
 class Result;
@@ -35,7 +35,9 @@ private:
 
     Chromosome m_chromosome;
 
-    QGraphicsScene* scene;
+    GanttChart* m_chart;
+    QGraphicsScene* m_scene;
+
 };
 
 #endif // WYKRES_H

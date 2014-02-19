@@ -20,6 +20,9 @@ public:
 
     bool operator==(const Operation& other);
 
+    Operation& operator=(const Operation& other);
+    Operation(const Operation& other);
+
     QString print()const;
 
     QString id() const;

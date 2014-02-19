@@ -37,3 +37,8 @@ void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->setFont(font);
     painter->drawText(rect, Qt::AlignCenter, m_id);
 }
+
+void GanttOperation::setStart(int time)
+{
+    setPos(m_height-1, time*m_widthUnit);
+}

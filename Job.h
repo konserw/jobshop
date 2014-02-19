@@ -41,6 +41,8 @@ public:
     QString id() const;
     int totalTime() const;
 
+    const QColor& color() const;
+
 private:
     QString m_id;
     QString m_name;

@@ -11,6 +11,7 @@
 
 class JobshopModel;
 class Operation;
+class GanttChart;
 
 /*!
  * \brief The Jobshop class - holds information about problem to solve.
@@ -69,6 +70,12 @@ public:
      * \return Const reference to jobs list
      */
     const QList<Job>& jobs() const;
+
+    /*!
+     * \brief ganttChart Constructs GanttChart for winer chromosome
+     * \return Pointer to newly created GanttChart
+     */
+    GanttChart* ganttChart() const;
 
 public slots:
     FitnessFunction fitnessFunction() const;

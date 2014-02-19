@@ -66,7 +66,8 @@ SOURCES += \
     GanttOperation.cpp \
     Result.cpp \
     ResultsModel.cpp \
-    Logger.cpp
+    Logger.cpp \
+    GanttChart.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -83,7 +84,8 @@ HEADERS += \
     GanttOperation.h \
     Result.h \
     ResultsModel.h \
-    Logger.h
+    Logger.h \
+    GanttChart.h
 
 FORMS += \
     MainWindow.ui \

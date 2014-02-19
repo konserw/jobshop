@@ -110,6 +110,11 @@ int Job::totalTime() const
     return t;
 }
 
+const QColor &Job::color() const
+{
+    return m_color;
+}
+
 QString Job::operationId(int number) const
 {
     return QString("%1%2").arg(m_id).arg(number);

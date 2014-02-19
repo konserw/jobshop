@@ -13,6 +13,8 @@ public:
 //    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    void setStart(int time);
+
     static const int m_widthUnit = 9;
     static const int m_height = 20;
 

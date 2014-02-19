@@ -1,12 +1,18 @@
 #include "Operation.h"
 #include "Job.h"
 #include "GanttOperation.h"
+#include "Jobshop.h"
 #include <QtDebug>
+
+/***********
+ * TODO co jak time sie zmienia!?
+ * *****************************/
 
 Operation::Operation()
 {
     m_time = 0;
     m_valid = false;
+    m_graphic = nullptr;
 }
 
 Operation::Operation(const QColor& color, const QString& id, int machine, int time) :
@@ -21,6 +27,28 @@ Operation::Operation(const QColor& color, const QString& id, int machine, int ti
 bool Operation::operator==(const Operation &other)
 {
     return other.m_id == m_id;
+}
+
+Operation &Operation::operator=(const Operation &other)
+{
+    m_id = other.m_id;
+    m_machine = other.m_machine;
+    m_time = other.m_time;
+    m_valid = other.m_valid;
+
+    m_graphic = new GanttOperation(m_id, m_time, Jobshop::instance()->jobs()[this->jobNumber()].color());
+
+    return *this;
+}
+
+Operation::Operation(const Operation &other)
+{
+    m_id = other.m_id;
+    m_machine = other.m_machine;
+    m_time = other.m_time;
+    m_valid = other.m_valid;
+
+    m_graphic = new GanttOperation(m_id, m_time, Jobshop::instance()->jobs()[this->jobNumber()].color());
 }
 
 QString Operation::print() const
@@ -77,7 +105,8 @@ QDataStream &operator<<(QDataStream &out, const Operation &op)
 
     out << op.m_id
         << machine
-        << time;
+        << time
+        << op.m_valid;
 
     return out;
 }
@@ -89,10 +118,13 @@ QDataStream &operator>>(QDataStream &in, Operation &op)
 
     in  >> op.m_id
         >> machine
-        >> time;
+        >> time
+        >> op.m_valid;
 
     op.m_machine = machine;
     op.m_time = time;
+
+    op.m_graphic = new GanttOperation(op.m_id, time, Jobshop::instance()->jobs()[op.jobNumber()].color());
 
     return in;
 }

@@ -89,6 +89,10 @@ int Chromosome::startTime(const QString &operation) const
 {
     return m_operationsStartTime[operation];
 }
+const QList<QString> &Chromosome::genes() const
+{
+    return m_genes;
+}
 
 void Chromosome::calculateValues()
 {

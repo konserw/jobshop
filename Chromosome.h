@@ -15,6 +15,7 @@ public:
     Chromosome();
 
     int geneCount() const;
+    const QList<QString>& genes() const;
 
     bool hasGene(const QString& gene) const;
     void addGene(const QString& gene);
@@ -51,6 +52,7 @@ public:
 
     ///Returns scheduled start time for operation in this chromosome (schedule)
     int startTime(const QString& operation) const;
+
 
 protected:
     ///value of fitness funciton meanSquare
