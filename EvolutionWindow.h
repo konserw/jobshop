@@ -58,10 +58,7 @@ protected:
     static const int m_maxRange = 1000;
     int m_plotRange;
 
-    Chromosome m_fifoChromosome;
     double m_fifoValue;
-
-    Chromosome m_lifoChromosome;
     double m_lifoValue;
 };
 

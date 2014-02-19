@@ -114,9 +114,13 @@ public slots:
     ///Returns current best chromosome
     const Chromosome& winner() const;
     ///Returns chromosome constructed by FIFO cheuristic
-    Chromosome fifo() const;
+    const Chromosome& fifoChromosome() const;
     ///Returns chromosome constructed by FIFO cheuristic
-    Chromosome lifo() const;
+    const Chromosome& lifoChromosome() const;
+    ///Returns value of chromosome constructed by FIFO cheuristic
+    double fifoValue() const;
+    ///Returns value of chromosome constructed by LIFO cheuristic
+    double lifoValue() const;
 
 signals:
     /*!
@@ -138,6 +142,12 @@ protected:
     virtual void reproduce();
     ///printGenome - used for printing current genome to log file
     void printGenome() const;
+
+    void fifo();
+    void lifo();
+
+    Chromosome m_fifoChromosome;
+    Chromosome m_lifoChromosome;
 
     ///Number of machines used by operations
     int m_machinesCount;

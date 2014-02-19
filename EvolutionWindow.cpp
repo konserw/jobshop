@@ -11,11 +11,10 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_isRunning(false),
     m_plotRange(25)
 {
-    m_fifoChromosome = Jobshop::instance()->fifo();
-    m_fifoValue = m_fifoChromosome.value();
+    Jobshop::instance()->generateInitialPopulation();
 
-    m_lifoChromosome = Jobshop::instance()->lifo();
-    m_lifoValue = m_lifoChromosome.value();
+    m_fifoValue = Jobshop::instance()->fifoValue();
+    m_lifoValue = Jobshop::instance()->lifoValue();
 
     setObjectName(QStringLiteral("EvolutionWindow"));
     setWindowModality(Qt::ApplicationModal);

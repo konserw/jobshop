@@ -185,6 +185,9 @@ void Jobshop::generateInitialPopulation()
     for(const Job& j : m_jobs)
         qDebug() << j.print();
 
+    fifo();
+    lifo();
+
     int jobsCount = m_jobs.count();
     std::uniform_int_distribution<int> dist(0, jobsCount-1);
 
@@ -256,7 +259,27 @@ const Chromosome &Jobshop::winner() const
     return m_chromosomes.first();
 }
 
-Chromosome Jobshop::fifo() const
+const Chromosome &Jobshop::fifoChromosome() const
+{
+    return m_fifoChromosome;
+}
+
+const Chromosome &Jobshop::lifoChromosome() const
+{
+    return m_lifoChromosome;
+}
+
+double Jobshop::fifoValue() const
+{
+    return m_fifoChromosome.value();
+}
+
+double Jobshop::lifoValue() const
+{
+    return m_lifoChromosome.value();
+}
+
+void Jobshop::fifo()
 {
     //kiedy konczy sie poprzednia operacja maszyny
     QVector<int> machineTime(m_machinesCount, 0);
@@ -308,10 +331,11 @@ Chromosome Jobshop::fifo() const
 
     chromosome.calculateValues();
     qDebug() << "FIFO:" << chromosome;
-    return chromosome;
+
+    m_fifoChromosome = chromosome;
 }
 
-Chromosome Jobshop::lifo() const
+void Jobshop::lifo()
 {
     //kiedy konczy sie poprzednia operacja maszyny
     QVector<int> machineTime(m_machinesCount, 0);
@@ -382,7 +406,8 @@ Chromosome Jobshop::lifo() const
 
     chromosome.calculateValues();
     qDebug() << "LIFO:" << chromosome;
-    return chromosome;
+
+    m_lifoChromosome = chromosome;
 }
 
 void Jobshop::demodata()
