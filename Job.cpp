@@ -209,3 +209,32 @@ QDataStream &operator >>(QDataStream &in, Job &job)
 
     return in;
 }
+
+
+QDebug& operator<<(QDebug& d, const Job &job)
+{
+
+    d << "Arrival:" << job.m_arrival;
+    d << "Due date:" << job.m_dueDate;
+    d << "Alpha:" << job.m_alpha;
+    d << "Beta:" << job.beta();
+    d << "Operations:";
+
+    bool f = false;
+    for(const QString& id : job.m_operationIds)
+    {
+        const Operation& operation = Jobshop::instance()->operation(id);
+        if(operation.time() > 0)
+        {
+            if(f)
+                d << "-";
+
+            d << operation;
+
+            if(!f)
+                f = true;
+        }
+    }
+
+    return d;
+}

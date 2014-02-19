@@ -97,17 +97,19 @@ void Jobshop::load(QDataStream &in)
         m_jobs.append(job);
     }
 
-    for(Job& job : m_jobs)
-        qDebug() << "job" << job.id() << "ids:" << job.m_operationIds;
-
+    qDebug() << "Operations:";
     for(qint64 i=0; i<operations*jobs; ++i)
     {
         Operation op;
         in >> op;
         m_operations.insert(op.id(), op);
+        qDebug() << op;
     }
 
-    qDebug() << "operations" << m_operations.keys();
+    qDebug() << "Jobs:";
+    for(const Job& job : m_jobs)
+        qDebug() << job;
+
 }
 
 void Jobshop::save(QDataStream &out)
@@ -183,7 +185,7 @@ void Jobshop::generateInitialPopulation()
 
     qDebug() << "Problem parameters:";
     for(const Job& j : m_jobs)
-        qDebug() << j.print();
+        qDebug() << j;
 
     fifo();
     lifo();
@@ -436,7 +438,6 @@ void Jobshop::addJobs(int count)
 {
     for(int i=0; i<count; ++i)
         m_jobs.append(Job(m_operationsCount));
-    
 }
 
 void Jobshop::removeJobs(int count)

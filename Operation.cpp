@@ -1,6 +1,7 @@
 #include "Operation.h"
 #include "Job.h"
 #include "GanttOperation.h"
+#include <QtDebug>
 
 Operation::Operation()
 {
@@ -94,4 +95,11 @@ QDataStream &operator>>(QDataStream &in, Operation &op)
     op.m_time = time;
 
     return in;
+}
+
+
+QDebug &operator<<(QDebug &d, const Operation &operation)
+{
+    d.nospace() << "Operation " << operation.id() << ": " << operation.time() << "h on machine " << operation.machine()+1;
+    return d.space();
 }

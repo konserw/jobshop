@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableView->setModel(model);
     ui->tableView->setItemDelegate(new OperationDelegate(this));
-//    ui->tableView->verticalHeader()->sectionResizeMode(QHeaderView::ResizeToContents);
     ui->tableView->verticalHeader()->setDefaultSectionSize(60);
     ui->tableView->horizontalHeader()->setDefaultSectionSize(125);
 
@@ -37,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBox_population, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setPopulation(int)));
     connect(ui->spinBox_crossovers, SIGNAL(valueChanged(int)), Jobshop::instance(), SLOT(setCrossovers(int)));
 
-//    connect(ui->comboBox_fitness, &QComboBox::currentIndexChanged, model, &JobshopModel::setFitnessFunction);
     connect(ui->comboBox_fitness, SIGNAL(currentIndexChanged(int)), model, SLOT(setFitnessFunction(int)));
     connect(ui->spinBox_operations, SIGNAL(valueChanged(int)), model, SLOT(setOperationsCount(int)));
     connect(ui->spinBox_jobs, SIGNAL(valueChanged(int)), model, SLOT(setJobsCount(int)));
@@ -100,22 +98,20 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::import(const QString& s)
 {
+    qDebug() <<  "Loading jobshop scheduling problem from file" << s;
+
     QFile file(s);
     if (!file.open(QIODevice::ReadOnly))
     {
         QMessageBox::critical(this, tr("Error"), tr("Nie udało się otworzyć pliku z danymi marszrut"));
-        if(!file.exists()) qWarning() <<  "plik marszrut nie iesnieje";
-        else qWarning() <<  "plik marszrut nie jest dostępny";
+        if(!file.exists()) qWarning() <<  "File does not exist";
+        else qWarning() <<  "File is not aviable";
         return;
     }
-
-    qDebug() <<  "wczytuje marszruty z pliku" << s;
 
     QDataStream in(&file);
 
     Jobshop::instance()->model()->loadModel(in);
-
-    qDebug() <<  "koniec wczytywania";
 
     ui->spinBox_machines->setValue(Jobshop::instance()->machinesCount());
     ui->spinBox_jobs->setValue(Jobshop::instance()->jobCount());
@@ -144,8 +140,6 @@ void MainWindow::solve()
         return;
     }
 
-    Jobshop::instance()->generateInitialPopulation();
-
     EvolutionWindow evo(this);// = new EvolutionWindow(this);
     evo.showMaximized();
     evo.exec();
@@ -157,20 +151,17 @@ void MainWindow::exp()
     s = QFileDialog::getSaveFileName(this, tr("Zapisz plik marszrut"), "", tr("Plik mar (*.mar)"));
     if(s.isEmpty())return;
 
+    qDebug() <<  "Saving jobshop scheduling problem to file" << s;
+
     QFile file(s);
     if (!file.open(QIODevice::WriteOnly))
     {
         QMessageBox::critical(this, tr("Error"), tr("Nie udało się otworzyć pliku z danymi marszrut"));
-        if(!file.exists()) qWarning() <<  "plik marszrut nie iesnieje";
-        else qWarning() <<  "plik marszrut nie jest dostępny";
+        qWarning() <<  "File is not aviable for writting";
         return;
     }
-
-    qDebug() <<  "zapisuje marszruty...";
 
     QDataStream out(&file);
 
     Jobshop::instance()->save(out);
-
-    qDebug() <<  "koniec zapisu";
 }
