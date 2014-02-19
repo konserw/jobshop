@@ -1,16 +1,16 @@
 #ifndef GRAFZADANIE_H
 #define GRAFZADANIE_H
 
-#include <QGraphicsItem>
+#include <QGraphicsRectItem>
 #include <QString>
 
-class GanttOperation : public QGraphicsItem
+class GanttOperation : public QGraphicsRectItem
 {
 public:
     GanttOperation(const QString& id, int time, const QColor& color);
     ~GanttOperation();
 
-    QRectF boundingRect() const;
+//    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     static const int m_widthUnit = 9;

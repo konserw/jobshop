@@ -2,21 +2,23 @@
 #include <QPainter>
 
 GanttOperation::GanttOperation(const QString& id, int time, const QColor &color) :
+    QGraphicsRectItem(nullptr),
     m_color(color)
 {
     m_id = id;
     m_width = time*m_widthUnit;
+    this->setRect(0, 0, m_width, m_height);
 }
 
 GanttOperation::~GanttOperation()
 {
 }
-
+/*
 QRectF GanttOperation::boundingRect() const
 {
-    return QRectF(0, 0, m_width, m_height);
+    return QRectF();
 }
-
+*/
 void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option);
@@ -26,7 +28,7 @@ void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     QPen pen;
     pen.setWidth(0);
 
-    QRectF rect(this->boundingRect());
+    const QRectF& rect = this->rect();
 
     painter->setPen(pen);
     painter->setBrush(m_color);

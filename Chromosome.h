@@ -6,8 +6,6 @@
 #include <QString>
 #include "Result.h"
 
-class Operation;
-
 /*!
  * \brief The Chromosome class - represnts single schedule as order of operations (genes)
  */
