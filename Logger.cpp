@@ -78,7 +78,7 @@ bool Logger::setFilePath(const QString &path)
     delete m_log;
 
     m_log = new QFile(path);
-    if(!m_log->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+    if(!m_log->open(QIODevice::WriteOnly | /*QIODevice::Append |*/ QIODevice::Text))
     {
         qDebug() << "Error opening log file '" << path << "'. All debug output redirected to console.";
         delete m_log;
@@ -88,7 +88,7 @@ bool Logger::setFilePath(const QString &path)
     }
 
     m_out = new QTextStream(m_log);
-    (*m_out) << "=========================================================================================\n";
+//    (*m_out) << "=========================================================================================\n";
 
     return true;
 }
