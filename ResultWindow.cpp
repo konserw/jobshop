@@ -71,30 +71,6 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
                        .arg(m_chromosome.valueAlpha())
                        );
 
-    /*
-        QGraphicsSimpleTextItem* text;
-        QFont font("Arial", 12);
-        qreal x;
-        qreal ym = (maszyn*2*grafZadanie::dy)+grafZadanie::dy;
-
-        for(int i=0; i<c; i+=5)
-        {
-            x = maszyna::X0 + grafZadanie::dx*i;
-            scene->addLine(x, 0, x, ym);
-            text = scene->addSimpleText(QString::number(i), font);
-            text->setX(x+3);
-            text->setY(ym-18);
-        }
-      ilnia z Cmax
-        x = x0 + dx*c;
-        scene->addLine(x, 0, x, ym);
-        text = scene->addSimpleText(tr("Cmax = %1").arg(QString::number(c)), font);
-        text->setX(x+3);
-        text->setY(ym-18);
-
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-*/
     m_chart = Jobshop::instance()->ganttChart();
 
     m_scene = new QGraphicsScene(this);

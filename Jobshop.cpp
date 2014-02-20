@@ -68,7 +68,8 @@ const QList<Job> &Jobshop::jobs() const
 GanttChart *Jobshop::ganttChart() const
 {
     const Chromosome& chromosome = this->winner();
-    GanttChart* chart = new GanttChart();
+    int cMax = chromosome.completionTime();
+    GanttChart* chart = new GanttChart(cMax);
 
     QList<GanttMachine*> machines;
     GanttMachine* m ;
@@ -76,8 +77,8 @@ GanttChart *Jobshop::ganttChart() const
     {
         m = new GanttMachine(QString("m%1").arg(i+1), chart);
         machines.append(m);
-        m->setPos(30, i * GanttChart::machineHeight);
-        m->setCMax(chromosome.completionTime());
+        m->setPos(0, i * GanttChart::machineHeight);
+        m->setCMax(cMax);
     }
 
     for(const QString& opId : m_operations.keys())
