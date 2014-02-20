@@ -26,23 +26,25 @@ public:
     Chromosome chromosome() const;
     void setChromosome(const Chromosome &chromosome);
 
-    QPen pen() const;
-    void setPen(const QPen &pen);
+    static QPointF offset()
+    { return QPointF(m_xOffset, m_height - GanttOperation::m_height - 1); }
+
+    static const int m_height = GanttOperation::m_height * 3;
+
+    void setCMax(int cMax);
 
 protected:
     ///Metoda rysująca graficzą reprezentację obiektu.
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
-
 private:
-    int stop;
+    int m_cMax;
     QString m_id;
 
     QPen m_pen;
-    QFont m_font;
-    QList<GanttOperation> m_opertionGraphics;
+    QList<GanttOperation*> m_opertionGraphics;
 
-    static const int X0 = 35;
+    static const int m_xOffset = 35;
 };
 
 #endif // MASZYNA_H

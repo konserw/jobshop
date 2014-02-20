@@ -5,6 +5,8 @@
 
 class GanttChart : public QGraphicsItemGroup
 {
+    Q_INTERFACES(QGraphicsItem)
+
 public:
     GanttChart();
 };

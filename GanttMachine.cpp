@@ -1,15 +1,15 @@
 #include "GanttMachine.h"
 #include "Job.h"
 #include <QtDebug>
-#include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QPainter>
 
 GanttMachine::GanttMachine(const QString &id, QGraphicsItem *parent) :
     QGraphicsItem(parent),
     m_id(id),
-    m_font(QFont("Arial", 10, QFont::Normal, false))
+    m_cMax(0)
 {
-    setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    m_pen = QPen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
 /*
     y = (id - 1) * (2 * grafZadanie::dy);
@@ -24,6 +24,8 @@ GanttMachine::GanttMachine(const QString &id, QGraphicsItem *parent) :
     y += grafZadanie::dy;
 */
     QGraphicsTextItem* text = new QGraphicsTextItem(m_id, this);
+    text->setPos(0, m_height/2);
+    text->setFont(QFont("Arial", 12, QFont::Normal, false));
 
     qDebug() << "utworzono maszyne" << m_id;
 }
@@ -31,21 +33,6 @@ GanttMachine::GanttMachine(const QString &id, QGraphicsItem *parent) :
 GanttMachine::~GanttMachine()
 {
 }
-
-/*
-void maszyna::start(Job* z)
-{
-    cur = z;
-    stop = t + cur->time();
-
-    QGraphicsItem* it = cur->gItem();
-    it->setX(x);
-    it->setY(y-cur->gItem()->boundingRect().height());
-    scene->addItem(it);
-
-    x += cur->gItem()->boundingRect().width();
-}
-*/
 
 QString GanttMachine::id() const
 {
@@ -59,23 +46,26 @@ void GanttMachine::setId(const QString &id)
 
 QRectF GanttMachine::boundingRect() const
 {
-    return QRectF();
-}
-
-QPen GanttMachine::pen() const
-{
-    return m_pen;
-}
-
-void GanttMachine::setPen(const QPen &pen)
-{
-    m_pen = pen;
+    return QRectF(0, 0, m_xOffset + (m_cMax + 5) * GanttOperation::m_widthUnit, m_height);
 }
 
 void GanttMachine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+/*
+    qDebug() << boundingRect();
+    painter->setPen(m_pen);
+    painter->drawRect(boundingRect());
+*/
 }
+
+void GanttMachine::setCMax(int cMax)
+{
+    m_cMax = cMax;
+}
+
+
 /*
 void maszyna::up2()
 {

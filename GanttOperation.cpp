@@ -38,7 +38,7 @@ void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->drawText(rect, Qt::AlignCenter, m_id);
 }
 
-void GanttOperation::setStart(int time)
+QPointF GanttOperation::position(int time)
 {
-    setPos(m_height-1, time*m_widthUnit);
+    return QPointF(time*m_widthUnit, 0);
 }

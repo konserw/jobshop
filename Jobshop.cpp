@@ -74,7 +74,8 @@ GanttChart *Jobshop::ganttChart() const
     {
         GanttMachine* m = new GanttMachine(QString("m%1").arg(i+1), chart);
         machines.append(m);
-        m->setPos(30, i*30);
+        m->setPos(30, i*GanttMachine::m_height);
+        m->setCMax(chromosome.completionTime());
     }
 
     for(const QString& opId : m_operations.keys())
@@ -82,7 +83,8 @@ GanttChart *Jobshop::ganttChart() const
         const Operation& op = m_operations[opId];
         GanttOperation* gop = op.ganttGraphic();
         gop->setParentItem(machines[op.machine()]);
-        gop->setStart(chromosome.startTime(opId));
+        QPointF pos = gop->position(chromosome.startTime(opId));
+        gop->setPos(pos + GanttMachine::offset());
     }
 
     return chart;
