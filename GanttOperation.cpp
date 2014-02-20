@@ -14,6 +14,11 @@ GanttOperation::~GanttOperation()
 {
 }
 
+void GanttOperation::setTime(int time)
+{
+    this->setRect(0, 0, time * GanttChart::widthUnit, GanttChart::operationHeight);
+}
+
 void GanttOperation::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option);

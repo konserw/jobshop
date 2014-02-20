@@ -4,10 +4,6 @@
 #include "Jobshop.h"
 #include <QtDebug>
 
-/***********
- * TODO co jak time sie zmienia!?
- * *****************************/
-
 Operation::Operation()
 {
     m_time = 0;
@@ -81,6 +77,7 @@ int Operation::time() const
 void Operation::setTime(int time)
 {
     m_time = time;
+    m_graphic->setTime(time);
 }
 
 int Operation::jobNumber() const

@@ -12,6 +12,8 @@ public:
     GanttOperation(const QString& id, int time, const QColor& color);
     ~GanttOperation();
 
+    void setTime(int time);
+
 protected:    
     ///Metoda rysująca graficzą reprezentację obiektu.
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
