@@ -116,7 +116,7 @@ void Job::setOperationsCount(int count)
     {
         QString id = operationId(i);
         m_operationIds.append(id);
-        Jobshop::instance()->insertOperation(m_color, id);
+        Jobshop::instance()->operation(id);
     }
 }
 

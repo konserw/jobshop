@@ -8,16 +8,14 @@ Operation::Operation()
 {
     m_time = 0;
     m_valid = false;
-    m_graphic = nullptr;
 }
 
-Operation::Operation(const QColor& color, const QString& id, int machine, int time) :
+Operation::Operation(const QString& id, int machine, int time) :
     m_id(id),
     m_machine(machine),
     m_time(time),
     m_valid(true)
 {
-    m_graphic = new GanttOperation(m_id, m_time, color);
 }
 
 bool Operation::operator==(const Operation &other)
@@ -32,8 +30,6 @@ Operation &Operation::operator=(const Operation &other)
     m_time = other.m_time;
     m_valid = other.m_valid;
 
-    m_graphic = new GanttOperation(m_id, m_time, Jobshop::instance()->jobs()[this->jobNumber()].color());
-
     return *this;
 }
 
@@ -43,8 +39,6 @@ Operation::Operation(const Operation &other)
     m_machine = other.m_machine;
     m_time = other.m_time;
     m_valid = other.m_valid;
-
-    m_graphic = new GanttOperation(m_id, m_time, Jobshop::instance()->jobs()[this->jobNumber()].color());
 }
 
 QString Operation::print() const
@@ -77,7 +71,6 @@ int Operation::time() const
 void Operation::setTime(int time)
 {
     m_time = time;
-    m_graphic->setTime(time);
 }
 
 int Operation::jobNumber() const
@@ -87,7 +80,7 @@ int Operation::jobNumber() const
 
 GanttOperation *Operation::ganttGraphic() const
 {
-    return m_graphic;
+    return new GanttOperation(m_id, m_time, Jobshop::instance()->jobs()[this->jobNumber()].color());
 }
 
 bool Operation::isValid() const

@@ -16,7 +16,7 @@ class Operation
 {
 public:
     Operation();
-    Operation(const QColor &color, const QString &id, int machine = 0, int time = 0);
+    Operation(const QString &id, int machine = 0, int time = 0);
 
     bool operator==(const Operation& other);
 

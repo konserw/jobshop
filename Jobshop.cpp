@@ -188,18 +188,10 @@ JobshopModel *Jobshop::model()
     return m_model;
 }
 
-void Jobshop::insertOperation(const QColor &color, const QString &id)
-{
-    m_operations.insert(id, Operation(color, id));
-}
-
 Operation& Jobshop::operation(const QString &id)
 {
     if(!m_operations.contains(id))
-    {
-        qWarning() << "requested non-existant operation, id" << id;
-        return Operation();
-    }
+        m_operations.insert(id, Operation(id));
 
     return m_operations[id];
 }

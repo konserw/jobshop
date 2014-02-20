@@ -42,13 +42,12 @@ public:
     JobshopModel* model();
 
     /*!
-     * \brief insertOperation inserts new Operation into operations base
-     * \param color Color that all operations in one job share in Gantt chart
-     * \param id Operation's id
-     */
-    void insertOperation(const QColor& color, const QString& id);
-    /*!
-     * \brief operation Getter of Operation object. Flyweight pattern (?)
+     * \brief operation Getter of Operation object.
+     *
+     * Returns Operation object corresponding to the Id.
+     * If object of selected ID doens not exist it is creatred.
+     * This is implementation of Flyweight pattern.
+     *
      * \param id of operation to be returned
      * \return reference to Operation object that corresponds to given id
      */
