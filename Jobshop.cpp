@@ -10,7 +10,6 @@
 #include <QtDebug>
 #include <cmath>
 #include <ctime>
-#include <QtAlgorithms>
 
 Jobshop* Jobshop::m_instance = nullptr;
 
@@ -437,22 +436,24 @@ void Jobshop::lifo()
 
 void Jobshop::demodata()
 {
-    qsrand(time(0));
+    std::normal_distribution<> alphaDist(50, 20);
+    std::uniform_int_distribution<int> machineDist(0, m_machinesCount-1);
+    std::uniform_int_distribution<int> timeDist(1, 15);
+    std::normal_distribution<> arrivalDist(0, 6);
 
     for(Operation& op : m_operations)
     {
-        op.setMachine(qrand() % m_machinesCount);
-        op.setTime(qrand() % 15 + 1);
+        op.setMachine(machineDist(m_rng));
+        op.setTime(timeDist(m_rng));
     }
     int i=0;
     for(Job& job : m_jobs)
     {
-        double r = qrand()%100;
-        r /= 100;
+        double r = std::floor(alphaDist(m_rng))/100;
         job.setAlpha(r);
         job.setBeta(1-r);
-        job.setArrival(qrand()%50);
-        job.setDueDate(job.totalTime()*2.5);
+        job.setArrival(std::floor(std::abs(arrivalDist(m_rng))));
+        job.setDueDate(job.totalTime()*2);
         job.setName(QString("%1. job").arg(++i));
     }
 }

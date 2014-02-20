@@ -3,6 +3,7 @@
 #include "Jobshop.h"
 
 #include <QtDebug>
+#include <QtAlgorithms>
 
 int Job::m_jobsCount = 0;
 
