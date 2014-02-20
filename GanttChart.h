@@ -22,6 +22,15 @@ public:
     static QPointF machineOffset()
     { return QPointF(machineHorizontalOffset, machineHeight - operationHeight - 1); }
 
+    ///Zwraca prostokąt wewnątrz którego odbywa się rysowanie.
+    virtual QRectF boundingRect() const;
+
+    QPointF corner() const;
+    void setCorner(const QPointF &corner);
+
+protected:
+    QPointF m_corner;
+
 };
 
 #endif // GANTTCHART_H

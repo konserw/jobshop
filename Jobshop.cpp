@@ -71,13 +71,18 @@ GanttChart *Jobshop::ganttChart() const
     GanttChart* chart = new GanttChart();
 
     QList<GanttMachine*> machines;
+    GanttMachine* m ;
     for(int i=0; i<m_machinesCount; ++i)
     {
-        GanttMachine* m = new GanttMachine(QString("m%1").arg(i+1), chart);
+        m = new GanttMachine(QString("m%1").arg(i+1), chart);
         machines.append(m);
         m->setPos(30, i * GanttChart::machineHeight);
         m->setCMax(chromosome.completionTime());
+
+        qDebug() << m->boundingRect();
+        qDebug() << chart->mapFromItem(m, m->boundingRect());
     }
+    chart->setCorner(chart->mapFromItem(m, m->boundingRect().bottomLeft()));
 
     for(const QString& opId : m_operations.keys())
     {

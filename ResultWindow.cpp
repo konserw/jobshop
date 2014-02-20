@@ -102,6 +102,7 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
     ui->graphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     connect(ui->pushButton_latex, &QPushButton::clicked, this, &ResultWindow::latex);
+    connect(ui->pushButton_save, &QPushButton::clicked, this, &ResultWindow::saveChart);
 }
 
 ResultWindow::~ResultWindow()
@@ -292,4 +293,31 @@ void ResultWindow::latex2(const QString &texName)
             "\t\\FloatBarrier\n";
     save(texName, s);
     */
+}
+
+void ResultWindow::saveChart()
+{
+    QString fileName;
+    fileName = QFileDialog::getSaveFileName(this, tr("Export chart to file"), "", tr("Scalable Vector Graphics (*.svg)"));
+    if(fileName.isEmpty())return;
+    this->save2(fileName);
+}
+
+void ResultWindow::save2(const QString &filename)
+{
+    QSvgGenerator svgGen;
+    svgGen.setFileName(filename);
+    QRectF r = m_scene->sceneRect();
+    qDebug() << r << r.size().toSize();
+    svgGen.setSize(r.size().toSize());
+    svgGen.setViewBox(r);
+
+    svgGen.setTitle(tr("Gantt chart"));
+    svgGen.setDescription(tr("Gantt chart"));
+    QPainter painter;
+    painter.begin(&svgGen);
+  //  painter.rotate(rot);
+    m_scene->render(&painter);
+//    m_chart->paint(&painter, ?);
+    painter.end();
 }

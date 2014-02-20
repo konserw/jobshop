@@ -26,6 +26,8 @@ public slots:
 //    void pdf(const QString&fileName);
     void latex();
     void latex2(const QString&);
+    void saveChart();
+    void save2(const QString& filename);
 
 protected:
     void changeEvent(QEvent *e);
