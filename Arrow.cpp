@@ -46,6 +46,12 @@
 const qreal Pi = M_PI;
 const qreal arrowSize = 10;
 
+Arrow::Arrow(QGraphicsItem *parent) :
+    QGraphicsLineItem(parent)
+{
+    setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+}
+
 Arrow::Arrow(const QPointF &startPoint, const QPointF &endPoint, QGraphicsItem *parent) :
     QGraphicsLineItem(parent)
 {
@@ -103,3 +109,23 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
     painter->drawLine(line());
     painter->drawPolygon(arrowHead);
 }
+QPointF Arrow::endPoint() const
+{
+    return m_endPoint;
+}
+
+void Arrow::setEndPoint(const QPointF &endPoint)
+{
+    m_endPoint = endPoint;
+}
+
+QPointF Arrow::startPoint() const
+{
+    return m_startPoint;
+}
+
+void Arrow::setStartPoint(const QPointF &startPoint)
+{
+    m_startPoint = startPoint;
+}
+

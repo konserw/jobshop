@@ -62,20 +62,31 @@ public:
     virtual int type() const
         { return Type; }
 
+    /*! Default Constructor.
+     *
+     * Creates an empty arrow object with start and end point to be set.
+     * \param parent Pointer to GraphicsItem that owns newly constructed arrow.
+     */
+    explicit Arrow(QGraphicsItem *parent = 0);
     /*! Konstruktor parametryczny.
      *
      * Tworzy statyczny graficzny obiekt strzałki o podanych parametrach.
      * \param startPoint Punkt zaczepienia strzałki.
      * \param endPoint Punkt końca grotu strzałki.
      * \param parent Wskaźnika na rodzica do którego ma zostać dodana strzałka.
-     * \param scene Wskaźnik na QGraphicsScene do której ma zostać dodana strzałka.
      */
-    explicit Arrow(const QPointF& startPoint, const QPointF& endPoint, QGraphicsItem *parent = 0);
+    Arrow(const QPointF& startPoint, const QPointF& endPoint, QGraphicsItem *parent = 0);
 
     ///Zwraca prostokąt wewnątrz którego odbywa się rysowanie.
     virtual QRectF boundingRect() const;
     ///Zwraca kształt rysowanego obiektu.
     virtual QPainterPath shape() const;
+
+    QPointF startPoint() const;
+    void setStartPoint(const QPointF &startPoint);
+
+    QPointF endPoint() const;
+    void setEndPoint(const QPointF &endPoint);
 
 protected:
     ///Metoda rysująca graficzą reprezentację obiektu.

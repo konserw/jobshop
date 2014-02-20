@@ -2,7 +2,8 @@
 #define MASZYNA_H
 
 #include <QGraphicsItem>
-#include <QPen>
+
+class Arrow;
 
 class GanttMachine : public QGraphicsItem
 {
@@ -24,7 +25,7 @@ protected:
 private:
     int m_cMax;
     QString m_id;
-    QPen m_pen;
+    Arrow* m_arrow;
 };
 
 #endif // MASZYNA_H
