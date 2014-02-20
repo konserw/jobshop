@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
+    <width>789</width>
     <height>513</height>
    </rect>
   </property>
@@ -27,14 +27,11 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QGraphicsView" name="graphicsView"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QTableView" name="tableView"/>
-     </item>
-     <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QWidget" name="">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QPushButton" name="pushButton_save">
@@ -60,9 +57,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QTableView" name="tableView"/>
+       </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+     <widget class="QGraphicsView" name="graphicsView"/>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -49,6 +49,7 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
 
     //per job stats
     ui->tableView->setModel(new ResultsModel(chromosome.results(), this));
+    ui->tableView->resizeColumnsToContents();
     //global stats
     ui->label->setTextFormat(Qt::RichText);
     ui->label->setStyleSheet("QLabel { vertical-align: middle; font-size: 12pt; background-color: white; color: black; }");

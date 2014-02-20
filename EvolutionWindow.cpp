@@ -23,9 +23,9 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_layout = new QVBoxLayout(this);
 
     m_h1 = new QHBoxLayout();
-    m_pauseButton = new QPushButton(tr("pause/start"), this);
+    m_pauseButton = new QPushButton(tr("Pause/Start"), this);
     m_h1->addWidget(m_pauseButton);
-    m_stopButton = new QPushButton(tr("stop"), this);
+    m_stopButton = new QPushButton(tr("Show result"), this);
     m_h1->addWidget(m_stopButton);
     m_h1->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding));
 
