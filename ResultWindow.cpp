@@ -308,16 +308,13 @@ void ResultWindow::save2(const QString &filename)
     QSvgGenerator svgGen;
     svgGen.setFileName(filename);
     QRectF r = m_scene->sceneRect();
-    qDebug() << r << r.size().toSize();
+    qDebug() << "image size:" << r << r.size().toSize();
     svgGen.setSize(r.size().toSize());
     svgGen.setViewBox(r);
-
     svgGen.setTitle(tr("Gantt chart"));
     svgGen.setDescription(tr("Gantt chart"));
     QPainter painter;
     painter.begin(&svgGen);
-  //  painter.rotate(rot);
     m_scene->render(&painter);
-//    m_chart->paint(&painter, ?);
     painter.end();
 }

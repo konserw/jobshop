@@ -5,7 +5,6 @@
 #include "Jobshop.h"
 
 #include <QtDebug>
-//#include <QPainter>
 
 OperationDelegate::OperationDelegate(QObject *parent) :
     QStyledItemDelegate(parent)

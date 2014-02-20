@@ -140,7 +140,7 @@ void MainWindow::solve()
         return;
     }
 
-    EvolutionWindow evo(this);// = new EvolutionWindow(this);
+    EvolutionWindow evo(this);
     evo.showMaximized();
     evo.exec();
 }

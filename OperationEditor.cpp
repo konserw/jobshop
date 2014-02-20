@@ -2,7 +2,6 @@
 #include "Operation.h"
 
 #include <QtWidgets>
-//#include <QSize>
 
 OperationEditor::OperationEditor(int machineCount, QWidget *parent) :
     QWidget(parent)
