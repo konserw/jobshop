@@ -70,6 +70,11 @@ int Chromosome::maxTardy() const
     )->lateness();
 }
 
+double Chromosome::meanTardy() const
+{
+    return m_meanTardy;
+}
+
 bool Chromosome::operator<(const Chromosome& other) const
 {
     return value() < other.value();
@@ -121,6 +126,7 @@ void Chromosome::calculateValues()
         mt = end;
     }
 
+    m_meanTardy = 0;
     m_meanFlow = 0;
     m_numberOfTardy = 0;
     double sum = 0;
@@ -141,7 +147,10 @@ void Chromosome::calculateValues()
 
         if(result.lateness() > 0)
             ++m_numberOfTardy;
+        m_meanTardy += double(result.lateness());
     }
+
+    m_meanTardy /= (double)jobsCount;
 
     m_meanFlow /= jobsCount;
     m_valueMean = std::sqrt(sum);

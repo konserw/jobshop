@@ -43,6 +43,8 @@ public:
 
     const QColor& color() const;
 
+    QString printCompact() const;
+
 private:
     QString m_id;
     QString m_name;

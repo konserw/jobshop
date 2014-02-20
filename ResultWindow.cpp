@@ -58,13 +58,15 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
                            "Mean Flow Time = %2<br />\n"
                            "Number of tardy jodbs = %3 <br />\n"
                            "Maximum tardiness = %4<br />\n"
-                           "<img src=:/w1> %5<br />\n"
-                           "<img src=:/w2> %6<br />\n"
+                           "Mean tardiness = %5<br />\n"
+                           "<img src=:/w1> %6<br />\n"
+                           "<img src=:/w2> %7<br />\n"
                            )
                        .arg(m_chromosome.completionTime())
                        .arg(m_chromosome.meanFlow())
                        .arg(m_chromosome.tardy())
                        .arg(m_chromosome.maxTardy())
+                       .arg(m_chromosome.meanTardy())
                        .arg(m_chromosome.valueMean())
                        .arg(m_chromosome.valueAlpha())
                        );
@@ -179,57 +181,40 @@ void ResultWindow::latex()
 
 void ResultWindow::latex2(const QString &texName)
 {
-    /*===================
-     * TODO
-     *========================/
-    QString s;
-    Result* st;
-
     QFileInfo fi(texName);
-    const QString name = fi.baseName();
-    const QString svgName(tr("output/gantt_%1.svg").arg(name));
+    const QString svgName(QString("%2/gantt_%1.svg").arg(fi.baseName()).arg(fi.absolutePath()));
+
+    save2(svgName);
+
+    /*convert svg to pdf using incscape
     const QString pdfName(tr("gantt_%1.pdf").arg(name));
-
-    QSvgGenerator svgGen;
-    svgGen.setFileName(svgName);
-    svgGen.setSize(QSize(1000, 500));
-    svgGen.setViewBox(QRect(0, 0, 1000, 500));
-    svgGen.setTitle(tr("Gantt chart"));
-    svgGen.setDescription(tr("Gantt chart"));
-    QPainter painter;
-    painter.begin(&svgGen);
-  //  painter.rotate(rot);
-    scene->render(&painter);
-    painter.end();
-
     QStringList args;
     args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << tr("output/%1").arg(pdfName) << "-D";
     run("inkscape", args);
-
+*/
+    QString s;
     s =     "\n%Tabela danych\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
             "\t\t\\caption{Struktura zlecenia}\n"
-            "\t\t\\begin{tabular}{ | r | c | c | l | }\n"
+            "\t\t\\begin{tabular}{ | r | c | c | c | c | l | }\n"
             "\t\t\\hline\n"
-            "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& Marszruta technologiczna\t\\\\ \\hline\n";
-    Job* z;
-    foreach(z, *zadania)
+            "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& \\(\\alpha\\)\t& \\(\\beta\\)\t& Operacje zadnia\t\\\\ \\hline\n";
+
+    for(const Job& job : Jobshop::instance()->jobs())
     {
-        s += "\t\t";
-        s += z->id();
-        s += "\t& ";
-        s += QString::number(z->arrival());
-        s += "\t& ";
-        s += QString::number(z->dueDate());
-        s += "\t& ";
-        s += z->print();
-        s += "\t\\\\ \\hline\n";
+        s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t& %6\t\\\\ \\hline\n")
+                .arg(job.id())
+                .arg(job.arrival())
+                .arg(job.dueDate())
+                .arg(job.alpha())
+                .arg(job.beta())
+                .arg(job.printCompact());
     }
     s +=    "\t\t\\end{tabular}\n"
-            "\t\\end{table}\n";
-
-    s +=    "\n%Tabela wynikowa\n\n"
+            "\t\\end{table}\n"
+            "\n"
+            "%Tabela wynikowa\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
             "\t\t\\caption{Parametry wykonanych zadań}\n"
@@ -237,51 +222,39 @@ void ResultWindow::latex2(const QString &texName)
             "\t\t\\hline\n"
             "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
 
-    qSort(stats.begin(), stats.end());
-
-    foreach(st, stats)
+    for(const Result& result : m_chromosome.results())
     {
-        s += "\t\t";
-        s += QString::number(st->j());
-        s += "\t& ";
-        s += QString::number(st->cj());
-        s += "\t& ";
-        s += QString::number(st->fj());
-        s += "\t& ";
-        s += QString::number(st->lj());
-        s += "\t& ";
-        s += QString::number(st->ej());
-        s += "\t\\\\ \\hline\n";
+        s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t\\\\ \\hline\n")
+                .arg(result.jobID())
+                .arg(result.completionTime())
+                .arg(result.flow())
+                .arg(result.lateness())
+                .arg(result.earliness());
     }
 
     s +=    "\t\t\\end{tabular}\n"
-            "\t\\end{table}\n";
-
-    s +=    "\n%Tabela wyznacznikow\n\n"
+            "\t\\end{table}\n"
+            "\n"
+            "%Tabela wyznacznikow\n\n"
             "\t\\begin{table}[htb]\n"
             "\t\t\\centering\n"
-            "\t\t\\begin{tabular}{ l l l }\n"
-            "\t\t\\(C_{max} = ";
-    s +=    QString::number(c);
-    s +=    " \\)\t& \\( T_{max} = ";
-    s +=    QString::number(Tmax);
-    s +=    " \\)\t& \\( \\sqrt{\\sum e_j^2 + \\sum l_j^2} = ";
-    s +=    QString::number(w1);
-    s +=    "\\)\t\\\\\n"
-            "\t\t\\( \\bar{F} = ";
-    s +=    QString::number(f);
-    s +=    " \\)\t& \\( \\bar{T} = ";
-    s +=    QString::number(Tsr);
-    s +=    " \\)\t& \\( \\alpha*\\sum e_j + \\beta*\\sum l_j \\Big|_{\\substack{\\alpha = ";
-    s +=    QString::number(alfa);
-    s +=    "\\\\ \\beta = ";
-    s +=    QString::number(beta);
-    s +=    "}} = ";
-    s +=    QString::number(w2);
-    s +=    " \\)\t\\\\ \n";
+            "\t\t\\begin{tabular}{ l l l }\n";
+
+    s +=    QString(
+                "\t\t\\(C_{max} = %1 \\)\t& \\( T_{max} = %3 \\)\t& \\( \\sqrt{\\sum e_j^2 + \\sum l_j^2} = %5 \\)\t\\\\\n"
+                "\t\t\\( \\bar{F} = %2 \\)\t& \\( \\bar{T} = %4 \\)\t& \\( \\sum \\alpha * e_j + \\sum \\beta * l_j = %6 \\)\t\\\\\n"
+                )
+            //\\bar{T} = %4
+            .arg(m_chromosome.completionTime())
+            .arg(m_chromosome.meanFlow())
+            .arg(m_chromosome.maxTardy())
+            .arg(m_chromosome.meanTardy())
+            .arg(m_chromosome.valueMean())
+            .arg(m_chromosome.valueAlpha());
+
     s +=    "\t\t\\end{tabular}\n"
             "\t\\end{table}\n";
-
+/*
     s +=    "%wykres gantt'a\n"
            "\t\\begin{figure}[htb]\n"
            "\t\t\\centering\n"
@@ -291,8 +264,8 @@ void ResultWindow::latex2(const QString &texName)
             "\t\t\\caption{Wykres Gantt'a}\n"
             "\t\\end{figure}\n"
             "\t\\FloatBarrier\n";
+*/
     save(texName, s);
-    */
 }
 
 void ResultWindow::saveChart()

@@ -62,6 +62,29 @@ QString Job::print() const
     return s;
 }
 
+QString Job::printCompact() const
+{
+    QString s;
+    bool f = false;
+    for(const QString& id : m_operationIds)
+    {
+        const Operation& operation = Jobshop::instance()->operation(id);
+        if(operation.time() > 0)
+        {
+            if(f)
+                s += " - ";
+
+            s += QString("m%1(%2)")
+                    .arg(operation.machine())
+                    .arg(operation.time());
+
+            if(!f)
+                f = true;
+        }
+    }
+    return s;
+}
+
 void Job::setOperation(int number, const Operation &operation)
 {
     Jobshop::instance()->operation(operationId(number)) = operation;

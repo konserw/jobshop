@@ -43,6 +43,8 @@ public:
     int tardy() const;
     ///Maximum tardiness
     int maxTardy() const;
+    ///Mean tardinnes
+    double meanTardy() const;
 
     //for sorting
     bool operator<(const Chromosome& other) const;
@@ -63,6 +65,8 @@ protected:
     int m_numberOfTardy;
     ///Mean flow time
     double m_meanFlow;
+    ///Mean tardinnes
+    double m_meanTardy;
 
     ///Basic statistics for each job
     QList<Result> m_results;
