@@ -70,11 +70,6 @@ public:
      */
     const QList<Job>& jobs() const;
 
-    /*!
-     * \brief ganttChart Constructs GanttChart for winer chromosome
-     * \return Pointer to newly created GanttChart
-     */
-    GanttChart* ganttChart() const;
 
 public slots:
     FitnessFunction fitnessFunction() const;

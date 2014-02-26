@@ -3,6 +3,10 @@
 #include "Job.h"
 #include "Operation.h"
 
+#include "GanttMachine.h"
+#include "GanttOperation.h"
+#include "GanttChart.h"
+
 #include <QVector>
 #include <random>
 #include <algorithm>
@@ -94,6 +98,35 @@ int Chromosome::startTime(const QString &operation) const
 {
     return m_operationsStartTime[operation];
 }
+
+GanttChart *Chromosome::ganttChart() const
+{
+    int cMax = completionTime();
+    GanttChart* chart = new GanttChart(cMax);
+
+    QList<GanttMachine*> machines;
+    GanttMachine* m;
+    int machinesCount = Jobshop::instance()->machinesCount();
+    for(int i=0; i<machinesCount; ++i)
+    {
+        m = new GanttMachine(QString("m%1").arg(i+1), chart);
+        machines.append(m);
+        m->setPos(0, i * GanttChart::machineHeight);
+        m->setCMax(cMax);
+    }
+
+    for(const QString& opId : m_genes)
+    {
+        const Operation& op = Jobshop::instance()->operation(opId);
+        GanttOperation* gop = op.ganttGraphic();
+        gop->setParentItem(machines[op.machine()]);
+        QPointF pos = GanttChart::operationPosition(startTime(opId));
+        gop->setPos(pos + GanttChart::machineOffset());
+    }
+
+    return chart;
+}
+
 const QList<QString> &Chromosome::genes() const
 {
     return m_genes;
@@ -114,6 +147,7 @@ void Chromosome::calculateValues()
     //kiedy konczy sie poprzednia operacja maszyny
     QVector<int> machineTime(Jobshop::instance()->machinesCount(), 0);
 
+ //   qDebug() << "op.id()" << "jt" << "mt" << "start" << "op.time()" << "end";
     for(const QString& gene : m_genes)
     {
         const Operation& op = Jobshop::instance()->operation(gene);
@@ -122,6 +156,7 @@ void Chromosome::calculateValues()
         int start = std::max<int>(jt, mt);
         m_operationsStartTime.insert(op.id(), start);
         int end = start + op.time();
+  //      qDebug() << op.id() << jt << mt << start << op.time() << end;
         jt = end;
         mt = end;
     }

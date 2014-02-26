@@ -1,9 +1,6 @@
-#include "GanttMachine.h"
 #include "Jobshop.h"
 #include "JobshopModel.h"
 #include "Operation.h"
-#include "GanttOperation.h"
-#include "GanttChart.h"
 
 #include <QVector>
 #include <algorithm>
@@ -62,34 +59,6 @@ void Jobshop::setCrossovers(int crossovers)
 const QList<Job> &Jobshop::jobs() const
 {
     return m_jobs;
-}
-
-GanttChart *Jobshop::ganttChart() const
-{
-    const Chromosome& chromosome = this->winnerChromosome();
-    int cMax = chromosome.completionTime();
-    GanttChart* chart = new GanttChart(cMax);
-
-    QList<GanttMachine*> machines;
-    GanttMachine* m ;
-    for(int i=0; i<m_machinesCount; ++i)
-    {
-        m = new GanttMachine(QString("m%1").arg(i+1), chart);
-        machines.append(m);
-        m->setPos(0, i * GanttChart::machineHeight);
-        m->setCMax(cMax);
-    }
-
-    for(const QString& opId : m_operations.keys())
-    {
-        const Operation& op = m_operations[opId];
-        GanttOperation* gop = op.ganttGraphic();
-        gop->setParentItem(machines[op.machine()]);
-        QPointF pos = GanttChart::operationPosition(chromosome.startTime(opId));
-        gop->setPos(pos + GanttChart::machineOffset());
-    }
-
-    return chart;
 }
 
 std::mt19937& Jobshop::rng()

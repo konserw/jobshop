@@ -6,6 +6,8 @@
 #include <QString>
 #include "Result.h"
 
+class GanttChart;
+
 /*!
  * \brief The Chromosome class - represnts single schedule as order of operations (genes)
  */
@@ -55,6 +57,11 @@ public:
     ///Returns scheduled start time for operation in this chromosome (schedule)
     int startTime(const QString& operation) const;
 
+    /*!
+     * \brief ganttChart Constructs GanttChart for this chromosome
+     * \return Pointer to newly created GanttChart
+     */
+    GanttChart* ganttChart() const;
 
 protected:
     ///value of fitness funciton meanSquare

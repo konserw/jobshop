@@ -71,7 +71,7 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
                        .arg(m_chromosome.valueAlpha())
                        );
 
-    m_chart = Jobshop::instance()->ganttChart();
+    m_chart = m_chromosome.ganttChart();
 
     m_scene = new QGraphicsScene(this);
     m_scene->addItem(m_chart);
@@ -85,6 +85,7 @@ ResultWindow::ResultWindow(const Chromosome& chromosome, QWidget *parent) :
 
 ResultWindow::~ResultWindow()
 {
+    delete m_chart;
     delete ui;
 }
 
