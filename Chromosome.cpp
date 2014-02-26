@@ -221,7 +221,7 @@ QList<Chromosome> MSX(const Chromosome &a, const Chromosome &b)
     return QList<Chromosome>() << c1 << c2;
 }
 
-QDebug& operator<<(QDebug& d, const Chromosome &chromosome)
+QDebug operator<<(QDebug d, const Chromosome &chromosome)
 {
     int count = chromosome.m_genes.count();
     for(int i=0; i < count; ++i)

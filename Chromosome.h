@@ -76,12 +76,12 @@ protected:
     /// Externistic state in flyweight design pattern
     QHash<QString, int> m_operationsStartTime;
 
-    friend QDebug& operator<< (QDebug& d, const Chromosome& chromosome);
+    friend QDebug operator<< (QDebug d, const Chromosome& chromosome);
     friend QList<Chromosome> MSX(const Chromosome& a, const Chromosome& b);
 };
 
 QList<Chromosome> MSX(const Chromosome& a, const Chromosome& b);
 
-QDebug& operator<< (QDebug& d, const Chromosome& chromosome);
+QDebug operator<< (QDebug d, const Chromosome& chromosome);
 
 #endif // CHROMOSOME_H

@@ -55,6 +55,6 @@ Q_DECLARE_METATYPE(Operation)
 QDataStream &operator<<(QDataStream &out, const Operation& op);
 QDataStream &operator>>(QDataStream &in, Operation& op);
 
-QDebug& operator<< (QDebug& d, const Operation& operation);
+QDebug operator<< (QDebug d, const Operation& operation);
 
 #endif // MARSZRUTA_H

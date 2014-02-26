@@ -120,7 +120,7 @@ QDataStream &operator>>(QDataStream &in, Operation &op)
 }
 
 
-QDebug &operator<<(QDebug &d, const Operation &operation)
+QDebug operator<<(QDebug d, const Operation &operation)
 {
     d.nospace() << "Operation " << operation.id() << ": " << operation.time() << "h on machine " << operation.machine()+1;
     return d.space();

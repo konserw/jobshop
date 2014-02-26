@@ -62,13 +62,13 @@ private:
 
     friend QDataStream &operator<<(QDataStream &out, const Job & job);
     friend QDataStream &operator>>(QDataStream &in, Job & job);
-    friend QDebug& operator<< (QDebug& d, const Job& job);
+    friend QDebug operator<< (QDebug d, const Job& job);
     friend class Jobshop;
 };
 
 QDataStream &operator<<(QDataStream &out, const Job & job);
 QDataStream &operator>>(QDataStream &in, Job & job);
 
-QDebug& operator<< (QDebug& d, const Job& job);
+QDebug operator<< (QDebug d, const Job& job);
 
 #endif // ZADANIE_H

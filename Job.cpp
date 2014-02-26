@@ -97,7 +97,7 @@ Operation& Job::operation(int number)
         return Jobshop::instance()->operation(operationId(number));
 
     qWarning() << "requested non existan operation number" << number << "from job" << m_id;
-    return Operation();
+//    return Operation();
 }
 
 const Operation& Job::operation(int number) const
@@ -240,7 +240,7 @@ QDataStream &operator >>(QDataStream &in, Job &job)
 }
 
 
-QDebug& operator<<(QDebug& d, const Job &job)
+QDebug operator<<(QDebug d, const Job &job)
 {
 
     d << "Arrival:" << job.m_arrival;
