@@ -11,6 +11,7 @@ class QVBoxLayout;
 class QHBoxLayout;
 class QPushButton;
 class QSlider;
+class QComboBox;
 //class QLabel;
 QT_END_NAMESPACE
 
@@ -50,6 +51,7 @@ protected:
     QPushButton* m_pauseButton;
     QSlider* m_range;
     QSlider* m_interval;
+    QComboBox* m_resultCombo;
 
     int m_iteration;
     QTimer m_timer;

@@ -118,7 +118,9 @@ public slots:
     void iteration();
 
     ///Returns current best chromosome
-    const Chromosome& winner() const;
+    const Chromosome& winnerChromosome() const;
+    ///Returns current worst chromosome
+    const Chromosome& looserChromosome() const;
     ///Returns chromosome constructed by FIFO cheuristic
     const Chromosome& fifoChromosome() const;
     ///Returns chromosome constructed by FIFO cheuristic

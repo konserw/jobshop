@@ -66,7 +66,7 @@ const QList<Job> &Jobshop::jobs() const
 
 GanttChart *Jobshop::ganttChart() const
 {
-    const Chromosome& chromosome = this->winner();
+    const Chromosome& chromosome = this->winnerChromosome();
     int cMax = chromosome.completionTime();
     GanttChart* chart = new GanttChart(cMax);
 
@@ -278,9 +278,14 @@ void Jobshop::iteration()
     emit iterationResult(m_chromosomes.last().value(), m_chromosomes[0].value());
 }
 
-const Chromosome &Jobshop::winner() const
+const Chromosome &Jobshop::winnerChromosome() const
 {
     return m_chromosomes.first();
+}
+
+const Chromosome &Jobshop::looserChromosome() const
+{
+    return m_chromosomes.last();
 }
 
 const Chromosome &Jobshop::fifoChromosome() const

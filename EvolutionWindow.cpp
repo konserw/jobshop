@@ -25,6 +25,12 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_h1 = new QHBoxLayout();
     m_pauseButton = new QPushButton(tr("Pause/Start"), this);
     m_h1->addWidget(m_pauseButton);
+    m_resultCombo = new QComboBox(this);
+    m_resultCombo->addItem(tr("Best chromosome"));
+    m_resultCombo->addItem(tr("Worst chromosome"));
+    m_resultCombo->addItem(tr("FIFO cheuristic"));
+    m_resultCombo->addItem(tr("LIFO cheuristic"));
+    m_h1->addWidget(m_resultCombo);
     m_stopButton = new QPushButton(tr("Show result"), this);
     m_h1->addWidget(m_stopButton);
     m_h1->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding));
@@ -140,7 +146,24 @@ void EvolutionWindow::showResult()
     if(m_isRunning)
         toggleRun();
 
-    ResultWindow* rw = new ResultWindow(Jobshop::instance()->winner(), this);
+    ResultWindow* rw;
+
+    switch(m_resultCombo->currentIndex())
+    {
+    case 0:
+        rw = new ResultWindow(Jobshop::instance()->winnerChromosome(), this);
+        break;
+    case 1:
+        rw = new ResultWindow(Jobshop::instance()->looserChromosome(), this);
+        break;
+    case 2:
+        rw = new ResultWindow(Jobshop::instance()->fifoChromosome(), this);
+        break;
+    case 3:
+        rw = new ResultWindow(Jobshop::instance()->lifoChromosome(), this);
+        break;
+    }
+
     rw->showMaximized();
     rw->exec();
 }
