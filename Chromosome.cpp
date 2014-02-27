@@ -11,11 +11,20 @@
 #include <random>
 #include <algorithm>
 #include <QtDebug>
+#include <QtWidgets>
 
 Chromosome::Chromosome() :
     m_valueMean(-1),
-    m_valueAlpha(-1)
+    m_valueAlpha(-1),
+    m_chart(nullptr),
+    m_summary(nullptr)
 {
+}
+
+Chromosome::~Chromosome()
+{
+    delete m_chart;
+    delete m_summary;
 }
 
 int Chromosome::geneCount() const
@@ -99,32 +108,126 @@ int Chromosome::startTime(const QString &operation) const
     return m_operationsStartTime[operation];
 }
 
-GanttChart *Chromosome::ganttChart() const
+GanttChart* Chromosome::ganttChart()
 {
-    int cMax = completionTime();
-    GanttChart* chart = new GanttChart(cMax);
-
-    QList<GanttMachine*> machines;
-    GanttMachine* m;
-    int machinesCount = Jobshop::instance()->machinesCount();
-    for(int i=0; i<machinesCount; ++i)
+    if(m_chart == nullptr)
     {
-        m = new GanttMachine(QString("m%1").arg(i+1), chart);
-        machines.append(m);
-        m->setPos(0, i * GanttChart::machineHeight);
-        m->setCMax(cMax);
+        int cMax = completionTime();
+        m_chart = new GanttChart(cMax);
+
+        QList<GanttMachine*> machines;
+        GanttMachine* m;
+        int machinesCount = Jobshop::instance()->machinesCount();
+        for(int i=0; i<machinesCount; ++i)
+        {
+            m = new GanttMachine(QString("m%1").arg(i+1), m_chart);
+            machines.append(m);
+            m->setPos(0, i * GanttChart::machineHeight);
+            m->setCMax(cMax);
+        }
+
+        for(const QString& opId : m_genes)
+        {
+            const Operation& op = Jobshop::instance()->operation(opId);
+            GanttOperation* gop = op.ganttGraphic();
+            gop->setParentItem(machines[op.machine()]);
+            QPointF pos = GanttChart::operationPosition(startTime(opId));
+            gop->setPos(pos + GanttChart::machineOffset());
+        }
     }
 
-    for(const QString& opId : m_genes)
+    return m_chart;
+}
+
+const QString& Chromosome::latexSummary()
+{
+    if(m_summary == nullptr)
     {
-        const Operation& op = Jobshop::instance()->operation(opId);
-        GanttOperation* gop = op.ganttGraphic();
-        gop->setParentItem(machines[op.machine()]);
-        QPointF pos = GanttChart::operationPosition(startTime(opId));
-        gop->setPos(pos + GanttChart::machineOffset());
+
+        /*convert svg to pdf using incscape
+        const QString pdfName(tr("gantt_%1.pdf").arg(name));
+        QStringList args;
+        args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << tr("output/%1").arg(pdfName) << "-D";
+        run("inkscape", args);
+    */
+
+        QString s;
+        s =     "\n%Tabela danych\n\n"
+                "\t\\begin{table}[htb]\n"
+                "\t\t\\centering\n"
+                "\t\t\\caption{Struktura zlecenia}\n"
+                "\t\t\\begin{tabular}{ | r | c | c | c | c | l | }\n"
+                "\t\t\\hline\n"
+                "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& \\(\\alpha\\)\t& \\(\\beta\\)\t& Operacje zadnia\t\\\\ \\hline\n";
+
+        for(const Job& job : Jobshop::instance()->jobs())
+        {
+            s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t& %6\t\\\\ \\hline\n")
+                    .arg(job.id())
+                    .arg(job.arrival())
+                    .arg(job.dueDate())
+                    .arg(job.alpha())
+                    .arg(job.beta())
+                    .arg(job.printCompact());
+        }
+        s +=    "\t\t\\end{tabular}\n"
+                "\t\\end{table}\n"
+                "\n"
+                "%Tabela wynikowa\n\n"
+                "\t\\begin{table}[htb]\n"
+                "\t\t\\centering\n"
+                "\t\t\\caption{Parametry wykonanych zadań}\n"
+                "\t\t\\begin{tabular}{ | r | c | c | c | c |}\n"
+                "\t\t\\hline\n"
+                "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
+
+        for(const Result& result : m_results)
+        {
+            s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t\\\\ \\hline\n")
+                    .arg(result.jobID())
+                    .arg(result.completionTime())
+                    .arg(result.flow())
+                    .arg(result.lateness())
+                    .arg(result.earliness());
+        }
+
+        s +=    "\t\t\\end{tabular}\n"
+                "\t\\end{table}\n"
+                "\n"
+                "%Tabela wyznacznikow\n\n"
+                "\t\\begin{table}[htb]\n"
+                "\t\t\\centering\n"
+                "\t\t\\begin{tabular}{ l l l }\n";
+
+        s +=    QString(
+                    "\t\t\\(C_{max} = %1 \\)\t& \\( T_{max} = %3 \\)\t& \\( \\sqrt{\\sum e_j^2 + \\sum l_j^2} = %5 \\)\t\\\\\n"
+                    "\t\t\\( \\bar{F} = %2 \\)\t& \\( \\bar{T} = %4 \\)\t& \\( \\sum \\alpha * e_j + \\sum \\beta * l_j = %6 \\)\t\\\\\n"
+                    )
+                //\\bar{T} = %4
+                .arg(completionTime())
+                .arg(meanFlow())
+                .arg(maxTardy())
+                .arg(meanTardy())
+                .arg(valueMean())
+                .arg(valueAlpha());
+
+        s +=    "\t\t\\end{tabular}\n"
+                "\t\\end{table}\n";
+    /*
+        s +=    "%wykres gantt'a\n"
+               "\t\\begin{figure}[htb]\n"
+               "\t\t\\centering\n"
+               "\t\t\\def\\svgwidth{\\columnwidth}\n"
+               "\t\t\\input{";
+        s +=    pdfName + "_tex}\n"
+                "\t\t\\caption{Wykres Gantt'a}\n"
+                "\t\\end{figure}\n"
+                "\t\\FloatBarrier\n";
+    */
+        m_summary = new QString(s);
     }
 
-    return chart;
+    return *m_summary;
 }
 
 const QList<QString> &Chromosome::genes() const
@@ -265,3 +368,41 @@ QDebug operator<<(QDebug d, const Chromosome &chromosome)
     return d;
 }
 
+/*
+void ResultWindow::pdf(const QString &fileName)
+{
+    const QString texFile("output/wrapped.tex");
+
+    this->latex("output/temp.tex");
+
+    QString s;
+    s =     "\\documentclass[11pt,a4paper]{article}\n"
+            "\\usepackage{polski}\n" //[babel]
+            "\\usepackage[utf8]{inputenc}\n"
+            "\\usepackage{mathtools}\n"
+            "\\usepackage{color}\n"
+            "\\usepackage{graphicx}\n"
+            "\\usepackage{lscape}\n"
+            "\\usepackage{transparent}\n"
+            "\\mathtoolsset{showonlyrefs}\n"
+            "\\title{Generated by kSzereg}\n"
+            "\\date{}\n"
+            "\\begin{document}\n"
+            "\t\\input{";
+    s +=    "temp.tex";
+    s +=    "}\n"
+            "\\end{document}\n";
+
+    save(texFile, s);
+
+    QStringList args;
+    args << "--pdf" << "--inplace" << "-I" << "output" << texFile;
+    run("rubber", args);
+
+    args.clear();
+    args << "--clean" << "--inplace" << texFile;
+    run("rubber", args);
+
+    QDir::current().rename("output/wrapped.pdf", fileName);
+}
+*/

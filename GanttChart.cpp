@@ -5,6 +5,11 @@
 #include <QGraphicsLineItem>
 #include <QFont>
 #include <QPen>
+#include <QtSvg/QSvgGenerator>
+#include <QPainter>
+#include <QtDebug>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsScene>
 
 GanttChart::GanttChart(int cMax) :
     QGraphicsItem(nullptr),
@@ -37,14 +42,32 @@ GanttChart::GanttChart(int cMax) :
 
 QRectF GanttChart::boundingRect() const
 {
-    double width = machineHorizontalOffset + (m_cMax + 4) * widthUnit;
-    double height = GanttChart::machineHeight * (Jobshop::instance()->machinesCount() + 1);
-    return QRectF(0, 0, width, height);
+    return this->childrenBoundingRect();
 }
-
+/*
+void GanttChart::save(const QString &filename)
+{
+    QSvgGenerator svgGen;
+    svgGen.setFileName(filename);
+    QRectF r = boundingRect();
+    QSize s = r.size().toSize();
+    qDebug() << "image size:" << r << s;
+    svgGen.setSize(s);
+    svgGen.setViewBox(r);
+    svgGen.setResolution(300);
+    svgGen.setTitle(QObject::tr("Gantt chart"));
+    svgGen.setDescription(QObject::tr("Gantt chart"));
+    QImage im(s);
+    im.fill(Qt::white);
+    QPainter painter;
+    painter.begin(&svgGen);
+    im.
+    painter.end();
+}
+*/
 void GanttChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(painter);
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    Q_UNUSED(painter);
 }

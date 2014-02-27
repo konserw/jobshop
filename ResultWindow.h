@@ -18,16 +18,17 @@ class ResultWindow : public QDialog {
     Q_OBJECT
 
 public:
-    ResultWindow(const Chromosome& chromosome, QWidget *parent);
+    ResultWindow(const Chromosome& chromosome, QWidget *parent = nullptr);
     ~ResultWindow();
 
+    void save2(const QString &filename);
 public slots:
 //    void pdf();
 //    void pdf(const QString&fileName);
     void latex();
     void latex2(const QString&);
     void saveChart();
-    void save2(const QString& filename);
+  //  void save2(const QString& filename);
 
 protected:
     void changeEvent(QEvent *e);

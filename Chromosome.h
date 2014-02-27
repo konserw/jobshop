@@ -15,6 +15,7 @@ class Chromosome
 {
 public:
     Chromosome();
+    ~Chromosome();
 
     int geneCount() const;
     const QList<QString>& genes() const;
@@ -61,7 +62,10 @@ public:
      * \brief ganttChart Constructs GanttChart for this chromosome
      * \return Pointer to newly created GanttChart
      */
-    GanttChart* ganttChart() const;
+    GanttChart* ganttChart();
+
+    ///generate summary in latex
+    const QString &latexSummary();
 
 protected:
     ///value of fitness funciton meanSquare
@@ -82,6 +86,9 @@ protected:
     ///Starting time for each operation
     /// Externistic state in flyweight design pattern
     QHash<QString, int> m_operationsStartTime;
+
+    GanttChart* m_chart;
+    QString* m_summary;
 
     friend QDebug operator<< (QDebug d, const Chromosome& chromosome);
     friend QList<Chromosome> MSX(const Chromosome& a, const Chromosome& b);

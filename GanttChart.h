@@ -25,6 +25,8 @@ public:
     ///Zwraca prostokąt wewnątrz którego odbywa się rysowanie.
     virtual QRectF boundingRect() const;
 
+ //   void save(const QString &filename);
+
 protected:
     ///Metoda rysująca graficzą reprezentację obiektu.
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);

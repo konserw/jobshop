@@ -38,10 +38,10 @@ QRectF GanttMachine::boundingRect() const
 }
 
 void GanttMachine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+{    
+    Q_UNUSED(painter);
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    Q_UNUSED(painter);
 }
 
 void GanttMachine::setCMax(int cMax)
