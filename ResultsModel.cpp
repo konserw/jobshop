@@ -50,7 +50,7 @@ QVariant ResultsModel::headerData(int section, Qt::Orientation orientation, int 
     case 1:
         return tr("Flow");
     case 2:
-        return tr("Lateness");
+        return tr("Tardiness");
     case 3:
         return tr("Earliness");
     }

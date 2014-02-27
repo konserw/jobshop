@@ -77,8 +77,8 @@ QString Jobshop::latexSummary()
     QString s;
     s =     "\n%Tabela danych\n\n"
             "\\begin{table}[htb]\n"
-            "\t\\centering\n"
             "\t\\caption{Struktura zlecenia}\n"
+            "\t\\centering\n"
             "\t\\begin{tabular}{ | r | c | c | c | c | l | }\n"
             "\t\t\\hline\n"
             "\t\tJob\t& \\(r_i\\)\t& \\(d_i\\)\t& \\(\\alpha_i\\)\t& \\(\\beta_i\\)\t& Operacje zadnia\t\\\\ \\hline\n";
@@ -99,8 +99,9 @@ QString Jobshop::latexSummary()
 
     s +=    "\n%Tabela parametrow genetycznych\n\n"
             "\\begin{table}[htb]\n"
+            "\t\\caption{Parametry algorytmu genetycznego}\n"
             "\t\\centering\n"
-            "\t\\begin{tabular}{ l l l l }\n";
+            "\t\\begin{tabular}{ c | c | c | c }\n";
 
     s +=    QString(
                 "\t\tPopulacja\t& Liczba krzyżowań\t& Liczba iteracji\t& Funkcja przystosowania\t\\\\\n"

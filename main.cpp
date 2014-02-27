@@ -6,7 +6,7 @@
 #include <QtDebug>
 #include <QApplication>
 
-//#define TESTRUN 2
+//#define TESTRUN 1
 
 #ifdef TESTRUN
 #include "EvolutionWindow.h"

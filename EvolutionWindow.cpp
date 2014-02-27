@@ -16,6 +16,8 @@ EvolutionWindow::EvolutionWindow(QWidget *parent) :
     m_fifoValue = Jobshop::instance()->fifoValue();
     m_lifoValue = Jobshop::instance()->lifoValue();
 
+    setWindowTitle(tr("Evolution process"));
+    setWindowIcon(QIcon(":/logo"));
     setObjectName(QStringLiteral("EvolutionWindow"));
     setWindowModality(Qt::ApplicationModal);
     resize(500, 500);
