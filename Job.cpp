@@ -96,7 +96,7 @@ Operation& Job::operation(int number)
     if(number < m_operationIds.count())
         return Jobshop::instance()->operation(operationId(number));
 
-    qWarning() << "requested non existan operation number" << number << "from job" << m_id;
+    qFatal(QString("requested non existan operation number %1 from job %2.").arg(number).arg(m_id).toLatin1());
 //    return Operation();
 }
 

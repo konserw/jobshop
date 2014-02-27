@@ -121,15 +121,15 @@ void ResultWindow::latex()
 
 void ResultWindow::latex2(const QString &texName)
 {
+    /*
     QFileInfo fi(texName);
     const QString svgName(QString("%2/gantt_%1.svg").arg(fi.baseName()).arg(fi.absolutePath()));
 
     save2(svgName);
-
+*/
     QString s;
-
-    s = m_chromosome.latexSummary();
-
+    s = Jobshop::instance()->latexSummary();
+    s += m_chromosome.latexSummary();
     save(texName, s);
 }
 

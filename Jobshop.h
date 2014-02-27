@@ -70,9 +70,12 @@ public:
      */
     const QList<Job>& jobs() const;
 
+    ///generate summary in latex
+    QString latexSummary();
 
 public slots:
     FitnessFunction fitnessFunction() const;
+    QString fitnessFunctionEquation() const;
     void setFitnessFunction(FitnessFunction fitnessFunction);
 
     int crossovers() const;

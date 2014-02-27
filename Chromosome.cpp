@@ -143,87 +143,58 @@ const QString& Chromosome::latexSummary()
 {
     if(m_summary == nullptr)
     {
-
-        /*convert svg to pdf using incscape
-        const QString pdfName(tr("gantt_%1.pdf").arg(name));
-        QStringList args;
-        args << "-z" << "-f" << svgName << "--export-latex" << "--export-pdf" << tr("output/%1").arg(pdfName) << "-D";
-        run("inkscape", args);
-    */
-
         QString s;
-        s =     "\n%Tabela danych\n\n"
-                "\t\\begin{table}[htb]\n"
-                "\t\t\\centering\n"
-                "\t\t\\caption{Struktura zlecenia}\n"
-                "\t\t\\begin{tabular}{ | r | c | c | c | c | l | }\n"
-                "\t\t\\hline\n"
-                "\t\tj\t& \\(r_j\\)\t& \\(d_j\\)\t& \\(\\alpha\\)\t& \\(\\beta\\)\t& Operacje zadnia\t\\\\ \\hline\n";
-
-        for(const Job& job : Jobshop::instance()->jobs())
-        {
-            s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t& %6\t\\\\ \\hline\n")
-                    .arg(job.id())
-                    .arg(job.arrival())
-                    .arg(job.dueDate())
-                    .arg(job.alpha())
-                    .arg(job.beta())
-                    .arg(job.printCompact());
-        }
-        s +=    "\t\t\\end{tabular}\n"
-                "\t\\end{table}\n"
-                "\n"
+        s =
                 "%Tabela wynikowa\n\n"
-                "\t\\begin{table}[htb]\n"
-                "\t\t\\centering\n"
-                "\t\t\\caption{Parametry wykonanych zadań}\n"
-                "\t\t\\begin{tabular}{ | r | c | c | c | c |}\n"
+                "\\begin{table}[htb]\n"
+                "\t\\centering\n"
+                "\t\\caption{Parametry wykonanych zadań}\n"
+                "\t\\begin{tabular}{ | r | c | c | c | c |}\n"
                 "\t\t\\hline\n"
-                "\t\tj\t& \\(c_j\\)\t& \\(f_j\\)\t& \\(l_j\\)\t& \\(e_j\\)\t\\\\ \\hline\n";
+                "\t\tJob\t& \\(C_i\\)\t& \\(f_i\\)\t& \\(T_i\\)\t& \\(E_i\\)\t\\\\ \\hline\n";
 
-        for(const Result& result : m_results)
-        {
-            s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t\\\\ \\hline\n")
-                    .arg(result.jobID())
-                    .arg(result.completionTime())
-                    .arg(result.flow())
-                    .arg(result.lateness())
-                    .arg(result.earliness());
-        }
+            for(const Result& result : m_results)
+            {
+                s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t\\\\ \\hline\n")
+                        .arg(result.jobID())
+                        .arg(result.completionTime())
+                        .arg(result.flow())
+                        .arg(result.lateness())
+                        .arg(result.earliness());
+            }
 
-        s +=    "\t\t\\end{tabular}\n"
-                "\t\\end{table}\n"
-                "\n"
-                "%Tabela wyznacznikow\n\n"
-                "\t\\begin{table}[htb]\n"
-                "\t\t\\centering\n"
-                "\t\t\\begin{tabular}{ l l l }\n";
+            s +=    "\t\\end{tabular}\n"
+                    "\\end{table}\n"
+                    "\n"
+                    "%Tabela wyznacznikow\n\n"
+                    "\\begin{table}[htb]\n"
+                    "\t\\centering\n"
+                    "\t\\begin{tabular}{ l l l }\n";
 
-        s +=    QString(
-                    "\t\t\\(C_{max} = %1 \\)\t& \\( T_{max} = %3 \\)\t& \\( \\sqrt{\\sum e_j^2 + \\sum l_j^2} = %5 \\)\t\\\\\n"
-                    "\t\t\\( \\bar{F} = %2 \\)\t& \\( \\bar{T} = %4 \\)\t& \\( \\sum \\alpha * e_j + \\sum \\beta * l_j = %6 \\)\t\\\\\n"
-                    )
-                //\\bar{T} = %4
-                .arg(completionTime())
-                .arg(meanFlow())
-                .arg(maxTardy())
-                .arg(meanTardy())
-                .arg(valueMean())
-                .arg(valueAlpha());
+            s +=    QString(
+                        "\t\t\\(C_{max} = %1 \\)\t& \\( T_{max} = %3 \\)\t& \\( \\sqrt{\\sum E_i^2 + \\sum T_i^2} = %5 \\)\t\\\\\n"
+                        "\t\t\\( \\bar{F} = %2 \\)\t& \\( \\bar{T} = %4 \\)\t& \\( \\sum \\left( \\alpha_i * E_i + \\beta_i * T_i \\right) = %6 \\)\t\\\\\n"
+                        )
+                    .arg(completionTime())
+                    .arg(meanFlow())
+                    .arg(maxTardy())
+                    .arg(meanTardy())
+                    .arg(valueMean())
+                    .arg(valueAlpha());
 
-        s +=    "\t\t\\end{tabular}\n"
-                "\t\\end{table}\n";
-    /*
-        s +=    "%wykres gantt'a\n"
-               "\t\\begin{figure}[htb]\n"
-               "\t\t\\centering\n"
-               "\t\t\\def\\svgwidth{\\columnwidth}\n"
-               "\t\t\\input{";
-        s +=    pdfName + "_tex}\n"
-                "\t\t\\caption{Wykres Gantt'a}\n"
-                "\t\\end{figure}\n"
-                "\t\\FloatBarrier\n";
-    */
+            s +=    "\t\\end{tabular}\n"
+                    "\\end{table}\n";
+        /*
+            s +=    "%wykres gantt'a\n"
+                   "\t\\begin{figure}[htb]\n"
+                   "\t\t\\centering\n"
+                   "\t\t\\def\\svgwidth{\\columnwidth}\n"
+                   "\t\t\\input{";
+            s +=    pdfName + "_tex}\n"
+                    "\t\t\\caption{Wykres Gantt'a}\n"
+                    "\t\\end{figure}\n"
+                    "\t\\FloatBarrier\n";
+        */
         m_summary = new QString(s);
     }
 

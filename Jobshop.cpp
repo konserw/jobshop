@@ -30,6 +30,17 @@ Jobshop::FitnessFunction Jobshop::fitnessFunction() const
     return m_fitnessFunction;
 }
 
+QString Jobshop::fitnessFunctionEquation() const
+{
+    switch(m_fitnessFunction)
+    {
+    case SquareMean:
+        return "\\( \\sqrt{\\sum E_i^2 + \\sum T_i^2} \\)";
+    case AlphaBeta:
+        return "\\( \\sum \\left( \\alpha_i * E_i + \\beta_i * T_i \\right) \\)";
+    }
+}
+
 void Jobshop::setFitnessFunction(FitnessFunction fitnessFunction)
 {
     m_fitnessFunction = fitnessFunction;
@@ -59,6 +70,51 @@ void Jobshop::setCrossovers(int crossovers)
 const QList<Job> &Jobshop::jobs() const
 {
     return m_jobs;
+}
+
+QString Jobshop::latexSummary()
+{
+    QString s;
+    s =     "\n%Tabela danych\n\n"
+            "\\begin{table}[htb]\n"
+            "\t\\centering\n"
+            "\t\\caption{Struktura zlecenia}\n"
+            "\t\\begin{tabular}{ | r | c | c | c | c | l | }\n"
+            "\t\t\\hline\n"
+            "\t\tJob\t& \\(r_i\\)\t& \\(d_i\\)\t& \\(\\alpha_i\\)\t& \\(\\beta_i\\)\t& Operacje zadnia\t\\\\ \\hline\n";
+
+    for(const Job& job : m_jobs)
+    {
+        s += QString("\t\t%1\t& %2\t& %3\t& %4\t& %5\t& %6\t\\\\ \\hline\n")
+                .arg(job.id())
+                .arg(job.arrival())
+                .arg(job.dueDate())
+                .arg(job.alpha())
+                .arg(job.beta())
+                .arg(job.printCompact());
+    }
+    s +=    "\t\\end{tabular}\n"
+            "\\end{table}\n"
+            "\n";
+
+    s +=    "\n%Tabela parametrow genetycznych\n\n"
+            "\\begin{table}[htb]\n"
+            "\t\\centering\n"
+            "\t\\begin{tabular}{ l l l l }\n";
+
+    s +=    QString(
+                "\t\tPopulacja\t& Liczba krzyżowań\t& Liczba iteracji\t& Funkcja przystosowania\t\\\\\n"
+                "\t\t%1\t& %2\t& %3\t& %4\t\\\\\n"
+                )
+            .arg(m_population)
+            .arg(m_crossovers)
+            .arg(m_iteration)
+            .arg(fitnessFunctionEquation());
+
+    s +=    "\t\\end{tabular}\n"
+            "\\end{table}\n";
+
+    return s;
 }
 
 std::mt19937& Jobshop::rng()
